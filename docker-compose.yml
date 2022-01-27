@@ -1,0 +1,19 @@
+version: "3.8"
+services:
+  mongodb:
+    container_name: mongo
+    image: mongo:4.4
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    networks:
+      backend:
+        aliases:
+          - mongo
+    volumes:
+      - MongodbVolume:/data/db
+volumes:
+  MongodbVolume:
+
+networks:
+  backend:
