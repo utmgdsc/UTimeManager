@@ -1,0 +1,13 @@
+.headerText {
+  font-size: 40px;
+  color: white;
+  font-weight: bold;
+  font-family: "Roboto", sans-serif;
+}
+
+.subtitleText {
+  font-size: 18px;
+  color: #dadada;
+  font-weight: 400;
+  font-family: "Roboto", sans-serif;
+}
