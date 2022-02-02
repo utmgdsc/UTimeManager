@@ -41,7 +41,7 @@ const config = {
                 title: 'UTimeManager',
                 logo: {
                     alt: 'UTimeManager Logo',
-                    src: 'img/logo.svg',
+                    src: 'img/calendar.svg',
                 },
                 items: [
                     {

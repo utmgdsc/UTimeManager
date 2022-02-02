@@ -5,7 +5,7 @@ import styles from './HomepageFeatures.module.css';
 const FeatureList = [
     {
         title: 'Easy to Use',
-        Svg: require('../../static/img/undraw_docusaurus_mountain.svg').default,
+        Svg: require('../../static/img/projectboard.svg').default,
         description: (
             <>
                 In just a few clicks, you can plan out your schedule for the week to follow!
@@ -14,7 +14,7 @@ const FeatureList = [
     },
     {
         title: 'Focus on What Matters',
-        Svg: require('../../static/img/undraw_docusaurus_tree.svg').default,
+        Svg: require('../../static/img/focus.svg').default,
         description: (
             <>
                 From your planned out time schedule, you can spend more time focusing on your studies!
