@@ -9,7 +9,7 @@ const config = {
     title: 'UTimeManager',
     tagline: 'Plan, Record and Review your weekly schedule',
     url: 'https://UTimeManager.com',
-    baseUrl: '/v1/',
+    baseUrl: '/',
     onBrokenLinks: 'throw',
     onBrokenMarkdownLinks: 'warn',
     favicon: 'img/favicon.ico',

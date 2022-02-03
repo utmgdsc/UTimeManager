@@ -41,7 +41,6 @@ services:
     image: nginx
     restart: unless-stopped
     depends_on:
-      - documentation
       - frontend
     networks:
       backend:
