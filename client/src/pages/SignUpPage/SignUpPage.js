@@ -6,9 +6,16 @@ import {
 } from "../../components/ThemeText/ThemeText.js";
 import { CredentialsButton } from "../../components/CredentialsButton/CredentialsButton.js";
 import { DescriptiveTextButton } from "../../components/DescriptiveTextButton/DescriptiveTextButton.js";
+import { useNavigate } from "react-router-dom";
+
 import "./SignUpPage.css";
 
 const SignUpPage = () => {
+  const navigate = useNavigate();
+  const routeToLogin = () => {
+    navigate("/");
+  };
+
   useEffect(() => {
     document.body.style.background = "#032A5C";
   });
@@ -30,6 +37,7 @@ const SignUpPage = () => {
         <DescriptiveTextButton
           desc="Already have an account?"
           data=" Sign In"
+          onClick={routeToLogin}
         />
       </div>
     </div>
