@@ -5,6 +5,7 @@ import {
   SubtitleText,
 } from "../../components/ThemeText/ThemeText.js";
 import { CredentialsButton } from "../../components/CredentialsButton/CredentialsButton.js";
+import { DescriptiveTextButton } from "../../components/DescriptiveTextButton/DescriptiveTextButton.js";
 
 import "./LoginPage.css";
 
@@ -20,11 +21,14 @@ const LoginPage = () => {
       <div style={{ marginBottom: "10%" }}>
         <SubtitleText data="Please sign in to continue" />
       </div>
-      <div style={{ marginBottom: "15%" }}>
+      <div style={{ marginBottom: "10%" }}>
         <CredentialsInputBox />
       </div>
       <div>
         <CredentialsButton data="Login" />
+      </div>
+      <div style={{ marginTop: "40%" }}>
+        <DescriptiveTextButton desc="Don't have an account?" data=" Sign Up" />
       </div>
     </div>
   );
