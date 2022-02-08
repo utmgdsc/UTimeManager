@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import CredentialsInputBox from "../../components/CredentialsInputBox/CredentialsInputBox.js";
 import {
   HeaderText,
