@@ -26,25 +26,27 @@ const CredentialsPage = ({
 
   document.body.style.background = "#032A5C";
   return (
-    <div className={styles.credentials_container}>
-      <div style={{ marginBottom: "3px" }}>
-        <HeaderText data={headerText} />
-      </div>
-      <div style={{ marginBottom: "10%" }}>
-        <SubtitleText data={subtitleText} />
-      </div>
-      <div style={{ marginBottom: "10%" }}>
-        <CredentialsInputBox />
-      </div>
-      <div>
-        <CredentialsButton data={actionText} />
-      </div>
-      <div style={{ marginTop: "40%" }}>
-        <DescriptiveTextButton
-          desc={nextPageDescription}
-          data={" " + nextPageText}
-          onClick={routeToNextPage}
-        />
+    <div className={styles.bg}>
+      <div className={styles.credentials_container}>
+        <div style={{ marginBottom: "3px" }}>
+          <HeaderText data={headerText} />
+        </div>
+        <div style={{ marginBottom: "10%" }}>
+          <SubtitleText data={subtitleText} />
+        </div>
+        <div style={{ marginBottom: "10%" }}>
+          <CredentialsInputBox />
+        </div>
+        <div>
+          <CredentialsButton data={actionText} />
+        </div>
+        <div style={{ marginTop: "40%" }}>
+          <DescriptiveTextButton
+            desc={nextPageDescription}
+            data={" " + nextPageText}
+            onClick={routeToNextPage}
+          />
+        </div>
       </div>
     </div>
   );
