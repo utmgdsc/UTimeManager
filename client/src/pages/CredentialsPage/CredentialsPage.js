@@ -24,7 +24,6 @@ const CredentialsPage = ({
     navigate(nextPage);
   };
 
-  document.body.style.background = "#032A5C";
   return (
     <div className={styles.bg}>
       <div className={styles.credentials_container}>
