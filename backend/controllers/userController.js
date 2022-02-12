@@ -1,6 +1,8 @@
 const asyncHandler = require("express-async-handler");
 const generateToken = require("../utils/jsonUtils");
 const User = require("../models/userModel");
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken")
 
 const registerUser = asyncHandler(async (req, res) => {
   console.log("HERE");
@@ -14,9 +16,9 @@ const registerUser = asyncHandler(async (req, res) => {
   }
 
   const user = await User.create({
-    name,
-    email,
-    password,
+    name: name,
+    email: email,
+    password: password
   });
 
   if (user) {
@@ -25,7 +27,6 @@ const registerUser = asyncHandler(async (req, res) => {
       name: user.name,
       email: user.email,
       isAdmin: user.isAdmin,
-      token: generateToken(user._id),
     });
   } else {
     res.status(400);
@@ -33,4 +34,28 @@ const registerUser = asyncHandler(async (req, res) => {
   }
 });
 
-module.exports = { registerUser };
+const loginUser = asyncHandler(async (req, res) => {
+  const user = await User.findOne({email: req.body.email});
+  console.log(user);
+  if(!user) {
+      res.status(400);
+      throw new Error("No user found");
+  }
+
+  const validate = await bcrypt.compare(req.body.password, user.password);
+  console.log(validate);
+  if(!validate) {
+      res.status(400);
+      throw new Error("Wrong password");
+  }
+
+  const {password, ...others} = user._doc;
+
+  //TODO: Return a cookie? How do you return a cookie?
+  res.status(200).json({token: jwt.sign({email: user.email, name: user.name, isAdmin: user.isAdmin, _id: user._id, }, process.env.JWT_SECRET, {
+          expiresIn: "12000s"
+      }
+  )});
+})
+
+module.exports = { registerUser, loginUser };
