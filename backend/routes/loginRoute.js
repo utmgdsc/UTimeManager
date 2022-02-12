@@ -11,7 +11,6 @@ loginRouter.get('/', (req, res) => {
 });
 
 loginRouter.post('/register', (req, res) => {
-    // TODO: Register Users
     try {
         const salt = await bcrypt.genSalt(10);
         const hashedPass = await bcrypt.hash(req.body.password, salt);
@@ -31,7 +30,6 @@ loginRouter.post('/register', (req, res) => {
 })
 
 loginRouter.post('/authenticate_user', (req, res) => {
-    // TODO: Authenticate Users
     try {
         const user = await User.findOne({email: req.body.email});
         !user && res.status(400).json("No user found");
