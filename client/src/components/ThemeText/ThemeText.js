@@ -1,19 +1,16 @@
 import React from "react";
 import PropTypes from "prop-types";
-import "./ThemeText.css";
+import styles from "./ThemeText.module.css";
 
-export const HeaderText = ({ data }) => {
-  return <div className="headerText"> {data} </div>;
+export const ThemeText = ({ primary, text }) => {
+  return (
+    <div className={primary ? styles.headerText : styles.subtitleText}>
+      {text}
+    </div>
+  );
 };
 
-export const SubtitleText = ({ data }) => {
-  return <div className="subtitleText"> {data} </div>;
-};
-
-HeaderText.propTypes = {
-  data: PropTypes.string,
-};
-
-SubtitleText.propTypes = {
-  data: PropTypes.string,
+ThemeText.propTypes = {
+  primary: PropTypes.bool,
+  text: PropTypes.string,
 };

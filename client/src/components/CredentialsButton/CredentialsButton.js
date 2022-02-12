@@ -1,10 +1,10 @@
 import React from "react";
-import "./CredentialsButton.css";
+import styles from "./CredentialsButton.module.css";
 import { PropTypes } from "prop-types";
 
 export const CredentialsButton = ({ data, onClick }) => {
   return (
-    <button className="credentials" onClick={onClick}>
+    <button className={styles.credentials} onClick={onClick}>
       {" "}
       {data}{" "}
     </button>

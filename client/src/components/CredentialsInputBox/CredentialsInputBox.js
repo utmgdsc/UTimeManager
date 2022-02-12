@@ -1,18 +1,23 @@
 import React from "react";
-import "./CredentialsInputBox.css";
+import styles from "./CredentialsInputBox.module.css";
 
 export default function CredentialsInputBox() {
   return (
-    <div className="cred-layout">
-      <b className="cred-input-header">Email</b>
+    <div className={styles.credLayout}>
+      <p className={styles.inputHeader}>Email</p>
       <input
-        className="cred-inputbox"
+        className={styles.inputBox}
         type="text"
         name="name"
         placeholder="utorid@utoronto.ca"
       />
-      <b className="cred-input-header">Password</b>
-      <input className="cred-inputbox" type="password" name="name" />
+      <p className={styles.inputHeader}>Password</p>
+      <input
+        className={styles.inputBox}
+        type="password"
+        name="name"
+        placeholder="your password"
+      />
     </div>
   );
 }

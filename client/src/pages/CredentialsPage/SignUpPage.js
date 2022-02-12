@@ -9,7 +9,7 @@ const SignUpPage = () => {
       actionText="Join Us"
       nextPage="/"
       nextPageDescription="Already have an account?"
-      nextPageText="Sign Up"
+      nextPageText="Sign In"
     />
   );
 };

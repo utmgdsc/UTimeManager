@@ -1,9 +1,11 @@
 import React from "react";
 import CredentialsInputBox from "../../components/CredentialsInputBox/CredentialsInputBox.js";
-import {
-  HeaderText,
-  SubtitleText,
-} from "../../components/ThemeText/ThemeText.js";
+// import {
+//   HeaderText,
+//   SubtitleText,
+// } from "../../components/ThemeText/ThemeText.js";
+
+import { ThemeText } from "../../components/ThemeText/ThemeText.js";
 import { CredentialsButton } from "../../components/CredentialsButton/CredentialsButton.js";
 import { DescriptiveTextButton } from "../../components/DescriptiveTextButton/DescriptiveTextButton.js";
 import { useNavigate } from "react-router-dom";
@@ -12,8 +14,7 @@ import PropTypes from "prop-types";
 import styles from "./CredentialsPage.module.css";
 
 const CredentialsPage = ({
-  headerText,
-  subtitleText,
+  themeText,
   actionText,
   nextPage,
   nextPageDescription,
@@ -28,10 +29,10 @@ const CredentialsPage = ({
     <div className={styles.bg}>
       <div className={styles.credentials_container}>
         <div style={{ marginBottom: "3px" }}>
-          <HeaderText data={headerText} />
+          <ThemeText primary={true} text={themeText} />
         </div>
         <div style={{ marginBottom: "10%" }}>
-          <SubtitleText data={subtitleText} />
+          <ThemeText primary={false} text={themeText} />
         </div>
         <div style={{ marginBottom: "10%" }}>
           <CredentialsInputBox />
@@ -52,8 +53,7 @@ const CredentialsPage = ({
 };
 
 CredentialsPage.propTypes = {
-  headerText: PropTypes.string.isRequired,
-  subtitleText: PropTypes.string.isRequired,
+  themeText: PropTypes.string.isRequired,
   actionText: PropTypes.string.isRequired,
   nextPage: PropTypes.string.isRequired,
   nextPageDescription: PropTypes.string.isRequired,

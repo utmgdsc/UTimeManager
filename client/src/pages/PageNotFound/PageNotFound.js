@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./PageNotFound.module.css";
-import { HeaderText } from "../../components/ThemeText/ThemeText.js";
+import { ThemeText } from "../../components/ThemeText/ThemeText.js";
 
 const PageNotFound = () => {
   return (
@@ -11,7 +11,7 @@ const PageNotFound = () => {
         <div style={{ marginTop: "10%", marginBottom: "10%" }}>
           <hr />
         </div>
-        <HeaderText data="UTimeManager" />
+        <ThemeText primary={true} data="UTimeManager" />
       </div>
     </div>
   );
