@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+const mongoose = require("mongoose");
 
 const userSchema = mongoose.Schema(
   {
@@ -25,4 +25,4 @@ const userSchema = mongoose.Schema(
 // User is a constructor defined from userSchema. This allows us to create documents
 const User = mongoose.model("User", userSchema);
 
-export default User;
+module.exports = User;
