@@ -11,7 +11,7 @@ const PageNotFound = () => {
         <div style={{ marginTop: "10%", marginBottom: "10%" }}>
           <hr />
         </div>
-        <ThemeText primary={true} data="UTimeManager" />
+        <ThemeText primary={true} text="UTimeManager" />
       </div>
     </div>
   );

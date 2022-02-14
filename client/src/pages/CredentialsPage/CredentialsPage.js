@@ -14,7 +14,8 @@ import PropTypes from "prop-types";
 import styles from "./CredentialsPage.module.css";
 
 const CredentialsPage = ({
-  themeText,
+  headerText,
+  subtitleText,
   actionText,
   nextPage,
   nextPageDescription,
@@ -29,10 +30,10 @@ const CredentialsPage = ({
     <div className={styles.bg}>
       <div className={styles.credentials_container}>
         <div style={{ marginBottom: "3px" }}>
-          <ThemeText primary={true} text={themeText} />
+          <ThemeText primary={true} text={headerText} />
         </div>
         <div style={{ marginBottom: "10%" }}>
-          <ThemeText primary={false} text={themeText} />
+          <ThemeText primary={false} text={subtitleText} />
         </div>
         <div style={{ marginBottom: "10%" }}>
           <CredentialsInputBox />
@@ -53,7 +54,8 @@ const CredentialsPage = ({
 };
 
 CredentialsPage.propTypes = {
-  themeText: PropTypes.string.isRequired,
+  headerText: PropTypes.string.isRequired,
+  subtitleText: PropTypes.string.isRequired,
   actionText: PropTypes.string.isRequired,
   nextPage: PropTypes.string.isRequired,
   nextPageDescription: PropTypes.string.isRequired,
