@@ -32,22 +32,16 @@ const CredentialsPage = ({
         <div style={{ marginBottom: "3px" }}>
           <ThemeText primary={true} text={headerText} />
         </div>
-        <div style={{ marginBottom: "10%" }}>
-          <ThemeText primary={false} text={subtitleText} />
-        </div>
-        <div style={{ marginBottom: "10%" }}>
-          <CredentialsInputBox />
-        </div>
+        <ThemeText primary={false} text={subtitleText} />
+        <CredentialsInputBox />
         <div>
           <CredentialsButton data={actionText} />
         </div>
-        <div style={{ marginTop: "40%" }}>
-          <DescriptiveTextButton
-            desc={nextPageDescription}
-            data={" " + nextPageText}
-            onClick={routeToNextPage}
-          />
-        </div>
+        <DescriptiveTextButton
+          desc={nextPageDescription}
+          data={" " + nextPageText}
+          onClick={routeToNextPage}
+        />
       </div>
     </div>
   );
