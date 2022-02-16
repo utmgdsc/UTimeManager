@@ -1,7 +1,7 @@
 .noAccountText {
   font-family: "Source Sans Pro", sans-serif;
   font-weight: bold;
-  font-size: 18px;
+  font-size: 1.125rem;
   color: #dadada;
   margin-top: 40%;
 }
@@ -9,7 +9,7 @@
 .noAccountButton {
   font-family: "Source Sans Pro", sans-serif;
   font-weight: bold;
-  font-size: 18px;
+  font-size: 1.125rem;
   background-color: transparent;
   color: white;
   border: none;

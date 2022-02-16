@@ -2,9 +2,9 @@ import React from "react";
 import styles from "./CredentialsButton.module.css";
 import { PropTypes } from "prop-types";
 
-export const CredentialsButton = ({ text, onClick }) => {
+export const CredentialsButton = ({ text, authAction }) => {
   return (
-    <button className={styles.credentials} onClick={onClick}>
+    <button className={styles.credentials} onClick={authAction}>
       {text}
     </button>
   );
@@ -12,5 +12,5 @@ export const CredentialsButton = ({ text, onClick }) => {
 
 CredentialsButton.propTypes = {
   text: PropTypes.string.isRequired,
-  onClick: PropTypes.func,
+  authAction: PropTypes.func,
 };
