@@ -35,11 +35,11 @@ const CredentialsPage = ({
         <ThemeText primary={false} text={subtitleText} />
         <CredentialsInputBox />
         <div>
-          <CredentialsButton data={actionText} />
+          <CredentialsButton text={actionText} />
         </div>
         <DescriptiveTextButton
           desc={nextPageDescription}
-          data={" " + nextPageText}
+          nextPageText={" " + nextPageText}
           onClick={routeToNextPage}
         />
       </div>
