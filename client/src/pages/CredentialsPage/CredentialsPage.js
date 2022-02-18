@@ -1,10 +1,5 @@
 import React from "react";
 import CredentialsInputBox from "../../components/CredentialsInputBox/CredentialsInputBox.js";
-// import {
-//   HeaderText,
-//   SubtitleText,
-// } from "../../components/ThemeText/ThemeText.js";
-
 import { ThemeText } from "../../components/ThemeText/ThemeText.js";
 import { CredentialsButton } from "../../components/CredentialsButton/CredentialsButton.js";
 import { DescriptiveTextButton } from "../../components/DescriptiveTextButton/DescriptiveTextButton.js";
@@ -33,7 +28,7 @@ const CredentialsPage = ({
           <ThemeText primary={true} text={headerText} />
         </div>
         <ThemeText primary={false} text={subtitleText} />
-        <CredentialsInputBox />
+        <CredentialsInputBox errorMessage="This is a super long error message that can be editted." />
         <div>
           <CredentialsButton text={actionText} />
         </div>
