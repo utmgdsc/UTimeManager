@@ -1,0 +1,9 @@
+.errorMessage {
+  background-color: #ffb4b4;
+  color: #1b4376;
+  font-family: "Roboto", sans-serif;
+  font-size: 0.75rem;
+  border-radius: 10px;
+  padding: 7px;
+  max-width: 300px;
+}
