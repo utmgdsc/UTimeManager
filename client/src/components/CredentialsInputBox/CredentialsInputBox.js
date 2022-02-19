@@ -18,7 +18,7 @@ export default function CredentialsInputBox({ errorMessage }) {
         className={styles.inputBox}
         type="password"
         name="name"
-        placeholder="your password"
+        placeholder="password"
       />
       <ErrorMessage errorMessage={errorMessage} />
     </div>
