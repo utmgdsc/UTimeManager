@@ -5,17 +5,6 @@ const router = express.Router();
 const loginRouter = express.Router();
 
 router.post("/", registerUser);
-router.post("/login", loginUser );
-
-// loginRouter.get("/", (req, res) => {
-//   res.send("Login page");
-// });
-// loginRouter.post("/register_user", (req, res) => {
-//   // TODO: Register Users
-// });
-
-// loginRouter.post("/authenticate_user", (req, res) => {
-//   // TODO: Authenticate Users
-// });
+router.post("/login", loginUser);
 
 module.exports = router;
