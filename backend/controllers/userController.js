@@ -45,7 +45,7 @@ const loginUser = asyncHandler(async (req, res) => {
   const validate = await bcrypt.compare(req.body.password, user.password);
   console.log(validate);
   if (!validate) {
-    res.status(400);
+    res.status(401);
     throw new Error("Wrong password");
   }
 
