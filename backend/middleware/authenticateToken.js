@@ -7,8 +7,10 @@ const authenticateToken = (req, res, next) => {
     const authHeader = req.headers["authentication"];
     const token = authHeader.split(' ')[1]
 
+    console.log(authHeader);
+
     // Verify that there is a token
-    if(token == NULL) {
+    if(!token) {
         // Bad request
         // Code subject to change
         res.sendStatus(401);
@@ -28,4 +30,4 @@ const authenticateToken = (req, res, next) => {
 
 }
 
-export default authenticateToken;
+module.exports = {authenticateToken}
