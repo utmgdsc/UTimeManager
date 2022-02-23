@@ -1,0 +1,17 @@
+.bg {
+  background-image: linear-gradient(
+    #032567 30%,
+    rgba(195, 221, 253, 30) 60%,
+    #032a5c
+  );
+  height: 100vh;
+  width: 100%;
+}
+
+.calendarHeader {
+  color: white;
+  font-weight: bold;
+  font-family: "Source Sans Pro", sans-serif;
+  font-size: 1.875rem;
+  margin-left: 20px;
+}
