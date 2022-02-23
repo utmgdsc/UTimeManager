@@ -3,7 +3,7 @@ const users = require("../sampleData/users");
 const User = require("../models/userModel");
 const connectDB = require("../config/db");
 
-dotenv.config();
+dotenv.config({path:__dirname+'/../.env'});
 
 connectDB();
 

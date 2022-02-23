@@ -12,6 +12,8 @@ const SignUpPage = () => {
         nextPage="/"
         nextPageDescription="Already have an account?"
         nextPageText="Sign In"
+        submitURL={"/api/users"}
+        errorMessage={"Unable to Sign up"}
       />
     </div>
   );
