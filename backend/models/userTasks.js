@@ -7,7 +7,8 @@ const taskSchema = mongoose.Schema(
             required: true
         },
         user_id: {
-            type: mongoose.Schema.Types.ObjectId
+            type: mongoose.Schema.Types.ObjectId,
+            required: true
         },
         description: {
             type: String,
