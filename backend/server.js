@@ -2,6 +2,7 @@ const express = require("express");
 const userRoutes = require("./routes/userRoutes");
 const { notFound, errorHandler } = require("./middleware/errorMiddleware");
 const connectDB = require("./config/db");
+const taskRoutes = require("./routes/taskRoutes");
 const cors = require("cors");
 
 const app = express();
@@ -25,6 +26,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/users", userRoutes);
+app.use("/api/task", taskRoutes);
 // app.use("/login", login);
 
 app.use(notFound);
