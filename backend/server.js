@@ -3,11 +3,19 @@ const userRoutes = require("./routes/userRoutes");
 const { notFound, errorHandler } = require("./middleware/errorMiddleware");
 const connectDB = require("./config/db");
 const taskRoutes = require("./routes/taskRoutes");
+const cors = require("cors");
 
 const app = express();
 require("dotenv").config();
 
 connectDB();
+app.use(
+    cors({
+      origin: "http://localhost:3000",
+      credentials: true,
+      methods: "GET,POST,DELETE"
+    })
+)
 app.use(express.json()); // Allows us to accept JSON data in the body
 
 var router = express.Router();
