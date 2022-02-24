@@ -1,0 +1,25 @@
+.taskContainer {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.colorBar {
+  border-radius: 3px;
+  background: yellow;
+  height: 10%;
+  max-height: 100px;
+}
+
+.taskInfo {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.timeInfo {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-end;
+}
