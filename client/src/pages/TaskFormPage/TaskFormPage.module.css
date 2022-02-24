@@ -1,0 +1,35 @@
+.Header{
+    color: white;
+    font-weight: 400;
+    font-size: 2.0rem;
+    padding: 0px 15px 0px 20px;
+    font-family: "Source Sans Pro", sans-serif;
+}
+
+.bg {
+    position: absolute;
+    background: #032a5c;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 100vh;
+    width: 100vw;
+}
+
+.inputBox {
+    border-radius: 1px;
+    padding: 0px 15px 10px;
+    font-size: 1.125rem;
+    font-family: "Source Sans Pro", sans-serif;
+    margin-bottom: 10px;
+    border-color: transparent;
+}
+
+.button{
+    padding: 0px 15px;
+}
+
+input{
+    width: 100%;
+}
+
