@@ -1,7 +1,8 @@
 const express = require("express");
-const { createTask } = require("../controllers/taskController");
+const { createTask, getTasks, getTasksById, getTasksByDay } = require("../controllers/taskController");
 
 const { authenticateToken } = require("../middleware/authenticateToken");
+
 
 const router = express.Router();
 
@@ -12,12 +13,15 @@ router.post("/", [authenticateToken, createTask]);
 
 // @desc     Fetch all tasks
 // @route    GET /api/tasks/
-// @access   Public
+// @access   Private
 router.get("/", [authenticateToken, getTasks]);
 
 // @desc     Fetch single task
-// @route    GET /api/products/:id
-// @acesss   Public
-router.get("/", [authenticateToken, getTasksById]);
+// @route    GET /api/tasks/task/:id
+// @acesss   Private
+router.get("/task/:id", [authenticateToken, getTasksById]);
+
+
+router.get("/day/:day", [authenticateToken, getTasksByDay]);
 
 module.exports = router;
