@@ -3,13 +3,14 @@ import { PropTypes } from "prop-types";
 import SmallActionButton from "../SmallActionButton/SmallActionButton.js";
 import styles from "./TaskCard.module.css";
 
-const TaskCard = (
+// TODO : gesture detection for TaskCard
+const TaskCard = ({
   title,
   locationText,
   startTimeText,
   endTimeText,
-  isOngoing
-) => {
+  isOngoing,
+}) => {
   return (
     <div className={styles.taskContainer}>
       <div className={styles.colorBar}></div>
@@ -19,7 +20,7 @@ const TaskCard = (
       </div>
       <div className={styles.timeInfo}>
         <p>{startTimeText}</p>
-        <p>to {endTimeText}</p>
+        <p className={styles.endTimeStyle}>to {endTimeText}</p>
         <SmallActionButton text={!isOngoing ? "Start" : "End"} />
       </div>
     </div>

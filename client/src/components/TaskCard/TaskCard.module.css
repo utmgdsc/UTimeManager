@@ -1,13 +1,21 @@
 .taskContainer {
   display: flex;
   justify-content: flex-start;
+  height: 8vh;
+  margin: 10px 0px;
+  font-family: "Source Sans Pro", sans-serif;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: white;
 }
 
 .colorBar {
-  border-radius: 3px;
+  border-radius: 5px;
   background: yellow;
-  height: 10%;
+  height: 100%;
+  width: 2.5%;
   max-height: 100px;
+  margin-right: 8px;
 }
 
 .taskInfo {
@@ -15,6 +23,7 @@
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
+  flex-grow: 1;
 }
 
 .timeInfo {
@@ -22,4 +31,14 @@
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-end;
+}
+
+.endTimeStyle {
+  font-family: "Source Sans Pro", sans-serif !important;
+  font-size: 0.75rem !important;
+  font-weight: 600 !important;
+}
+
+p {
+  margin: 0px;
 }
