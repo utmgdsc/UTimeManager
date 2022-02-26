@@ -3,7 +3,6 @@ import { PropTypes } from "prop-types";
 import SmallActionButton from "../SmallActionButton/SmallActionButton.js";
 import styles from "./TaskCard.module.css";
 
-// TODO : gesture detection for TaskCard
 const TaskCard = ({
   title,
   locationText,
