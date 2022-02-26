@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { PropTypes } from "prop-types";
 import SmallActionButton from "../SmallActionButton/SmallActionButton.js";
 import styles from "./TaskCard.module.css";
@@ -11,6 +11,7 @@ const TaskCard = ({
   endTimeText,
   isOngoing,
 }) => {
+  const [_isOngoing, setOngoing] = useState(isOngoing);
   return (
     <div className={styles.taskContainer}>
       <div className={styles.colorBar}></div>
@@ -21,7 +22,12 @@ const TaskCard = ({
       <div className={styles.timeInfo}>
         <p>{startTimeText}</p>
         <p className={styles.endTimeStyle}>to {endTimeText}</p>
-        <SmallActionButton text={!isOngoing ? "Start" : "End"} />
+        <SmallActionButton
+          text={!_isOngoing ? "Start" : "End"}
+          startEndClick={() => {
+            setOngoing(!_isOngoing);
+          }}
+        />
       </div>
     </div>
   );
