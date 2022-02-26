@@ -46,21 +46,61 @@ const CalendarPage = () => {
       endTimeText: "07:00PM",
       isOngoing: true,
     },
+    {
+      title: "GDSC Meeting",
+      locationText: "DH2020",
+      startTimeText: "05:00PM",
+      endTimeText: "07:00PM",
+      isOngoing: false,
+    },
+    {
+      title: "another meeting",
+      locationText: "DH2020",
+      startTimeText: "05:00PM",
+      endTimeText: "07:00PM",
+      isOngoing: true,
+    },
+    {
+      title: "GDSC Meeting",
+      locationText: "DH2020",
+      startTimeText: "05:00PM",
+      endTimeText: "07:00PM",
+      isOngoing: false,
+    },
+    {
+      title: "another meeting",
+      locationText: "DH2020",
+      startTimeText: "05:00PM",
+      endTimeText: "07:00PM",
+      isOngoing: true,
+    },
+    {
+      title: "GDSC Meeting",
+      locationText: "DH2020",
+      startTimeText: "05:00PM",
+      endTimeText: "07:00PM",
+      isOngoing: false,
+    },
+    {
+      title: "another meeting",
+      locationText: "DH2020",
+      startTimeText: "05:00PM",
+      endTimeText: "07:00PM",
+      isOngoing: true,
+    },
   ];
-  // const cards = children.map((task, ix) => (
-  //         <li key={ix}>
-  //         {/* <TaskCard
-  //           title={task.title}
-  //           locationText={task.locationText}
-  //           startTimeText={task.startTimeText}
-  //           endTimeText={task.endTimeText}
-  //           isOngoing={task.isOngoing}
-  //         /> */}
-  //         abc
-  //         </li>
-  //       ));
+  const cards = children.map((task, ix) => (
+    <li key={ix} style={{ listStyle: "none" }}>
+      <TaskCard
+        title={task.title}
+        locationText={task.locationText}
+        startTimeText={task.startTimeText}
+        endTimeText={task.endTimeText}
+        isOngoing={task.isOngoing}
+      />
+    </li>
+  ));
 
-  // console.log(cards);
   return (
     <div className={styles.bg}>
       <Calendar
@@ -68,19 +108,13 @@ const CalendarPage = () => {
         value={currDate}
         formatShortWeekday={dayLabelFormatter}
       />
+      <div className={styles.flexContainer}>
+        <button className={styles.filterButton}>Filter: Ongoing</button>
+      </div>
       <p className={styles.calendarHeader}>
         {dailyTaskDateFormatter(currDate)}
       </p>
-      <TaskCard
-        title="GDSC Meeting"
-        locationText="GDSC Meeting"
-        startTimeText="GDSC Meeting"
-        endTimeText="GDSC Meeting"
-        isOngoing={false}
-      />
-      {/* <ul>
-        {cards}
-      </ul> */}
+      <ul>{cards}</ul>
     </div>
   );
 };
