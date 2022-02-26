@@ -97,6 +97,9 @@ const CalendarPage = () => {
         startTimeText={task.startTimeText}
         endTimeText={task.endTimeText}
         isOngoing={task.isOngoing}
+        showDetailsDialog={() => {
+          console.log("show the modal from here");
+        }}
       />
     </li>
   ));

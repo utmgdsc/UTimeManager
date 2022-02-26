@@ -10,10 +10,11 @@ const TaskCard = ({
   startTimeText,
   endTimeText,
   isOngoing,
+  showDetailsDialog,
 }) => {
   const [_isOngoing, setOngoing] = useState(isOngoing);
   return (
-    <div className={styles.taskContainer}>
+    <div className={styles.taskContainer} onClick={showDetailsDialog}>
       <div className={styles.colorBar}></div>
       <div className={styles.taskInfo}>
         <p>{title}</p>
@@ -39,6 +40,7 @@ TaskCard.propTypes = {
   startTimeText: PropTypes.string.isRequired,
   endTimeText: PropTypes.string.isRequired,
   isOngoing: PropTypes.bool.isRequired,
+  showDetailsDialog: PropTypes.func,
 };
 
 export default TaskCard;
