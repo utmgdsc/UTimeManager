@@ -15,7 +15,7 @@
   font-weight: 600;
   font-family: "Source Sans Pro", sans-serif;
   font-size: 1.875rem;
-  margin-left: 30px;
+  margin-left: 25px;
   text-decoration: underline;
 }
 
@@ -35,7 +35,7 @@
 }
 
 ul {
-  margin: 10px 30px;
+  margin: 10px 25px;
   padding: 0px;
   overflow: hidden;
   overflow-y: scroll;
