@@ -1,11 +1,26 @@
-import React from "react";
-import ThemeText from "../ThemeText/ThemeText.js";
+import React, { useState } from "react";
+import { FiMenu } from "react-icons/fi";
+import { MdClose } from "react-icons/md";
+import styles from "./CalendarHeader.module.css";
 
 const CalendarHeader = () => {
-  // TODO : create hamburger icon
+  const [menuOpened, setMenuOpened] = useState(false);
+
   return (
-    <div>
-      <ThemeText primary={true} text={"Daily Tasks"} />
+    <div className={styles.calendarHeaderContainer}>
+      <button
+        className={styles.navButton}
+        onClick={() => {
+          setMenuOpened(!menuOpened);
+        }}
+      >
+        {!menuOpened ? (
+          <FiMenu className={styles.hamburgerIcon} />
+        ) : (
+          <MdClose className={styles.hamburgerIcon} />
+        )}
+      </button>
+      <p className={styles.calendarPageHeader}>Daily Tasks</p>
     </div>
   );
 };
