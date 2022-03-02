@@ -4,6 +4,7 @@ import "./CalendarOverride.css";
 import Calendar from "react-calendar";
 import styles from "./CalendarPage.module.css";
 import TaskCard from "../../components/TaskCard/TaskCard.js";
+import CalendarHeader from "../../components/CalendarHeader/CalendarHeader.js";
 
 const dayLabelFormatter = (locale, label) => {
   return label.toString().slice(0, 1);
@@ -106,6 +107,7 @@ const CalendarPage = () => {
 
   return (
     <div className={styles.bg}>
+      <CalendarHeader />
       <Calendar
         onChange={onDateChange}
         value={currDate}

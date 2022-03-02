@@ -7,6 +7,7 @@
   font-weight: bold !important;
   font-family: "Source Sans Pro", sans-serif !important;
   font-size: 1.125rem !important;
+  border: none;
 }
 
 .react-calendar__tile {
