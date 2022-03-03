@@ -12,6 +12,44 @@ services:
           - mongo
     volumes:
       - MongodbVolume:/data/db
+  frontend:
+    container_name: frontend
+    build:
+       context: ./client
+       dockerfile: Dockerfile
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    networks:
+      backend:
+        aliases:
+          - frontend
+  documentation:
+    container_name: documentation
+    build:
+       context: ./docs
+       dockerfile: Dockerfile
+    restart: unless-stopped
+    ports:
+      - "3001:3001"
+    networks:
+      backend:
+        aliases:
+          - docs
+  nginx-proxy:
+    container_name: nginx
+    image: nginx
+    restart: unless-stopped
+    depends_on:
+      - frontend
+    networks:
+      backend:
+        aliases:
+          - nginx
+    ports:
+      - "5000:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
 volumes:
   MongodbVolume:
 
