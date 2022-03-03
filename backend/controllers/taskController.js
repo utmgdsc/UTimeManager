@@ -3,6 +3,9 @@ const Task = require("../models/userTasks");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const e = require("express");
+const { mongo } = require("mongoose");
+const { isValidObjectId } = require("mongoose");
+const ObjectId = require('mongoose').Types.ObjectId; 
 
 const createTask = asyncHandler(async (req, res) => {
   // TODO:
@@ -52,20 +55,25 @@ const getTasksById = asyncHandler(async (req, res) => {
 });
 
 const getTasksByDay = asyncHandler(async (req, res) => {
-  // TODO: Extract the user_id from JWT instead
-  // of getting it from the body. GET does not take any body!
-  // After extracting user_id from JWT, pass it into object when
-  // we call Task.find()
+
+  const header = req.headers["authentication"];
+  const token = header.split(" ")[1];
+
+  const user_data = jwt.decode(token);
+
+  const userId = user_data._id;
+
 
   const date = req.params.day; // get a day -> 26
   console.log("In getTasksByDay");
 
   // Users id -> Extract from JWT since GET does not take any body
-  const userId = req.body.user_id;
+  //  const userId = req.body.user_id;
   console.log("In getTasksByDay");
   let startDate = 0;
   let endDate = 0;
   console.log("user_id:" + userId);
+  console.log("Is valid uid", isValidObjectId(userId))
 
   if (date.length === 8) {
     // parse
@@ -94,13 +102,13 @@ const getTasksByDay = asyncHandler(async (req, res) => {
   console.log("bbb:", bbb);
 
   const tasks = await Task.find({
-    user_id: userId,
+    user_id: ObjectId(userId),
     startDate: {
       // $gte: startDate,
-      $lte: startDate,
+      $gte: new Date(startDate),
     },
     endDate: {
-      $gte: startDate,
+      $lte: new Date(endDate),
     },
     isStarted: true,
   });
