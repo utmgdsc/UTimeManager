@@ -5,6 +5,7 @@ import Calendar from "react-calendar";
 import styles from "./CalendarPage.module.css";
 import TaskCard from "../../components/TaskCard/TaskCard.js";
 import CalendarHeader from "../../components/CalendarHeader/CalendarHeader.js";
+import TaskDetails from "../../components/TaskDetails/TaskDetails";
 
 const dayLabelFormatter = (locale, label) => {
   return label.toString().slice(0, 1);
@@ -31,6 +32,11 @@ const dailyTaskDateFormatter = (date) => {
 };
 
 const CalendarPage = () => {
+  const [showModal, setModal] = useState(false);
+
+  const toggleModal = () => {
+    setModal(!showModal);
+  };
   const [currDate, onDateChange] = useState(new Date());
   const children = [
     {
@@ -100,6 +106,7 @@ const CalendarPage = () => {
         isOngoing={task.isOngoing}
         showDetailsDialog={() => {
           console.log("show the modal from here");
+          toggleModal();
         }}
       />
     </li>
@@ -107,6 +114,7 @@ const CalendarPage = () => {
 
   return (
     <div className={styles.bg}>
+      {showModal ? <TaskDetails closeModalHandler={toggleModal} /> : <></>}
       <CalendarHeader />
       <Calendar
         onChange={onDateChange}
