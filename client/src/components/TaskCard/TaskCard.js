@@ -24,7 +24,7 @@ const TaskCard = ({
         <p className={styles.endTimeStyle}>to {endTimeText}</p>
         <SmallActionButton
           text={!_isOngoing ? "Start" : "End"}
-          startEndClick={() => {
+          toggleButton={() => {
             setOngoing(!_isOngoing);
           }}
         />

@@ -2,9 +2,9 @@ import React from "react";
 import styles from "./SmallActionButton.module.css";
 import { PropTypes } from "prop-types";
 
-const SmallActionButton = ({ text, startEndClick }) => {
+const SmallActionButton = ({ text, toggleButton }) => {
   return (
-    <button className={styles.buttonStyle} onClick={startEndClick}>
+    <button className={styles.buttonStyle} onClick={toggleButton}>
       {text}
     </button>
   );
@@ -12,7 +12,7 @@ const SmallActionButton = ({ text, startEndClick }) => {
 
 SmallActionButton.propTypes = {
   text: PropTypes.string.isRequired,
-  startEndClick: PropTypes.func,
+  toggleButton: PropTypes.func,
 };
 
 export default SmallActionButton;
