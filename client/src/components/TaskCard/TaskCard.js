@@ -5,27 +5,27 @@ import styles from "./TaskCard.module.css";
 
 const TaskCard = ({
   title,
-  locationText,
-  startTimeText,
-  endTimeText,
+  location,
+  startTime,
+  endTime,
   isOngoing,
   showDetailsDialog,
 }) => {
-  const [_isOngoing, setOngoing] = useState(isOngoing);
+  const [taskOngoing, setOngoing] = useState(isOngoing);
   return (
     <div className={styles.taskContainer} onClick={showDetailsDialog}>
       <div className={styles.colorBar}></div>
       <div className={styles.taskInfo}>
         <p>{title}</p>
-        <p>{locationText}</p>
+        <p>{location}</p>
       </div>
       <div className={styles.timeInfo}>
-        <p>{startTimeText}</p>
-        <p className={styles.endTimeStyle}>to {endTimeText}</p>
+        <p>{startTime}</p>
+        <p className={styles.endTimeStyle}>to {endTime}</p>
         <SmallActionButton
-          text={!_isOngoing ? "Start" : "End"}
+          text={!taskOngoing ? "Start" : "End"}
           toggleButton={() => {
-            setOngoing(!_isOngoing);
+            setOngoing(!taskOngoing);
           }}
         />
       </div>
@@ -35,9 +35,9 @@ const TaskCard = ({
 
 TaskCard.propTypes = {
   title: PropTypes.string.isRequired,
-  locationText: PropTypes.string.isRequired,
-  startTimeText: PropTypes.string.isRequired,
-  endTimeText: PropTypes.string.isRequired,
+  location: PropTypes.string.isRequired,
+  startTime: PropTypes.string.isRequired,
+  endTime: PropTypes.string.isRequired,
   isOngoing: PropTypes.bool.isRequired,
   showDetailsDialog: PropTypes.func,
 };
