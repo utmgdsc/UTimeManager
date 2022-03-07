@@ -22,7 +22,7 @@
 .navButton {
   background: transparent;
   border: none;
-  margin: 0px 0px 0px 10px;
-  padding: 0.4rem 0px 0px 0px;
+  margin-left: 10px;
+  padding-top: 0.4rem;
   cursor: pointer;
 }
