@@ -7,7 +7,7 @@ import TaskCard from "../../components/TaskCard/TaskCard.js";
 import CalendarHeader from "../../components/CalendarHeader/CalendarHeader.js";
 import TaskDetails from "../../components/TaskDetails/TaskDetails";
 
-const dayLabelFormatter = (locale, label) => {
+const getDayAbbreviation = (_, label) => {
   return label.toString().slice(0, 1);
 };
 
@@ -100,9 +100,9 @@ const CalendarPage = () => {
     <li key={ix} style={{ listStyle: "none" }}>
       <TaskCard
         title={task.title}
-        locationText={task.locationText}
-        startTimeText={task.startTimeText}
-        endTimeText={task.endTimeText}
+        location={task.locationText}
+        startTime={task.startTimeText}
+        endTime={task.endTimeText}
         isOngoing={task.isOngoing}
         showDetailsDialog={() => {
           console.log("show the modal from here");
@@ -119,7 +119,7 @@ const CalendarPage = () => {
       <Calendar
         onChange={onDateChange}
         value={currDate}
-        formatShortWeekday={dayLabelFormatter}
+        formatShortWeekday={getDayAbbreviation}
       />
       <div className={styles.flexContainer}>
         <button className={styles.filterButton}>Filter: Ongoing</button>
