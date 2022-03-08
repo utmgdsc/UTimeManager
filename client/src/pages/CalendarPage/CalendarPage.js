@@ -28,7 +28,7 @@ const dailyTaskDateFormatter = (date) => {
   ];
   return String.raw`${
     months[date.getMonth()]
-  } ${date.getDate()}, ${date.getFullYear()}`.toString();
+  } ${date.getDate()}, ${date.getFullYear()}`;
 };
 
 const CalendarPage = () => {
