@@ -1,3 +1,7 @@
+.taskDone {
+  text-decoration: line-through;
+  color: #dadada;
+}
 .taskContainer {
   display: flex;
   justify-content: flex-start;

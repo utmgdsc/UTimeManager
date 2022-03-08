@@ -12,16 +12,19 @@ const TaskCard = ({
   showDetailsDialog,
 }) => {
   const [taskOngoing, setOngoing] = useState(isOngoing);
+  const taskTextStyle = !taskOngoing ? styles.taskDone : "";
   return (
-    <div className={styles.taskContainer} onClick={showDetailsDialog}>
+    <div className={styles.taskContainer}>
       <div className={styles.colorBar}></div>
-      <div className={styles.taskInfo}>
-        <p>{title}</p>
-        <p>{location}</p>
+      <div className={styles.taskInfo} onClick={showDetailsDialog}>
+        <p className={taskTextStyle}>{title}</p>
+        <p className={taskTextStyle}>{location}</p>
       </div>
       <div className={styles.timeInfo}>
-        <p>{startTime}</p>
-        <p className={styles.endTimeStyle}>to {endTime}</p>
+        <p className={taskTextStyle}>{startTime}</p>
+        <p className={taskOngoing ? styles.endTimeStyle : styles.taskDone}>
+          to {endTime}
+        </p>
         <SmallActionButton
           text={!taskOngoing ? "Start" : "End"}
           toggleButton={() => {

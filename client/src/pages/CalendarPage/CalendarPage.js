@@ -37,7 +37,7 @@ const CalendarPage = () => {
   const toggleModal = () => {
     setModal(!showModal);
   };
-  const [currDate, onDateChange] = useState(new Date());
+  const [currDate, setCurrDate] = useState(new Date());
   const children = [
     {
       title: "GDSC Meeting",
@@ -112,12 +112,17 @@ const CalendarPage = () => {
     </li>
   ));
 
+  // follows the signature in react-calendar documentation
+  const dateChangeGetter = (date, _) => {
+    setCurrDate(date);
+  };
+
   return (
     <div className={styles.bg}>
       {showModal ? <TaskDetails closeModalHandler={toggleModal} /> : <></>}
       <CalendarHeader />
       <Calendar
-        onChange={onDateChange}
+        onChange={dateChangeGetter}
         value={currDate}
         formatShortWeekday={getDayAbbreviation}
       />
