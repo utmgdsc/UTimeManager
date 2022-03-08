@@ -61,10 +61,3 @@
   color: white !important;
   background: #032a5c !important;
 }
-
-abbr[title] {
-  text-decoration: none; /* removes the default */
-}
-body {
-  margin: 0;
-}

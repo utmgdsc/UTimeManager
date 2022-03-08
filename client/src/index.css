@@ -1,4 +1,12 @@
-body,
 html {
   overflow: hidden;
+}
+
+abbr[title] {
+  text-decoration: none; /* removes the default */
+}
+
+body {
+  overflow: hidden;
+  margin: 0;
 }
