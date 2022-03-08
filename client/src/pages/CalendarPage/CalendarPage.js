@@ -127,7 +127,7 @@ const CalendarPage = () => {
       <p className={styles.calendarHeader}>
         {dailyTaskDateFormatter(currDate)}
       </p>
-      <ul>{cards}</ul>
+      <ul className={styles.taskList}>{cards}</ul>
     </div>
   );
 };

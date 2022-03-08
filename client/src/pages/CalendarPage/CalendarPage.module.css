@@ -34,7 +34,7 @@
   margin: 10px 20px 15px 0px;
 }
 
-ul {
+.taskList {
   margin: 10px 25px;
   padding: 0px;
   overflow: hidden;
@@ -42,12 +42,7 @@ ul {
 }
 
 /* works in chrome and safari */
-ul::-webkit-scrollbar {
+.taskList::-webkit-scrollbar {
   width: 0px !important;
   display: none;
-}
-
-body,
-html {
-  overflow: hidden;
 }
