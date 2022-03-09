@@ -14,7 +14,7 @@
   },
   "scripts": {
     "start": "node server.js",
-    "test": "jest --testTimeout 2000 --silent"
+    "test": "jest --testTimeout 2000"
   },
   "devDependencies": {
     "jest": "^27.5.1",
