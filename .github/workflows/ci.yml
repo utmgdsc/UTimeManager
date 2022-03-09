@@ -13,3 +13,9 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: cd client && yarn --frozen-lockfile && yarn lint
+  test_server:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: cd backend && yarn --frozen-lockfile && yarn test
+
