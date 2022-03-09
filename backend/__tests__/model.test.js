@@ -1,12 +1,9 @@
 const mongoose = require("mongoose");
 const User = require("../models/userModel");
-const dotenv = require("dotenv");
-dotenv.config({path: __dirname + '/../.env'});
 
 beforeAll(async () => {
-    console.log(process.env.MONGO_URI)
     // TODO: Change this to another database that isn't the main one
-    await mongoose.connect(process.env.MONGO_URI, {
+    await mongoose.connect("mongodb://localhost:27017/", {
         useUnifiedTopology: true,
         useNewUrlParser: true,
         // useCreateIndex: true,

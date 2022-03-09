@@ -1,9 +1,10 @@
 const request = require("supertest");
 const {app, server} = require("../server")
 const mongoose = require("mongoose");
+const User = require("../models/userModel");
 
 beforeAll(async () => {
-    await mongoose.connect(process.env.MONGO_URI, {
+    await mongoose.connect("mongodb://localhost:27017/", {
         useUnifiedTopology: true,
         useNewUrlParser: true,
         // useCreateIndex: true,
@@ -18,6 +19,14 @@ describe("Example Test Suite", () => {
 })
 
 describe("Login Test Suite", () => {
+    it("Create User", async () => {
+        const res = await request(app)
+            .post("/api/users")
+            .send({email: "nestor@mail.utoronto.ca", password: "abcd"})
+        expect(res.statusCode).toEqual(201);
+        expect(res.body.email).toEqual("nestor@mail.utoronto.ca");
+    })
+
     it("Valid Login", async () => {
         const res = await request(app)
             .post("/api/users/login")
