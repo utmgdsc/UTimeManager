@@ -4,6 +4,7 @@ const dotenv = require("dotenv");
 dotenv.config({path: __dirname + '/../.env'});
 
 beforeAll(async () => {
+    console.log(process.env.MONGO_URI)
     // TODO: Change this to another database that isn't the main one
     await mongoose.connect(process.env.MONGO_URI, {
         useUnifiedTopology: true,
