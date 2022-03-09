@@ -17,5 +17,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - run: cd backend && yarn --frozen-lockfile && yarn test
+      - name: Start MongoDB Container
+        - run: docker-compose up --build -d
+      - name: Install dependencies and run tests
+        - run: cd backend && yarn --frozen-lockfile && yarn test
+      - name: Cleanup
+        - run: docker-compose down
 
