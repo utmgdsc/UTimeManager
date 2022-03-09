@@ -15,6 +15,10 @@ jobs:
       - run: cd client && yarn --frozen-lockfile && yarn lint
   test_server:
     runs-on: ubuntu-latest
+    env:
+      JWT_SECRET: ${{secrets.JWT_SECRET}}
+      MONGO_URL: ${{secrets.MONGO_URL}}
+      NODE_ENV: ${{secrets.NODE_ENV}}
     steps:
       - uses: actions/checkout@v2
       - name: Start MongoDB Container
