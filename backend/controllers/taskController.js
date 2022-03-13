@@ -126,6 +126,8 @@ const startTask = asyncHandler(async (req, res) => {
 
   const userId = user_data._id;
 
+  const taskStartedDate = new Date();
+
   const task = await Task.find({
     _id: taskId,
     user_id: userId,
@@ -138,6 +140,7 @@ const startTask = asyncHandler(async (req, res) => {
 
   if (task) {
     task.isStarted = true;
+    task.taskStartedAt = taskStartedDate;
     const updatedTask = await Task.save();
     res.json(updatedTask);
   } else {
@@ -160,6 +163,8 @@ const stopTask = asyncHandler(async (req, res) => {
   // Users id
 
   const userId = user_data._id;
+  const taskEndedDate = new Date();
+
 
   const task = await Task.find({
     _id: taskId,
@@ -173,6 +178,7 @@ const stopTask = asyncHandler(async (req, res) => {
 
   if (task) {
     task.isStarted = false;
+    task.taskEndedDate = taskEndedDate;
     const updatedTask = await Task.save();
     res.json(updatedTask);
   } else {
