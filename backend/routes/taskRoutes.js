@@ -1,8 +1,12 @@
 const express = require("express");
-const { createTask, getTasks, getTasksById, getTasksByDay } = require("../controllers/taskController");
+const {
+  createTask,
+  getTasks,
+  getTasksById,
+  getTasksByDay,
+} = require("../controllers/taskController");
 
 const { authenticateToken } = require("../middleware/authenticateToken");
-
 
 const router = express.Router();
 
@@ -21,7 +25,8 @@ router.get("/", [authenticateToken, getTasks]);
 // @acesss   Private
 router.get("/task/:id", [authenticateToken, getTasksById]);
 
-
+// @desc     Fetch task with day query
+// @route    GET /api/tasks/day/:day
 router.get("/day/:day", [authenticateToken, getTasksByDay]);
 
 module.exports = router;
