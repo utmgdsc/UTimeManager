@@ -67,10 +67,10 @@ const getTasksByDay = asyncHandler(async (req, res) => {
       startDate = new Date(year, month - 1, day);
       endDate = new Date(year, month - 1, day + 2);
     } catch (error) {
+      res.status(400);
       throw new Error("Invalid Date Input");
     }
   }
-
 
   const tasks = await Task.find({
     user_id: ObjectId(userId),
