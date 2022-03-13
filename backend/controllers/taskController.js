@@ -27,7 +27,7 @@ const getTasks = asyncHandler(async (req, res) => {
 
 const getTasksById = asyncHandler(async (req, res) => {
   // Task id Parameter
-  const id = req.params.id;
+  const taskId = req.params.id;
 
   // Users id
   const userId = req.body.user_id;
@@ -37,7 +37,7 @@ const getTasksById = asyncHandler(async (req, res) => {
   });
   // .findById(req.body.id);
   const userTasks = tasks.filter(function (task) {
-    return task._id == id;
+    return task._id == taskId;
   });
 
   res.status(200).json(userTasks);
