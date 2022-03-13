@@ -19,7 +19,13 @@ const createTask = asyncHandler(async (req, res) => {
 });
 
 const getTasks = asyncHandler(async (req, res) => {
-  const userId = req.body.user_id;
+  const header = req.headers["authentication"];
+  const token = header.split(" ")[1];
+
+  const user_data = jwt.decode(token);
+
+
+  const userId = user_data._id;
   const tasks = await Task.find({ user_id: userId });
 
   res.status(200).json(tasks);
@@ -27,10 +33,18 @@ const getTasks = asyncHandler(async (req, res) => {
 
 const getTasksById = asyncHandler(async (req, res) => {
   // Task id Parameter
+  const header = req.headers["authentication"];
+  const token = header.split(" ")[1];
+
+  const user_data = jwt.decode(token);
+
+
   const taskId = req.params.id;
 
   // Users id
-  const userId = req.body.user_id;
+
+  const userId = user_data._id;
+
 
   const tasks = await Task.find({
     user_id: userId,
@@ -69,6 +83,7 @@ const getTasksByDay = asyncHandler(async (req, res) => {
     } catch (error) {
       res.status(400);
       throw new Error("Invalid Date Input");
+
     }
   }
 
