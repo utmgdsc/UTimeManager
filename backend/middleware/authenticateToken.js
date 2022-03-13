@@ -3,7 +3,6 @@ const jwt = require("jsonwebtoken");
 const authenticateToken = (req, res, next) => {
   // Get the token from the auth header (where it would be stored)
   const authHeader = req.headers["authentication"];
-  //   console.log(authHeader);
   const token = authHeader.split(" ")[1];
 
   // Verify that there is a token
@@ -23,7 +22,6 @@ const authenticateToken = (req, res, next) => {
 
     next();
   });
-  console.log("END");
 };
 
 module.exports = { authenticateToken };

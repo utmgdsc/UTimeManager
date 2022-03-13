@@ -29,7 +29,6 @@ userSchema.methods.matchPassword = function (enteredPassword) {
 // Before we perform the command save, the async function will run
 userSchema.pre("save", async function (next) {
   // This function will automatically run pre save
-  console.log("here?");
   if (!this.isModified("password")) {
     next();
   }

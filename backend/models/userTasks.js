@@ -32,7 +32,6 @@ const taskSchema = mongoose.Schema(
     timestamps: true,
   }
 );
-// console.log("Heloe");
 const Task = mongoose.model("Task", taskSchema);
 
 module.exports = Task;
