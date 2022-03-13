@@ -47,14 +47,11 @@ const getTasksById = asyncHandler(async (req, res) => {
 
 
   const tasks = await Task.find({
+    _id: taskId,
     user_id: userId,
   });
-  // .findById(req.body.id);
-  const userTasks = tasks.filter(function (task) {
-    return task._id == taskId;
-  });
 
-  res.status(200).json(userTasks);
+  res.status(200).json(tasks);
 });
 
 const getTasksByDay = asyncHandler(async (req, res) => {
