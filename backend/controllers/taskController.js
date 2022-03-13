@@ -112,4 +112,74 @@ const getTasksByDay = asyncHandler(async (req, res) => {
   res.status(200).json(tasks);
 });
 
-module.exports = { createTask, getTasks, getTasksByDay, getTasksById };
+const startTask = asyncHandler(async (req, res) => {
+  // Task id Parameter
+  const header = req.headers["authentication"];
+  const token = header.split(" ")[1];
+
+  const user_data = jwt.decode(token);
+
+
+  const taskId = req.params.id;
+
+  // Users id
+
+  const userId = user_data._id;
+
+  const task = await Task.find({
+    _id: taskId,
+    user_id: userId,
+  }, (err, docs) => {
+    if(err) {
+      res.status(500);
+      throw new Error(`Could not fetch doc ${docs}`)
+    }
+  });
+
+  if (task) {
+    task.isStarted = true;
+    const updatedTask = await Task.save();
+    res.json(updatedTask);
+  } else {
+    res.status(404);
+    throw new Error("Task not found");
+  }
+  // res.status(200).json(task);
+})
+
+const stopTask = asyncHandler(async (req, res) => {
+  // Task id Parameter
+  const header = req.headers["authentication"];
+  const token = header.split(" ")[1];
+
+  const user_data = jwt.decode(token);
+
+
+  const taskId = req.params.id;
+
+  // Users id
+
+  const userId = user_data._id;
+
+  const task = await Task.find({
+    _id: taskId,
+    user_id: userId,
+  }, (err, docs) => {
+    if(err) {
+      res.status(500);
+      throw new Error(`Could not fetch doc ${docs}`)
+    }
+  });
+
+  if (task) {
+    task.isStarted = false;
+    const updatedTask = await Task.save();
+    res.json(updatedTask);
+  } else {
+    res.status(404);
+    throw new Error("Task not found");
+  }
+  // res.status(200).json(task);
+})
+
+module.exports = { createTask, getTasks, getTasksByDay, getTasksById, startTask, stopTask };
