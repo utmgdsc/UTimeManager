@@ -1,0 +1,58 @@
+.taskDone {
+  text-decoration: line-through;
+  color: #dadada;
+}
+
+.taskDoneEndTime {
+  text-decoration: line-through;
+  color: #dadada;
+  font-family: "Source Sans Pro", sans-serif !important;
+  font-size: 0.75rem !important;
+  font-weight: 600 !important;
+}
+
+.taskContainer {
+  display: flex;
+  justify-content: flex-start;
+  height: 8vh;
+  margin: 10px 0px;
+  font-family: "Source Sans Pro", sans-serif;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: white;
+}
+
+.colorBar {
+  border-radius: 5px;
+  background: yellow; /* TODO : make dynamic */
+  height: 100%;
+  width: 2.5%;
+  max-height: 100px;
+  max-width: 12px;
+  margin-right: 8px;
+}
+
+.taskInfo {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-grow: 1;
+}
+
+.timeInfo {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-end;
+}
+
+.endTimeStyle {
+  font-family: "Source Sans Pro", sans-serif !important;
+  font-size: 0.75rem !important;
+  font-weight: 600 !important;
+}
+
+p {
+  margin: 0px;
+}
