@@ -22,7 +22,9 @@ const TaskCard = ({
       </div>
       <div className={styles.timeInfo}>
         <p className={taskTextStyle}>{startTime}</p>
-        <p className={taskOngoing ? styles.endTimeStyle : styles.taskDone}>
+        <p
+          className={taskOngoing ? styles.endTimeStyle : styles.taskDoneEndTime}
+        >
           to {endTime}
         </p>
         <SmallActionButton

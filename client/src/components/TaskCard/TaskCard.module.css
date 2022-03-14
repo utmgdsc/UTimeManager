@@ -2,6 +2,15 @@
   text-decoration: line-through;
   color: #dadada;
 }
+
+.taskDoneEndTime {
+  text-decoration: line-through;
+  color: #dadada;
+  font-family: "Source Sans Pro", sans-serif !important;
+  font-size: 0.75rem !important;
+  font-weight: 600 !important;
+}
+
 .taskContainer {
   display: flex;
   justify-content: flex-start;
