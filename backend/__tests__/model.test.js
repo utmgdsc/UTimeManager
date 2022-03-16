@@ -2,7 +2,6 @@ const mongoose = require("mongoose");
 const User = require("../models/userModel");
 
 beforeAll(async () => {
-    // TODO: Change this to another database that isn't the main one
     await mongoose.connect("mongodb://localhost:27017/", {
         useUnifiedTopology: true,
         useNewUrlParser: true,
@@ -35,7 +34,6 @@ describe("Test User Model", () => {
         const user = await User.findOne({email: "testUser@test.com"});
         await User.deleteOne(user)
     })
-
 })
 
 afterAll(done => {

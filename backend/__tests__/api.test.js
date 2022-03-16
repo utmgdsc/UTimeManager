@@ -1,7 +1,6 @@
 const request = require("supertest");
 const {app, server} = require("../server")
 const mongoose = require("mongoose");
-const User = require("../models/userModel");
 
 beforeAll(async () => {
     await mongoose.connect("mongodb://localhost:27017/", {

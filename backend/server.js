@@ -6,7 +6,8 @@ const taskRoutes = require("./routes/taskRoutes");
 const cors = require("cors");
 
 const app = express();
-require("dotenv").config();
+require('dotenv').config()
+
 
 app.use(
     cors({
@@ -32,7 +33,7 @@ app.use(notFound);
 app.use(errorHandler);
 
 let server;
-if (process.env.NODE_ENV !== "development") {
+if (process.env.NODE_ENV === "test") {
     server = app.listen();
 } else {
     connectDB();
