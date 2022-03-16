@@ -1,6 +1,7 @@
 const request = require("supertest");
 const {app, server} = require("../server")
 const mongoose = require("mongoose");
+const User = require("../models/userModel");
 
 beforeAll(async () => {
     await mongoose.connect("mongodb://localhost:27017/", {
@@ -42,6 +43,12 @@ describe("Login Test Suite", () => {
         expect(res.body).toHaveProperty("message");
         expect(res.body.message).toEqual("Wrong password")
     })
+    afterAll(async () => {
+        const user = await User.findOne({email: "nestor@mail.utoronto.ca"});
+        await User.deleteOne(user)
+    })
+
+
 })
 
 afterAll(done => {
