@@ -35,6 +35,7 @@ app.use(errorHandler);
 let server;
 if (process.env.NODE_ENV === "test") {
     server = app.listen();
+    console.log("Running Test Server");
 } else {
     connectDB();
     server = app.listen(5000, console.log("Server running on port 5000"));
