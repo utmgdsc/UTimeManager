@@ -1,14 +1,16 @@
 const request = require("supertest");
-const {app, server} = require("../server")
+const {app} = require("../server")
 const mongoose = require("mongoose");
 const User = require("../models/userModel");
 
+let server;
 beforeAll(async () => {
     await mongoose.connect("mongodb://localhost:27017/", {
         useUnifiedTopology: true,
         useNewUrlParser: true,
         // useCreateIndex: true,
     });
+    server = app.listen();
 });
 
 describe("Example Test Suite", () => {

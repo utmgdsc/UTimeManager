@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const User = require("../models/userModel");
 
+
 beforeAll(async () => {
     await mongoose.connect("mongodb://localhost:27017/", {
         useUnifiedTopology: true,
