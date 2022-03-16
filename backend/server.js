@@ -33,10 +33,10 @@ app.use(notFound);
 app.use(errorHandler);
 
 let server;
-// if (process.env.NODE_ENV !== "test") {
-//     connectDB();
-//     server = app.listen(5000, console.log("Server running on port 5000"));
-// }
+if (process.env.NODE_ENV !== "test") {
+    connectDB();
+    server = app.listen(5000, console.log("Server running on port 5000"));
+}
 
 
 module.exports = {app, server}
