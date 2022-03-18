@@ -1,5 +1,5 @@
 ---
-title: Login
+title: Create Task
 ---
 
 export const Endpoint = ({children, color}) => ( <span style={{
@@ -7,14 +7,27 @@ borderRadius: '2px',
 color: '#E83E8C',
 }}>{children}</span> );
 
-<Endpoint>POST /login</Endpoint>: Login to the app provided the correct user credentials <br></br>
+<Endpoint>POST tasks/</Endpoint>: Create a task withh provided details <br></br>
 
 ```json
 {
-    "email": string,
-    "password": string,
+    "title": string,
+    "user_id": string,
+    "description": string,
+    "startDate": string,
+    "endDate": string,
+    "isStarted": boolean
 }
 ```
+
+<!-- {
+"title" : "Task 1 - john",
+"user_id" : "62227aab7a9965d0be73b052",
+"description" : "john",
+"startDate" : "2022-02-25T15:02:08",
+"endDate" : "2022-02-27T15:02:08",
+"isStarted" : false
+} -->
 
 ### Example Request
 
