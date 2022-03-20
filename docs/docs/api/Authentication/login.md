@@ -43,9 +43,9 @@ color: '#E83E8C',
 
 #### Failure
 
-````json
+```json
 {
-    "message": "No user found",
-    "stack": "Error: No user found"
-}```
-````
+  "message": "No user found",
+  "stack": "Error: No user found"
+}
+```
