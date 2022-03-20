@@ -14,40 +14,35 @@ const TaskCard = ({
 }) => {
   const [taskOngoing, setOngoing] = useState(isOngoing);
   const taskTextStyle = !taskOngoing ? styles.taskDone : "";
-  const noEditPadding = edittable ? {} : { paddingTop: "1px" };
+  const actionBtn = edittable ? (
+    <SmallActionButton
+      text={!taskOngoing ? "Start" : "End"}
+      toggleButton={() => {
+        setOngoing(!taskOngoing);
+      }}
+    />
+  ) : (
+    <SmallActionButton text={"View"} toggleButton={showDetailsDialog} />
+  );
+
   return (
     <div className={styles.taskContainer}>
       <div className={styles.colorBar}></div>
       <div
         className={styles.taskInfo}
-        onClick={showDetailsDialog}
-        style={noEditPadding}
+        onClick={edittable ? showDetailsDialog : () => {}}
       >
-        <p
-          className={taskTextStyle}
-          style={edittable ? {} : { fontSize: "1.3rem" }}
-        >
-          {title}
-        </p>
+        <p className={taskTextStyle}>{title}</p>
         <p className={taskTextStyle}>{location}</p>
       </div>
-      <div className={styles.timeInfo} style={noEditPadding}>
+      <div className={styles.timeInfo}>
         <p className={taskTextStyle}>{startTime}</p>
         <p
           className={taskOngoing ? styles.endTimeStyle : styles.taskDoneEndTime}
         >
           to {endTime}
         </p>
-        {edittable ? (
-          <SmallActionButton
-            text={!taskOngoing ? "Start" : "End"}
-            toggleButton={() => {
-              setOngoing(!taskOngoing);
-            }}
-          />
-        ) : (
-          <></>
-        )}
+        {actionBtn}
       </div>
     </div>
   );
