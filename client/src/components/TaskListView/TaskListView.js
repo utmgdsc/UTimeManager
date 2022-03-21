@@ -8,9 +8,9 @@ const TaskListView = ({ tasks, edittable }) => {
     <li key={ix} style={{ listStyle: "none" }}>
       <TaskCard
         title={task.title}
-        location={task.locationText}
-        startTime={task.startTimeText}
-        endTime={task.endTimeText}
+        location={task.location}
+        startTime={task.startTime}
+        endTime={task.endTime}
         isOngoing={task.isOngoing}
         showDetailsDialog={() => {}}
         edittable={edittable}

@@ -3,82 +3,21 @@ import styles from "./TaskHistoryPage.module.css";
 import TaskListView from "../../components/TaskListView/TaskListView.js";
 
 const TaskHistoryPage = () => {
-  const myTasks = [
-    {
-      title: "GDSC Meeting",
-      locationText: "DH2020",
-      startTimeText: "05:00PM",
-      endTimeText: "07:00PM",
-      isOngoing: false,
-    },
-    {
-      title: "another meeting",
-      locationText: "DH2020",
-      startTimeText: "05:00PM",
-      endTimeText: "07:00PM",
-      isOngoing: true,
-    },
-    {
-      title: "GDSC Meeting",
-      locationText: "DH2020",
-      startTimeText: "05:00PM",
-      endTimeText: "07:00PM",
-      isOngoing: false,
-    },
-    {
-      title: "another meeting",
-      locationText: "DH2020",
-      startTimeText: "05:00PM",
-      endTimeText: "07:00PM",
-      isOngoing: true,
-    },
-    {
-      title: "GDSC Meeting",
-      locationText: "DH2020",
-      startTimeText: "05:00PM",
-      endTimeText: "07:00PM",
-      isOngoing: false,
-    },
-    {
-      title: "another meeting",
-      locationText: "DH2020",
-      startTimeText: "05:00PM",
-      endTimeText: "07:00PM",
-      isOngoing: true,
-    },
-    {
-      title: "GDSC Meeting",
-      locationText: "DH2020",
-      startTimeText: "05:00PM",
-      endTimeText: "07:00PM",
-      isOngoing: false,
-    },
-    {
-      title: "another meeting",
-      locationText: "DH2020",
-      startTimeText: "05:00PM",
-      endTimeText: "07:00PM",
-      isOngoing: true,
-    },
-    {
-      title: "another meeting",
-      locationText: "DH2020",
-      startTimeText: "05:00PM",
-      endTimeText: "07:00PM",
-      isOngoing: true,
-    },
-    {
-      title: "another meeting",
-      locationText: "DH2020",
-      startTimeText: "05:00PM",
-      endTimeText: "07:00PM",
-      isOngoing: true,
-    },
-  ];
+  const sampleTask = {
+    title: "gdsc meeting",
+    location: "dh2020",
+    startTime: "05:00pm",
+    endTime: "07:00pm",
+    isOngoing: false,
+  };
+  const sampleTasks = [];
+  for (let i = 0; i < 15; i++) {
+    sampleTasks.push({ ...sampleTask });
+  }
   return (
     <div className={styles.bg}>
       <div className={styles.taskHistoryHeader}>Your Tasks</div>
-      <TaskListView tasks={myTasks} edittable={false} />
+      <TaskListView tasks={sampleTasks} edittable={false} />
     </div>
   );
 };

@@ -38,64 +38,17 @@ const CalendarPage = () => {
     setModal(!showModal);
   };
   const [currDate, setCurrDate] = useState(new Date());
-  const children = [
-    {
-      title: "GDSC Meeting",
-      locationText: "DH2020",
-      startTimeText: "05:00PM",
-      endTimeText: "07:00PM",
-      isOngoing: false,
-    },
-    {
-      title: "another meeting",
-      locationText: "DH2020",
-      startTimeText: "05:00PM",
-      endTimeText: "07:00PM",
-      isOngoing: true,
-    },
-    {
-      title: "GDSC Meeting",
-      locationText: "DH2020",
-      startTimeText: "05:00PM",
-      endTimeText: "07:00PM",
-      isOngoing: false,
-    },
-    {
-      title: "another meeting",
-      locationText: "DH2020",
-      startTimeText: "05:00PM",
-      endTimeText: "07:00PM",
-      isOngoing: true,
-    },
-    {
-      title: "GDSC Meeting",
-      locationText: "DH2020",
-      startTimeText: "05:00PM",
-      endTimeText: "07:00PM",
-      isOngoing: false,
-    },
-    {
-      title: "another meeting",
-      locationText: "DH2020",
-      startTimeText: "05:00PM",
-      endTimeText: "07:00PM",
-      isOngoing: true,
-    },
-    {
-      title: "GDSC Meeting",
-      locationText: "DH2020",
-      startTimeText: "05:00PM",
-      endTimeText: "07:00PM",
-      isOngoing: false,
-    },
-    {
-      title: "another meeting",
-      locationText: "DH2020",
-      startTimeText: "05:00PM",
-      endTimeText: "07:00PM",
-      isOngoing: true,
-    },
-  ];
+  const sampleTask = {
+    title: "gdsc meeting",
+    location: "dh2020",
+    startTime: "05:00pm",
+    endTime: "07:00pm",
+    isOngoing: false,
+  };
+  const sampleTasks = [];
+  for (let i = 0; i < 15; i++) {
+    sampleTasks.push({ ...sampleTask });
+  }
 
   // follows the signature in react-calendar documentation
   const dateChangeGetter = (date, _) => {
@@ -117,7 +70,7 @@ const CalendarPage = () => {
       <p className={styles.calendarHeader}>
         {dailyTaskDateFormatter(currDate)}
       </p>
-      <TaskListView tasks={children} edittable={true} />
+      <TaskListView tasks={sampleTasks} edittable={true} />
     </div>
   );
 };
