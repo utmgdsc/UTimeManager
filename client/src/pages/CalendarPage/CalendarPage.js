@@ -117,7 +117,7 @@ const CalendarPage = () => {
       <p className={styles.calendarHeader}>
         {dailyTaskDateFormatter(currDate)}
       </p>
-      <TaskListView tasks={children} taskEdittable={true} />
+      <TaskListView tasks={children} edittable={true} />
     </div>
   );
 };

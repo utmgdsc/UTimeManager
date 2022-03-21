@@ -3,7 +3,7 @@ import styles from "./TaskListView.module.css";
 import TaskCard from "../TaskCard/TaskCard";
 import { PropTypes } from "prop-types";
 
-const TaskListView = ({ tasks, taskEdittable }) => {
+const TaskListView = ({ tasks, edittable }) => {
   const cards = tasks.map((task, ix) => (
     <li key={ix} style={{ listStyle: "none" }}>
       <TaskCard
@@ -13,7 +13,7 @@ const TaskListView = ({ tasks, taskEdittable }) => {
         endTime={task.endTimeText}
         isOngoing={task.isOngoing}
         showDetailsDialog={() => {}}
-        edittable={taskEdittable}
+        edittable={edittable}
       />
     </li>
   ));
@@ -23,6 +23,6 @@ const TaskListView = ({ tasks, taskEdittable }) => {
 
 TaskListView.propTypes = {
   tasks: PropTypes.arrayOf(PropTypes.object).isRequired,
-  taskEdittable: PropTypes.bool.isRequired,
+  edittable: PropTypes.bool.isRequired,
 };
 export default TaskListView;

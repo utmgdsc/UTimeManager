@@ -78,7 +78,7 @@ const TaskHistoryPage = () => {
   return (
     <div className={styles.bg}>
       <div className={styles.taskHistoryHeader}>Your Tasks</div>
-      <TaskListView tasks={myTasks} taskEdittable={false} />
+      <TaskListView tasks={myTasks} edittable={false} />
     </div>
   );
 };
