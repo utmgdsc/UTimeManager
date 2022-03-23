@@ -24,14 +24,17 @@ const getTasks = asyncHandler(async (req, res) => {
 
   const user_data = jwt.decode(token);
 
-
   const userId = user_data._id;
-  const tasks = await Task.find({ user_id: userId }, (err, docs) => {
-    if(err) {
-      res.status(500);
-      throw new Error(`Could not fetch doc ${docs}`)
-    }
-  });
+  const tasks = await Task.find({ user_id: userId })
+    .then((docs) => {
+      res.status(200).json(docs);
+    })
+    .catch((err) => {
+      if (err) {
+        res.status(500);
+        throw new Error(`Could not fetch doc ${docs}`);
+      }
+    });
 
   res.status(200).json(tasks);
 });
@@ -43,7 +46,6 @@ const getTasksById = asyncHandler(async (req, res) => {
 
   const user_data = jwt.decode(token);
 
-
   const taskId = req.params.id;
 
   // Users id
@@ -53,13 +55,16 @@ const getTasksById = asyncHandler(async (req, res) => {
   const tasks = await Task.find({
     _id: taskId,
     user_id: userId,
-  }, (err, docs) => {
-    if(err) {
-      res.status(500);
-      throw new Error(`Could not fetch doc ${docs}`)
-    }
-  });
-
+  })
+    .then((docs) => {
+      res.status(200).json(docs);
+    })
+    .catch((err) => {
+      if (err) {
+        res.status(500);
+        throw new Error(`Could not fetch doc ${docs}`);
+      }
+    });
   res.status(200).json(tasks);
 });
 
@@ -88,104 +93,80 @@ const getTasksByDay = asyncHandler(async (req, res) => {
     } catch (error) {
       res.status(400);
       throw new Error("Invalid Date Input");
-
     }
   }
 
-  const tasks = await Task.find({
-    user_id: ObjectId(userId),
-    startDate: {
-      // $gte: startDate,
-      $gte: new Date(startDate),
+  const tasks = await Task.find(
+    {
+      user_id: ObjectId(userId),
+      startDate: {
+        // $gte: startDate,
+        $gte: new Date(startDate),
+      },
+      endDate: {
+        $lte: new Date(endDate),
+      },
+      isStarted: true,
     },
-    endDate: {
-      $lte: new Date(endDate),
-    },
-    isStarted: true,
-  }, (err, docs) => {
-    if(err) {
-      res.status(500);
-      throw new Error(`Could not fetch doc ${docs}`)
+    (err, docs) => {
+      if (err) {
+        res.status(500);
+        throw new Error(`Could not fetch doc ${docs}`);
+      }
     }
-  });
+  );
 
   res.status(200).json(tasks);
 });
 
-const startTask = asyncHandler(async (req, res) => {
-  // Task id Parameter
-  const header = req.headers["authentication"];
+const toggleTask = asyncHandler(async (req, res) => {
+  const header = req.headers.authorization;
   const token = header.split(" ")[1];
 
   const user_data = jwt.decode(token);
 
-
   const taskId = req.params.id;
 
-  // Users id
-
   const userId = user_data._id;
+  const taskDate = new Date();
 
-  const taskStartedDate = new Date();
-
-  const task = await Task.find({
+  const task = await Task.findOne({
     _id: taskId,
     user_id: userId,
-  }, (err, docs) => {
-    if(err) {
+  })
+
+    .then((docs) => {
+      console.log(docs);
+      return docs;
+    })
+    .catch((err) => {
+      console.log(err);
       res.status(500);
-      throw new Error(`Could not fetch doc ${docs}`)
-    }
-  });
+      throw new Error(`Could not fetch doc ${docs}`);
+    });
 
-  if (task) {
-    task.isStarted = true;
-    task.taskStartedAt = taskStartedDate;
-    const updatedTask = await Task.save();
-    res.json(updatedTask);
-  } else {
-    res.status(404);
-    throw new Error("Task not found");
-  }
-  // res.status(200).json(task);
-})
-
-const stopTask = asyncHandler(async (req, res) => {
-  // Task id Parameter
-  const header = req.headers["authentication"];
-  const token = header.split(" ")[1];
-
-  const user_data = jwt.decode(token);
-
-
-  const taskId = req.params.id;
-
-  // Users id
-
-  const userId = user_data._id;
-  const taskEndedDate = new Date();
-
-
-  const task = await Task.find({
-    _id: taskId,
-    user_id: userId,
-  }, (err, docs) => {
-    if(err) {
-      res.status(500);
-      throw new Error(`Could not fetch doc ${docs}`)
-    }
-  });
-
-  if (task) {
+  if (task && task.isStarted) {
+    // stop the task
     task.isStarted = false;
-    task.taskEndedDate = taskEndedDate;
-    const updatedTask = await Task.save();
+    task.taskEndedDate = taskDate;
+    const updatedTask = await task.save();
+    res.json(updatedTask);
+  } else if (task && !task.isStarted) {
+    // start the task
+    task.isStarted = true;
+    task.taskStartedAt = taskDate;
+    const updatedTask = await task.save();
     res.json(updatedTask);
   } else {
     res.status(404);
     throw new Error("Task not found");
   }
-  // res.status(200).json(task);
-})
+});
 
-module.exports = { createTask, getTasks, getTasksByDay, getTasksById, startTask, stopTask };
+module.exports = {
+  createTask,
+  getTasks,
+  getTasksByDay,
+  getTasksById,
+  toggleTask,
+};
