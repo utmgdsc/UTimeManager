@@ -19,30 +19,31 @@ const createTask = asyncHandler(async (req, res) => {
 });
 
 const getTasks = asyncHandler(async (req, res) => {
-  const header = req.headers["authentication"];
+  // console.log("hereee");
+  const header = req.headers.authorization;
   const token = header.split(" ")[1];
 
   const user_data = jwt.decode(token);
 
-
   const userId = user_data._id;
-  const tasks = await Task.find({ user_id: userId }, (err, docs) => {
-    if(err) {
-      res.status(500);
-      throw new Error(`Could not fetch doc ${docs}`)
-    }
-  });
-
-  res.status(200).json(tasks);
+  await Task.find({ user_id: userId })
+    .then((docs) => {
+      res.status(200).json(docs);
+    })
+    .catch((err) => {
+      if (err) {
+        res.status(500);
+        throw new Error(`Could not fetch doc ${docs}`);
+      }
+    });
 });
 
 const getTasksById = asyncHandler(async (req, res) => {
   // Task id Parameter
-  const header = req.headers["authentication"];
+  const header = req.headers.authorization;
   const token = header.split(" ")[1];
 
   const user_data = jwt.decode(token);
-
 
   const taskId = req.params.id;
 
@@ -53,18 +54,21 @@ const getTasksById = asyncHandler(async (req, res) => {
   const tasks = await Task.find({
     _id: taskId,
     user_id: userId,
-  }, (err, docs) => {
-    if(err) {
-      res.status(500);
-      throw new Error(`Could not fetch doc ${docs}`)
-    }
-  });
-
+  })
+    .then((docs) => {
+      res.status(200).json(docs);
+    })
+    .catch((err) => {
+      if (err) {
+        res.status(500);
+        throw new Error(`Could not fetch doc ${docs}`);
+      }
+    });
   res.status(200).json(tasks);
 });
 
 const getTasksByDay = asyncHandler(async (req, res) => {
-  const header = req.headers["authentication"];
+  const header = req.headers.authorization;
   const token = header.split(" ")[1];
 
   const user_data = jwt.decode(token);
@@ -88,10 +92,8 @@ const getTasksByDay = asyncHandler(async (req, res) => {
     } catch (error) {
       res.status(400);
       throw new Error("Invalid Date Input");
-
     }
   }
-
   const tasks = await Task.find({
     user_id: ObjectId(userId),
     startDate: {
@@ -102,12 +104,16 @@ const getTasksByDay = asyncHandler(async (req, res) => {
       $lte: new Date(endDate),
     },
     isStarted: true,
-  }, (err, docs) => {
-    if(err) {
-      res.status(500);
-      throw new Error(`Could not fetch doc ${docs}`)
-    }
-  });
+  })
+    .then((docs) => {
+      res.status(200).json(docs);
+    })
+    .catch((err) => {
+      if (err) {
+        res.status(500);
+        throw new Error(`Could not fetch doc ${docs}`);
+      }
+    });
 
   res.status(200).json(tasks);
 });

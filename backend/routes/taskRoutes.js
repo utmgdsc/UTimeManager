@@ -21,9 +21,9 @@ router.post("/", [authenticateToken, createTask]);
 router.get("/", [authenticateToken, getTasks]);
 
 // @desc     Fetch single task
-// @route    GET /api/tasks/task/:id
+// @route    GET /api/tasks/:id
 // @acesss   Private
-router.get("/task/:id", [authenticateToken, getTasksById]);
+router.get("/:id", [authenticateToken, getTasksById]);
 
 // @desc     Fetch task with day query
 // @route    GET /api/tasks/day/:day
