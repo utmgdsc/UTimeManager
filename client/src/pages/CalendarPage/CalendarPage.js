@@ -3,9 +3,9 @@ import "react-calendar/dist/Calendar.css";
 import "./CalendarOverride.css";
 import Calendar from "react-calendar";
 import styles from "./CalendarPage.module.css";
-import TaskCard from "../../components/TaskCard/TaskCard.js";
 import CalendarHeader from "../../components/CalendarHeader/CalendarHeader.js";
 import TaskDetails from "../../components/TaskDetails/TaskDetails";
+import TaskListView from "../../components/TaskListView/TaskListView.js";
 
 const getDayAbbreviation = (_, label) => {
   return label.toString().slice(0, 1);
@@ -38,79 +38,17 @@ const CalendarPage = () => {
     setModal(!showModal);
   };
   const [currDate, setCurrDate] = useState(new Date());
-  const children = [
-    {
-      title: "GDSC Meeting",
-      locationText: "DH2020",
-      startTimeText: "05:00PM",
-      endTimeText: "07:00PM",
-      isOngoing: false,
-    },
-    {
-      title: "another meeting",
-      locationText: "DH2020",
-      startTimeText: "05:00PM",
-      endTimeText: "07:00PM",
-      isOngoing: true,
-    },
-    {
-      title: "GDSC Meeting",
-      locationText: "DH2020",
-      startTimeText: "05:00PM",
-      endTimeText: "07:00PM",
-      isOngoing: false,
-    },
-    {
-      title: "another meeting",
-      locationText: "DH2020",
-      startTimeText: "05:00PM",
-      endTimeText: "07:00PM",
-      isOngoing: true,
-    },
-    {
-      title: "GDSC Meeting",
-      locationText: "DH2020",
-      startTimeText: "05:00PM",
-      endTimeText: "07:00PM",
-      isOngoing: false,
-    },
-    {
-      title: "another meeting",
-      locationText: "DH2020",
-      startTimeText: "05:00PM",
-      endTimeText: "07:00PM",
-      isOngoing: true,
-    },
-    {
-      title: "GDSC Meeting",
-      locationText: "DH2020",
-      startTimeText: "05:00PM",
-      endTimeText: "07:00PM",
-      isOngoing: false,
-    },
-    {
-      title: "another meeting",
-      locationText: "DH2020",
-      startTimeText: "05:00PM",
-      endTimeText: "07:00PM",
-      isOngoing: true,
-    },
-  ];
-  const cards = children.map((task, ix) => (
-    <li key={ix} style={{ listStyle: "none" }}>
-      <TaskCard
-        title={task.title}
-        location={task.locationText}
-        startTime={task.startTimeText}
-        endTime={task.endTimeText}
-        isOngoing={task.isOngoing}
-        showDetailsDialog={() => {
-          console.log("show the modal from here");
-          toggleModal();
-        }}
-      />
-    </li>
-  ));
+  const sampleTask = {
+    title: "gdsc meeting",
+    location: "dh2020",
+    startTime: "05:00pm",
+    endTime: "07:00pm",
+    isOngoing: false,
+  };
+  const sampleTasks = [];
+  for (let i = 0; i < 15; i++) {
+    sampleTasks.push({ ...sampleTask });
+  }
 
   // follows the signature in react-calendar documentation
   const dateChangeGetter = (date, _) => {
@@ -132,7 +70,7 @@ const CalendarPage = () => {
       <p className={styles.calendarHeader}>
         {dailyTaskDateFormatter(currDate)}
       </p>
-      <ul className={styles.taskList}>{cards}</ul>
+      <TaskListView tasks={sampleTasks} edittable={true} />
     </div>
   );
 };

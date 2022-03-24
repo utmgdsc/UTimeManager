@@ -1,0 +1,12 @@
+.taskList {
+  margin: 10px 25px;
+  padding: 0px;
+  overflow: hidden;
+  overflow-y: scroll;
+}
+
+/* works in chrome and safari */
+.taskList::-webkit-scrollbar {
+  width: 0px !important;
+  display: none;
+}
