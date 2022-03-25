@@ -7,7 +7,7 @@ borderRadius: '2px',
 color: '#E83E8C',
 }}>{children}</span> );
 
-<Endpoint>GET /tasks/day/:day/</Endpoint>: Fetching a single Task
+<Endpoint>GET /tasks/day/:day</Endpoint>: Fetching a single Task
 
 ```json
 {}

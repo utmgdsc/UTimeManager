@@ -7,7 +7,7 @@ borderRadius: '2px',
 color: '#E83E8C',
 }}>{children}</span> );
 
-<Endpoint>GET tasks/</Endpoint>: Get all tasks <br></br>
+<Endpoint>GET /tasks</Endpoint>: Get all tasks <br></br>
 
 ### Example Request
 
