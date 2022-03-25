@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "react-calendar/dist/Calendar.css";
 import "./CalendarOverride.css";
 import Calendar from "react-calendar";
@@ -6,6 +6,7 @@ import styles from "./CalendarPage.module.css";
 import TaskCard from "../../components/TaskCard/TaskCard.js";
 import CalendarHeader from "../../components/CalendarHeader/CalendarHeader.js";
 import TaskDetails from "../../components/TaskDetails/TaskDetails";
+import { instance } from "../../axios.js";
 
 const getDayAbbreviation = (_, label) => {
   return label.toString().slice(0, 1);
@@ -31,6 +32,27 @@ const dailyTaskDateFormatter = (date) => {
   } ${date.getDate()}, ${date.getFullYear()}`;
 };
 
+// Convert the task data fetched from the server into JS objects of the
+// {title, locationText, startTimeText, endTimeText, isOngoing}
+const convertTaskData = (fetchedTaskData) => {
+  return [];
+};
+
+const padSingleDigit = (num) => {
+  return num <= 9 ? `0${num}` : num.toString();
+};
+
+const buildDailyTaskRoute = (currDate) => {
+  const currMonthStr = padSingleDigit(currDate.getMonth() + 1);
+  const currDayStr = padSingleDigit(currDate.getDate());
+  return (
+    "/api/tasks/day/" +
+    currDate.getFullYear().toString() +
+    currMonthStr +
+    currDayStr
+  );
+};
+
 const CalendarPage = () => {
   const [showModal, setModal] = useState(false);
 
@@ -38,65 +60,30 @@ const CalendarPage = () => {
     setModal(!showModal);
   };
   const [currDate, setCurrDate] = useState(new Date());
-  const children = [
-    {
-      title: "GDSC Meeting",
-      locationText: "DH2020",
-      startTimeText: "05:00PM",
-      endTimeText: "07:00PM",
-      isOngoing: false,
-    },
-    {
-      title: "another meeting",
-      locationText: "DH2020",
-      startTimeText: "05:00PM",
-      endTimeText: "07:00PM",
-      isOngoing: true,
-    },
-    {
-      title: "GDSC Meeting",
-      locationText: "DH2020",
-      startTimeText: "05:00PM",
-      endTimeText: "07:00PM",
-      isOngoing: false,
-    },
-    {
-      title: "another meeting",
-      locationText: "DH2020",
-      startTimeText: "05:00PM",
-      endTimeText: "07:00PM",
-      isOngoing: true,
-    },
-    {
-      title: "GDSC Meeting",
-      locationText: "DH2020",
-      startTimeText: "05:00PM",
-      endTimeText: "07:00PM",
-      isOngoing: false,
-    },
-    {
-      title: "another meeting",
-      locationText: "DH2020",
-      startTimeText: "05:00PM",
-      endTimeText: "07:00PM",
-      isOngoing: true,
-    },
-    {
-      title: "GDSC Meeting",
-      locationText: "DH2020",
-      startTimeText: "05:00PM",
-      endTimeText: "07:00PM",
-      isOngoing: false,
-    },
-    {
-      title: "another meeting",
-      locationText: "DH2020",
-      startTimeText: "05:00PM",
-      endTimeText: "07:00PM",
-      isOngoing: true,
-    },
-  ];
-  const cards = children.map((task, ix) => (
+  const [taskData, setTaskData] = useState([]);
+
+  useEffect(() => {
+    const getTasks = async () => {
+      await instance
+        .get(buildDailyTaskRoute(currDate))
+        .then((taskData) => {
+          console.log(taskData);
+          setTaskData(convertTaskData(taskData));
+        })
+        .catch(() => {
+          // error message
+        });
+    };
+
+    getTasks();
+  }, [currDate]);
+
+  // follows the signature in react-calendar documentation
+  const dateChangeGetter = (date, _) => {
+    setCurrDate(date);
+  };
+
+  const cards = taskData.map((task, ix) => (
     <li key={ix} style={{ listStyle: "none" }}>
       <TaskCard
         title={task.title}
@@ -111,11 +98,6 @@ const CalendarPage = () => {
       />
     </li>
   ));
-
-  // follows the signature in react-calendar documentation
-  const dateChangeGetter = (date, _) => {
-    setCurrDate(date);
-  };
 
   return (
     <div className={styles.bg}>
