@@ -11,9 +11,9 @@ color: '#E83E8C',
 
 ```json
 {
-    "Username": string,
-    "Password": string,
-    "Email": string
+    "username": string,
+    "password": string,
+    "email": string
 }
 ```
 
@@ -23,7 +23,6 @@ color: '#E83E8C',
 
 ```json
 {
-  "name": "john",
   "email": "john@example.com",
   "password": "12345"
 }
