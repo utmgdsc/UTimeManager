@@ -7,7 +7,7 @@ borderRadius: '2px',
 color: '#E83E8C',
 }}>{children}</span> );
 
-<Endpoint>POST tasks/</Endpoint>: Create a task with provided task details <br></br>
+<Endpoint>POST /tasks</Endpoint>: Create a task with provided task details <br></br>
 
 ```json
 {
