@@ -33,20 +33,9 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1OTU4MjQyN
 
     id: task_id // Id of the task that is being searched for
 
-
 ### Possible Responses
 
 #### Immediate Success
-
-```json
-{
-  "code": 500,
-  "message": "Could not fetch doc",
-  "data": {}
-}
-```
-
-#### Failure
 
 ```json
 {
@@ -55,6 +44,16 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1OTU4MjQyN
   "data": {
     // Task information
   }
+}
+```
+
+#### Failure
+
+```json
+{
+  "code": 500,
+  "message": "Could not fetch doc",
+  "data": {}
 }
 ```
 
