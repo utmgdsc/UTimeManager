@@ -7,6 +7,7 @@ import CalendarHeader from "../../components/CalendarHeader/CalendarHeader.js";
 import TaskDetails from "../../components/TaskDetails/TaskDetails";
 import { instance } from "../../axios.js";
 import TaskListView from "../../components/TaskListView/TaskListView.js";
+import { ErrorMessage } from "../../components/ErrorMessage/ErrorMessage";
 
 const getDayAbbreviation = (_, label) => {
   return label.toString().slice(0, 1);
@@ -63,6 +64,7 @@ const CalendarPage = () => {
   };
   const [currDate, setCurrDate] = useState(new Date());
   const [taskData, setTaskData] = useState([]);
+  const [showError, setShowError] = useState(false);
 
   useEffect(() => {
     const getTasks = async () => {
@@ -71,9 +73,10 @@ const CalendarPage = () => {
         .then((taskData) => {
           console.log(taskData);
           setTaskData(convertTaskData(taskData));
+          setShowError(false);
         })
         .catch(() => {
-          // TODO : error message
+          setShowError(true);
         });
     };
 
@@ -100,7 +103,13 @@ const CalendarPage = () => {
       <p className={styles.calendarHeader}>
         {dailyTaskDateFormatter(currDate)}
       </p>
-      <TaskListView tasks={taskData} edittable={true} />
+      {showError ? (
+        <div className={styles.errorMessageStyle}>
+          <ErrorMessage errorMessage={"Unable to load tasks!"} />
+        </div>
+      ) : (
+        <TaskListView tasks={taskData} edittable={true} />
+      )}
     </div>
   );
 };

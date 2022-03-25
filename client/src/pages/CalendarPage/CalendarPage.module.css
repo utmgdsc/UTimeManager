@@ -41,6 +41,11 @@
   overflow-y: scroll;
 }
 
+.errorMessageStyle {
+  margin: 20px;
+  align-self: center;
+}
+
 /* works in chrome and safari */
 .taskList::-webkit-scrollbar {
   width: 0px !important;
