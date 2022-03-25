@@ -44,7 +44,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1OTU4MjQyN
 ```json
 {
   "code": 200,
-  "message": "",
+  "message": "Success.",
   "data": {
     // List of all tasks from within two days of the starting date
   }
@@ -57,22 +57,6 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1OTU4MjQyN
 {
   "code": 500,
   "message": "Could not fetch doc",
-  "data": {}
-}
-```
-
-```json
-{
-  "code": -1,
-  "message": "Forbidden",
-  "data": {}
-}
-```
-
-```json
-{
-  "code": -1,
-  "message": "user not found",
   "data": {}
 }
 ```
