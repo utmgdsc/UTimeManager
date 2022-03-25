@@ -1,18 +1,18 @@
 .inputBox {
-    border-radius: 20px;
-    padding: 7px 10px;
-    font-size: 1.125rem;
-    font-family: "Source Sans Pro", sans-serif;
-    margin-bottom: 10px;
-    background-color: white;
-    border-color: transparent;
-    max-width: 300px;
+  border-radius: 20px;
+  padding: 7px 10px;
+  font-size: 1.125rem;
+  font-family: "Source Sans Pro", sans-serif;
+  margin-bottom: 10px;
+  background-color: white;
+  border-color: transparent;
+  max-width: 300px;
 }
 
 .inputHeader {
-    color: white;
-    font-weight: 400;
-    font-size: 1.5rem;
-    margin: 0px 0px 3px 10px;
-    font-family: "Source Sans Pro", sans-serif;
+  color: white;
+  font-weight: 400;
+  font-size: 1.5rem;
+  margin: 0px 0px 3px 10px;
+  font-family: "Source Sans Pro", sans-serif;
 }

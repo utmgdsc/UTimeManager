@@ -13,3 +13,21 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: cd client && yarn --frozen-lockfile && yarn lint
+  test_server:
+    runs-on: ubuntu-latest
+    env:
+      JWT_SECRET: ${{secrets.JWT_SECRET}}
+    steps:
+      - uses: actions/checkout@v2
+      - name: Start MongoDB Container
+        run: docker-compose up --build -d
+      - name: Install dependencies and run tests
+        run: |
+          cd backend
+          yarn --frozen-lockfile
+          touch .env
+          echo 'JWT_SECRET=${{ secrets.JWT_SECRET }}' >> .env
+          yarn test
+      - name: Cleanup
+        run: docker-compose down
+
