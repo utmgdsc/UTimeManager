@@ -37,10 +37,6 @@ color: '#E83E8C',
 }
 ```
 
-**Note**: If you log in again (while you're already logged in), any previous **access & refresh tokens** will be revoked. <br></br>
-
-**Note**: The access token will be returned in `data.token`. The refresh token will be returned as an HTTPOnly, Secure, SameSite Cookie.
-
 #### Failure
 
 ```json
