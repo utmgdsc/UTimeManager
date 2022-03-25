@@ -14,6 +14,7 @@ const LoginPage = () => {
         nextPageText="Sign Up"
         submitURL="/api/users/login"
         errorMessage={"Invalid username or password"}
+        landingPage="/calendar"
       />
     </div>
   );
