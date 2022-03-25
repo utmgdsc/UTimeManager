@@ -31,12 +31,8 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1OTU4MjQyN
 
 #### Parameters
 
-```json
-{
     id: task_id // Id of the task that is being searched for
-}
 
-```
 
 ### Possible Responses
 
