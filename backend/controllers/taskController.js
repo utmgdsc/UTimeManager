@@ -136,11 +136,9 @@ const toggleTask = asyncHandler(async (req, res) => {
   })
 
     .then((docs) => {
-      console.log(docs);
       return docs;
     })
     .catch((err) => {
-      console.log(err);
       res.status(500);
       throw new Error(`Could not fetch doc ${docs}`);
     });
