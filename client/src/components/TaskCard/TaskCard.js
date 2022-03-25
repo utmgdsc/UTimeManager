@@ -10,13 +10,28 @@ const TaskCard = ({
   endTime,
   isOngoing,
   showDetailsDialog,
+  edittable,
 }) => {
   const [taskOngoing, setOngoing] = useState(isOngoing);
   const taskTextStyle = !taskOngoing ? styles.taskDone : "";
+  const actionBtn = edittable ? (
+    <SmallActionButton
+      text={!taskOngoing ? "Start" : "End"}
+      toggleButton={() => {
+        setOngoing(!taskOngoing);
+      }}
+    />
+  ) : (
+    <SmallActionButton text={"View"} toggleButton={showDetailsDialog} />
+  );
+
   return (
     <div className={styles.taskContainer}>
       <div className={styles.colorBar}></div>
-      <div className={styles.taskInfo} onClick={showDetailsDialog}>
+      <div
+        className={styles.taskInfo}
+        onClick={edittable ? showDetailsDialog : () => {}}
+      >
         <p className={taskTextStyle}>{title}</p>
         <p className={taskTextStyle}>{location}</p>
       </div>
@@ -27,12 +42,7 @@ const TaskCard = ({
         >
           to {endTime}
         </p>
-        <SmallActionButton
-          text={!taskOngoing ? "Start" : "End"}
-          toggleButton={() => {
-            setOngoing(!taskOngoing);
-          }}
-        />
+        {actionBtn}
       </div>
     </div>
   );
@@ -45,6 +55,7 @@ TaskCard.propTypes = {
   endTime: PropTypes.string.isRequired,
   isOngoing: PropTypes.bool.isRequired,
   showDetailsDialog: PropTypes.func,
+  edittable: PropTypes.bool.isRequired,
 };
 
 export default TaskCard;

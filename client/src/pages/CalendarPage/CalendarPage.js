@@ -3,10 +3,10 @@ import "react-calendar/dist/Calendar.css";
 import "./CalendarOverride.css";
 import Calendar from "react-calendar";
 import styles from "./CalendarPage.module.css";
-import TaskCard from "../../components/TaskCard/TaskCard.js";
 import CalendarHeader from "../../components/CalendarHeader/CalendarHeader.js";
 import TaskDetails from "../../components/TaskDetails/TaskDetails";
 import { instance } from "../../axios.js";
+import TaskListView from "../../components/TaskListView/TaskListView.js";
 
 const getDayAbbreviation = (_, label) => {
   return label.toString().slice(0, 1);
@@ -43,7 +43,9 @@ const padSingleDigit = (num) => {
 };
 
 const buildDailyTaskRoute = (currDate) => {
+  // getMonth returns 0-11
   const currMonthStr = padSingleDigit(currDate.getMonth() + 1);
+  // getDate returns 1-31
   const currDayStr = padSingleDigit(currDate.getDate());
   return (
     "/api/tasks/day/" +
@@ -71,7 +73,7 @@ const CalendarPage = () => {
           setTaskData(convertTaskData(taskData));
         })
         .catch(() => {
-          // error message
+          // TODO : error message
         });
     };
 
@@ -82,22 +84,6 @@ const CalendarPage = () => {
   const dateChangeGetter = (date, _) => {
     setCurrDate(date);
   };
-
-  const cards = taskData.map((task, ix) => (
-    <li key={ix} style={{ listStyle: "none" }}>
-      <TaskCard
-        title={task.title}
-        location={task.locationText}
-        startTime={task.startTimeText}
-        endTime={task.endTimeText}
-        isOngoing={task.isOngoing}
-        showDetailsDialog={() => {
-          console.log("show the modal from here");
-          toggleModal();
-        }}
-      />
-    </li>
-  ));
 
   return (
     <div className={styles.bg}>
@@ -114,7 +100,7 @@ const CalendarPage = () => {
       <p className={styles.calendarHeader}>
         {dailyTaskDateFormatter(currDate)}
       </p>
-      <ul className={styles.taskList}>{cards}</ul>
+      <TaskListView tasks={taskData} edittable={true} />
     </div>
   );
 };
