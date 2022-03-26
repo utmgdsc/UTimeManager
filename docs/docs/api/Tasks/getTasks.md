@@ -60,4 +60,9 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1OTU4MjQyN
 
 #### Failure
 
-**Note**: Denied access if privoded with invalid JWT token <br></br>
+```json
+{
+  "message": "Not authorized, token failed",
+  "stack": "Error: Not authorized, token failed\n at C:\\Users\\karan\\Desktop\\UTimeManager\\backend\\middleware\\authenticateToken.js:31:11\n at asyncUtilWrap"
+}
+```
