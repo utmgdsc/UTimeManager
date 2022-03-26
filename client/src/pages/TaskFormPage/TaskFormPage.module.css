@@ -1,4 +1,4 @@
-.Header{
+.header{
     color: white;
     font-weight: 400;
     font-size: 2.0rem;
@@ -7,13 +7,18 @@
 }
 
 .bg {
-    position: absolute;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+
+    /* position: absolute; */
     background: #032a5c;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    /* top: 50%;
+    left: 50%; */
+    /* transform: translate(-50%, -50%); */
     height: 100vh;
-    width: 100vw;
+    /* width: 100vw;  */
 }
 
 .inputBox {
@@ -29,7 +34,14 @@
     padding: 0px 15px;
 }
 
-input{
-    width: 100%;
+button{
+    background-color: white;
+    font-weight:bold;
+    color: grey;
 }
+
+.closeButton{
+    margin-left: 16px;
+}
+
 
