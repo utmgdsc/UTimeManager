@@ -19,13 +19,7 @@ const createTask = asyncHandler(async (req, res) => {
 });
 
 const getTasks = asyncHandler(async (req, res) => {
-  // console.log("hereee");
-  const header = req.headers.authorization;
-  const token = header.split(" ")[1];
-
-  const user_data = jwt.decode(token);
-
-  const userId = user_data._id;
+  const userId = req.id;
   await Task.find({ user_id: userId })
     .then((docs) => {
       res.status(200).json(docs);
@@ -33,23 +27,14 @@ const getTasks = asyncHandler(async (req, res) => {
     .catch((err) => {
       if (err) {
         res.status(500);
-        throw new Error(`Could not fetch doc ${docs}`);
+        throw new Error(`Could not fetch doc ${err}`);
       }
     });
 });
 
 const getTasksById = asyncHandler(async (req, res) => {
-  // Task id Parameter
-  const header = req.headers.authorization;
-  const token = header.split(" ")[1];
-
-  const user_data = jwt.decode(token);
-
   const taskId = req.params.id;
-
-  // Users id
-
-  const userId = user_data._id;
+  const userId = req.id;
 
   const tasks = await Task.find({
     _id: taskId,
@@ -61,19 +46,14 @@ const getTasksById = asyncHandler(async (req, res) => {
     .catch((err) => {
       if (err) {
         res.status(500);
-        throw new Error(`Could not fetch doc ${docs}`);
+        throw new Error(`Could not fetch doc ${err}`);
       }
     });
   res.status(200).json(tasks);
 });
 
 const getTasksByDay = asyncHandler(async (req, res) => {
-  const header = req.headers.authorization;
-  const token = header.split(" ")[1];
-
-  const user_data = jwt.decode(token);
-
-  const userId = user_data._id;
+  const userId = req.id;
 
   const date = req.params.day; // get a day -> 26
   // Users id -> Extract from JWT since GET does not take any body
@@ -111,7 +91,7 @@ const getTasksByDay = asyncHandler(async (req, res) => {
     .catch((err) => {
       if (err) {
         res.status(500);
-        throw new Error(`Could not fetch doc ${docs}`);
+        throw new Error(`Could not fetch doc ${err}`);
       }
     });
 

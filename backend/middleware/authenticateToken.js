@@ -1,6 +1,8 @@
 const jwt = require("jsonwebtoken");
+const asyncHandler = require("express-async-handler");
+const User = require("../models/userModel");
 
-const authenticateToken = (req, res, next) => {
+const authenticateToken = asyncHandler(async (req, res, next) => {
   // Get the token from the auth header (where it would be stored)
   let token;
 
@@ -19,16 +21,15 @@ const authenticateToken = (req, res, next) => {
     res.status(401);
   }
 
-  jwt.verify(token, process.env.JWT_SECRET, (err, id) => {
-    if (err) {
-      // Status subject to change
-      res.status(403);
-    }
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-    req.id = id;
-
+    req.id = decoded._id;
     next();
-  });
-};
+  } catch (error) {
+    res.status(401);
+    throw new Error("Not authorized, token failed");
+  }
+});
 
 module.exports = { authenticateToken };
