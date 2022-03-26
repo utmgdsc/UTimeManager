@@ -22,16 +22,9 @@ This is a **protected route**, a **valid JWT is required** in the header field
 ```
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1OTU4MjQyNzUsImlhdCI6IjIwMjAtMDctMjdUMDA6MjY6MTUuNzg5NTg0Mi0wNDowMCIsInN1YiI6ImNocmlzIn0.5US2_ITKcfgkpEbfsR-gxXbGPFY6XsgJPcGA5qaBD1M
 ```
-
-#### Body
-
-```json
-{}
-```
-
 #### Parameters
 
-    id: task_id // Id of the task that is being searched for
+  id: task_id 
 
 ### Possible Responses
 
@@ -40,35 +33,26 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1OTU4MjQyN
 ```json
 {
   "code": 200,
-  "message": "",
   "data": {
     // Task information
   }
 }
 ```
 
-#### Failure
+#### Immediate Failure
+
+```json
+{
+  "code": 500,
+  "message": "Not Authorized, token failed",
+  "data": {}
+}
+```
 
 ```json
 {
   "code": 500,
   "message": "Could not fetch doc",
-  "data": {}
-}
-```
-
-```json
-{
-  "code": -1,
-  "message": "Forbidden",
-  "data": {}
-}
-```
-
-```json
-{
-  "code": -1,
-  "message": "user not found",
   "data": {}
 }
 ```
