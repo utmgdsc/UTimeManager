@@ -53,3 +53,20 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1OTU4MjQyN
   "data": 
 }
 ```
+
+```json
+{
+  "code": 500,
+  "message": "Not Authorized, token failed",
+  "data": {}
+}
+```
+
+```json
+{
+  "code": 500,
+  "message": "Could not fetch doc",
+  "data": {}
+}
+```
+
