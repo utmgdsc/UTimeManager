@@ -39,15 +39,11 @@ const convertTaskData = (fetchedTaskData) => {
   return [];
 };
 
-const padSingleDigit = (num) => {
-  return num <= 9 ? `0${num}` : num.toString();
-};
-
 const buildDailyTaskRoute = (currDate) => {
   // getMonth returns 0-11
-  const currMonthStr = padSingleDigit(currDate.getMonth() + 1);
+  const currMonthStr = String(currDate.getMonth() + 1).padStart(2, "0");
   // getDate returns 1-31
-  const currDayStr = padSingleDigit(currDate.getDate());
+  const currDayStr = String(currDate.getDate()).padStart(2, "0");
   return (
     "/api/tasks/day/" +
     currDate.getFullYear().toString() +
@@ -72,7 +68,7 @@ const CalendarPage = () => {
         .get(buildDailyTaskRoute(currDate))
         .then((taskData) => {
           console.log(taskData);
-          setTaskData(convertTaskData(taskData));
+          setTaskData(taskData);
           setShowError(false);
         })
         .catch(() => {
@@ -108,7 +104,7 @@ const CalendarPage = () => {
           <ErrorMessage errorMessage={"Unable to load tasks!"} />
         </div>
       ) : (
-        <TaskListView tasks={taskData} edittable={true} />
+        <TaskListView tasks={convertTaskData(taskData)} edittable={true} />
       )}
     </div>
   );
