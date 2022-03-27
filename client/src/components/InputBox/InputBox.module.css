@@ -1,3 +1,9 @@
+.credLayout {
+  display: flex;
+  flex-direction: column;
+  margin: 10% 0%;
+}
+
 .inputBox {
   border-radius: 20px;
   padding: 7px 10px;
@@ -15,4 +21,8 @@
   font-size: 1.5rem;
   margin: 0px 0px 3px 10px;
   font-family: "Source Sans Pro", sans-serif;
+}
+
+.description{
+  height: 100px;
 }
