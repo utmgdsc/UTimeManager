@@ -11,6 +11,8 @@ const TaskCard = ({
   isOngoing,
   showDetailsDialog,
   edittable,
+  toggleTaskHandler,
+  id,
 }) => {
   const [taskOngoing, setOngoing] = useState(isOngoing);
   const taskTextStyle = !taskOngoing ? styles.taskDone : "";
@@ -18,7 +20,8 @@ const TaskCard = ({
     <SmallActionButton
       text={!taskOngoing ? "Start" : "End"}
       toggleButton={() => {
-        setOngoing(!taskOngoing);
+        toggleTaskHandler(id);
+        // setOngoing(!taskOngoing);
       }}
     />
   ) : (
@@ -56,6 +59,8 @@ TaskCard.propTypes = {
   isOngoing: PropTypes.bool.isRequired,
   showDetailsDialog: PropTypes.func,
   edittable: PropTypes.bool.isRequired,
+  toggleTaskHandler: PropTypes.func,
+  id: PropTypes.string.isRequired,
 };
 
 export default TaskCard;

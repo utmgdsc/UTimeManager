@@ -53,6 +53,35 @@ const buildDailyTaskRoute = (currDate) => {
 };
 
 const CalendarPage = () => {
+  const getTasks = async () => {
+    setLoadingErrorMessage("");
+    await instance
+      .get(buildDailyTaskRoute(currDate))
+      .then((taskData) => {
+        console.log(taskData);
+        setTaskData(convertTaskData(taskData));
+        setLoadingError(false);
+      })
+      .catch(() => {
+        setLoadingErrorMessage("Unable to load tasks!");
+        setLoadingError(true);
+      });
+  };
+
+  const toggleTaskHandler = async (id) => {
+    setToggleErrorMessage("");
+    await instance
+      .put(`/tasks/${id}/toggle`)
+      .then(() => {
+        getTasks();
+        setToggleError(false);
+      })
+      .catch(() => {
+        setToggleErrorMessage("Unable to toggle task!");
+        setToggleError(true);
+      });
+  };
+
   const [showModal, setModal] = useState(false);
 
   const toggleModal = () => {
@@ -60,22 +89,12 @@ const CalendarPage = () => {
   };
   const [currDate, setCurrDate] = useState(new Date());
   const [taskData, setTaskData] = useState([]);
-  const [showError, setShowError] = useState(false);
+  const [toggleError, setToggleError] = useState(false);
+  const [loadingError, setLoadingError] = useState(false);
+  const [toggleErrorMessage, setToggleErrorMessage] = useState("");
+  const [loadingErrorMessage, setLoadingErrorMessage] = useState("");
 
   useEffect(() => {
-    const getTasks = async () => {
-      await instance
-        .get(buildDailyTaskRoute(currDate))
-        .then((taskData) => {
-          console.log(taskData);
-          setTaskData(taskData);
-          setShowError(false);
-        })
-        .catch(() => {
-          setShowError(true);
-        });
-    };
-
     getTasks();
   }, [currDate]);
 
@@ -99,12 +118,19 @@ const CalendarPage = () => {
       <p className={styles.calendarHeader}>
         {dailyTaskDateFormatter(currDate)}
       </p>
-      {showError ? (
+      {loadingError ? (
         <div className={styles.errorMessageStyle}>
-          <ErrorMessage errorMessage={"Unable to load tasks!"} />
+          <ErrorMessage errorMessage={loadingErrorMessage} />
         </div>
       ) : (
         <TaskListView tasks={convertTaskData(taskData)} edittable={true} />
+      )}
+      {toggleError ? (
+        <div className={styles.errorMessageStyle}>
+          <ErrorMessage errorMessage={toggleErrorMessage} />
+        </div>
+      ) : (
+        <> </>
       )}
     </div>
   );
