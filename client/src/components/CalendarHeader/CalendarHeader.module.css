@@ -1,0 +1,28 @@
+.calendarPageHeader {
+  color: white;
+  font-weight: 600;
+  font-family: "Source Sans Pro", sans-serif;
+  font-size: 1.875rem;
+  margin: 5px 10px;
+}
+
+.calendarHeaderContainer {
+  display: flex;
+  background: #032a5c;
+  align-items: center;
+}
+
+.hamburgerIcon {
+  height: 1.875rem;
+  width: 1.875rem;
+  background: transparent;
+  color: #dadada;
+}
+
+.navButton {
+  background: transparent;
+  border: none;
+  margin-left: 10px;
+  padding-top: 0.4em;
+  cursor: pointer;
+}
