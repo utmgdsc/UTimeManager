@@ -25,10 +25,8 @@ const getTasks = asyncHandler(async (req, res) => {
       res.status(200).json(docs);
     })
     .catch((err) => {
-      if (err) {
-        res.status(500);
-        throw new Error(`Could not fetch doc ${err}`);
-      }
+      res.status(500);
+      throw new Error(`Could not fetch doc ${err}`);
     });
 });
 
@@ -44,10 +42,8 @@ const getTasksById = asyncHandler(async (req, res) => {
       res.status(200).json(docs);
     })
     .catch((err) => {
-      if (err) {
-        res.status(500);
-        throw new Error(`Could not fetch doc ${err}`);
-      }
+      res.status(500);
+      throw new Error(`Could not fetch doc ${err}`);
     });
   res.status(200).json(tasks);
 });
@@ -89,10 +85,8 @@ const getTasksByDay = asyncHandler(async (req, res) => {
       res.status(200).json(docs);
     })
     .catch((err) => {
-      if (err) {
-        res.status(500);
-        throw new Error(`Could not fetch doc ${err}`);
-      }
+      res.status(500);
+      throw new Error(`Could not fetch doc ${err}`);
     });
 
   res.status(200).json(tasks);
