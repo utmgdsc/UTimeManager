@@ -107,14 +107,14 @@ const getTasksByDay = asyncHandler(async (req, res) => {
         $lte: new Date(endDate),
       },
       isStarted: true,
-    },
-    (err, docs) => {
-      if (err) {
-        res.status(500);
-        throw new Error(`Could not fetch doc ${docs}`);
-      }
-    }
-  );
+    })
+    .then((tasks) => {
+      return tasks;
+    })
+    .catch((err) => {
+      res.status(500);
+      throw new Error(`Could not fetch doc ${docs}`);
+    });
 
   res.status(200).json(tasks);
 });
@@ -128,6 +128,7 @@ const toggleTask = asyncHandler(async (req, res) => {
   const taskId = req.params.id;
 
   const userId = user_data._id;
+  const curr_date = new Date();
   const taskDate = new Date();
 
   const task = await Task.findOne({
@@ -143,7 +144,11 @@ const toggleTask = asyncHandler(async (req, res) => {
       throw new Error(`Could not fetch doc ${docs}`);
     });
 
-  if (task && task.isStarted) {
+  if(task && (dates.compare(task.endDate, curr_date) == -1)) {
+    res.status(500);
+    throw new Error("Task already ended.")
+  }
+  else if (task && task.isStarted) {
     // stop the task
     task.isStarted = false;
     task.taskEndedDate = taskDate;
@@ -155,7 +160,8 @@ const toggleTask = asyncHandler(async (req, res) => {
     task.taskStartedAt = taskDate;
     const updatedTask = await task.save();
     res.json(updatedTask);
-  } else {
+  }
+  else {
     res.status(404);
     throw new Error("Task not found");
   }

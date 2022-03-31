@@ -4,7 +4,7 @@ const {
   getTasks,
   getTasksById,
   getTasksByDay,
-  startTask
+  toggleTask
 } = require("../controllers/taskController");
 
 const { authenticateToken } = require("../middleware/authenticateToken");
@@ -35,11 +35,11 @@ router.get("/day/:day", [authenticateToken, getTasksByDay]);
 // @desc     Update isStarted state to true
 // @route    PUT /api/tasks/startTask/:id
 // @access   Private
-router.put("/startTask/:id", [authenticateToken, startTask]);
+router.put("/startTask/:id", [authenticateToken, toggleTask]);
 
 // @desc     Update isStarted state to false
 // @route    PUT /api/tasks/stopTask/:id
 // @access   Private
-router.put("/stopTask/:id", [authenticateToken, stopTask]);
+// router.put("/stopTask/:id", [authenticateToken, stopTask]);
 
 module.exports = router;
