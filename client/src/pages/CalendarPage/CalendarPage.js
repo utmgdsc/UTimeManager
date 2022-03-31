@@ -59,7 +59,7 @@ const CalendarPage = () => {
       .get(buildDailyTaskRoute(currDate))
       .then((taskData) => {
         console.log(taskData);
-        setTaskData(convertTaskData(taskData));
+        setTaskData(taskData);
         setLoadingError(false);
       })
       .catch(() => {
