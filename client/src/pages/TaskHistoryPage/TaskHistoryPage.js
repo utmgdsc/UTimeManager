@@ -1,51 +1,71 @@
 import React, { useState, useEffect } from "react";
 import styles from "./TaskHistoryPage.module.css";
 import TaskListView from "../../components/TaskListView/TaskListView.js";
+import {
+  buildDailyTaskRoute,
+  buildDateRangeRoute,
+  convertTaskData,
+  getWeekRange,
+  getMonthRange,
+} from "../../utils.js";
+import { ErrorMessage } from "../../components/ErrorMessage/ErrorMessage.js";
+import { instance } from "../../axios.js";
 
 const TaskHistoryPage = () => {
   const dayFilter = "day";
   const weekFilter = "week";
   const monthFilter = "month";
+  const allFilter = "all";
   const [filter, setFilter] = useState(dayFilter);
   const [taskData, setTaskData] = useState([]);
+  const [loadingError, setLoadingError] = useState(false);
+  const [loadingErrorMessage, setLoadingErrorMessage] = useState("");
 
-  const getMonthRange = () => {
-    const firstDay = new Date();
-    firstDay.setDate(1);
-
-    const lastDay = new Date(firstDay);
-    lastDay.setMonth(lastDay.getMonth() + 1);
-    lastDay.setDate(0);
+  const getTaskOnRoute = async (route) => {
+    setLoadingErrorMessage("");
+    await instance
+      .get(route)
+      .then((taskData) => {
+        console.log(taskData);
+        setTaskData();
+        setLoadingError(false);
+      })
+      .catch(() => {
+        setLoadingErrorMessage("Unable to load tasks!");
+        setLoadingError(true);
+      });
   };
 
-  const getWeekRange = () => {
-    const monday = new Date();
-    const dayOffset = monday.getDay() === 0 ? 7 : monday.getDay();
-    monday.setDate(monday.getDate() - dayOffset + 1);
-
-    const sunday = new Date(monday);
-    sunday.setDate(sunday.getDate() + 7 - sunday.getDay());
-  };
-
-  const buildDailyTaskRoute = (currDate) => {
-    // getMonth returns 0-11
-    const currMonthStr = String(currDate.getMonth() + 1).padStart(2, "0");
-    // getDate returns 1-31
-    const currDayStr = String(currDate.getDate()).padStart(2, "0");
-    return (
-      "/api/tasks/day/" +
-      currDate.getFullYear().toString() +
-      currMonthStr +
-      currDayStr
-    );
-  };
-
-  const sampleTasks = [];
+  useEffect(() => {
+    let startDate, endDate;
+    switch (filter) {
+      case dayFilter:
+        getTaskOnRoute(buildDailyTaskRoute(new Date()));
+        break;
+      case weekFilter:
+        [startDate, endDate] = getWeekRange();
+        getTaskOnRoute(buildDateRangeRoute(startDate, endDate));
+        break;
+      case monthFilter:
+        [startDate, endDate] = getMonthRange();
+        getTaskOnRoute(buildDateRangeRoute(startDate, endDate));
+        break;
+      case allFilter:
+        getTaskOnRoute("/api/tasks/");
+        break;
+    }
+  }, [filter]);
 
   return (
     <div className={styles.bg}>
       <div className={styles.taskHistoryHeader}>Your Tasks</div>
-      <TaskListView tasks={sampleTasks} edittable={false} />
+      {loadingError ? (
+        <div className={styles.errorMessageStyle}>
+          <ErrorMessage errorMessage={loadingErrorMessage} />
+        </div>
+      ) : (
+        <TaskListView tasks={convertTaskData(taskData)} edittable={false} />
+      )}
     </div>
   );
 };
