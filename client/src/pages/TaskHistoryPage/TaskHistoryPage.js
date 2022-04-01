@@ -21,14 +21,14 @@ const TaskHistoryPage = () => {
   const [loadingError, setLoadingError] = useState(false);
   const [loadingErrorMessage, setLoadingErrorMessage] = useState("");
 
-  const getTaskOnRoute = async (route) => {
+  const fetchTasks = async (route) => {
     setLoadingErrorMessage("");
+    setLoadingError(false);
     await instance
       .get(route)
-      .then((taskData) => {
-        console.log(taskData);
-        setTaskData();
-        setLoadingError(false);
+      .then((response) => {
+        console.log(response);
+        setTaskData(response.data);
       })
       .catch(() => {
         setLoadingErrorMessage("Unable to load tasks!");
@@ -40,18 +40,18 @@ const TaskHistoryPage = () => {
     let startDate, endDate;
     switch (filter) {
       case dayFilter:
-        getTaskOnRoute(buildDailyTaskRoute(new Date()));
+        fetchTasks(buildDailyTaskRoute(new Date()));
         break;
       case weekFilter:
         [startDate, endDate] = getWeekRange();
-        getTaskOnRoute(buildDateRangeRoute(startDate, endDate));
+        fetchTasks(buildDateRangeRoute(startDate, endDate));
         break;
       case monthFilter:
         [startDate, endDate] = getMonthRange();
-        getTaskOnRoute(buildDateRangeRoute(startDate, endDate));
+        fetchTasks(buildDateRangeRoute(startDate, endDate));
         break;
-      case allFilter:
-        getTaskOnRoute("/api/tasks/");
+      default:
+        fetchTasks("/api/tasks/");
         break;
     }
   }, [filter]);
