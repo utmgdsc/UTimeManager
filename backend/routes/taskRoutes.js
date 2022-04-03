@@ -35,7 +35,7 @@ router.get("/day/:day", [authenticateToken, getTasksByDay]);
 // @desc     Update isStarted state to true
 // @route    PUT /api/tasks/startTask/:id
 // @access   Private
-router.put("/startTask/:id", [authenticateToken, toggleTask]);
+router.put("/toggle/:id", [authenticateToken, toggleTask]);
 
 // @desc     Update isStarted state to false
 // @route    PUT /api/tasks/stopTask/:id

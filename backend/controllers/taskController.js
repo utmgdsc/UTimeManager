@@ -3,174 +3,173 @@ const Task = require("../models/userTasks");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const e = require("express");
-const { mongo } = require("mongoose");
-const { isValidObjectId } = require("mongoose");
+const {mongo} = require("mongoose");
+const {isValidObjectId} = require("mongoose");
 const ObjectId = require("mongoose").Types.ObjectId;
 
 const createTask = asyncHandler(async (req, res) => {
-  const task = await new Task(req.body);
-  const createdTask = await task.save();
-  res.status(201).json(createdTask);
+    const task = await new Task(req.body);
+    const createdTask = await task.save();
+    res.status(201).json(createdTask);
 
-  if (!createdTask) {
-    res.status(400);
-    throw new Error("Invalid Task Input");
-  }
+    if (!createdTask) {
+        res.status(400);
+        throw new Error("Invalid Task Input");
+    }
 });
 
 const getTasks = asyncHandler(async (req, res) => {
-  const header = req.headers["authentication"];
-  const token = header.split(" ")[1];
+    const header = req.headers["authentication"];
+    const token = header.split(" ")[1];
 
-  const user_data = jwt.decode(token);
+    const user_data = jwt.decode(token);
 
-  const userId = user_data._id;
-  const tasks = await Task.find({ user_id: userId })
-    .then((docs) => {
-      res.status(200).json(docs);
-    })
-    .catch((err) => {
-      if (err) {
-        res.status(500);
-        throw new Error(`Could not fetch doc ${docs}`);
-      }
-    });
+    const userId = user_data._id;
+    const tasks = await Task.find({user_id: userId})
+        .then((docs) => {
+            res.status(200).json(docs);
+        })
+        .catch((err) => {
+            if (err) {
+                res.status(500);
+                throw new Error(`Could not fetch doc ${docs}`);
+            }
+        });
 
-  res.status(200).json(tasks);
+    res.status(200).json(tasks);
 });
 
 const getTasksById = asyncHandler(async (req, res) => {
-  // Task id Parameter
-  const header = req.headers["authentication"];
-  const token = header.split(" ")[1];
+    // Task id Parameter
+    const header = req.headers["authentication"];
+    const token = header.split(" ")[1];
 
-  const user_data = jwt.decode(token);
+    const user_data = jwt.decode(token);
 
-  const taskId = req.params.id;
+    const taskId = req.params.id;
 
-  // Users id
+    // Users id
 
-  const userId = user_data._id;
+    const userId = user_data._id;
 
-  const tasks = await Task.find({
-    _id: taskId,
-    user_id: userId,
-  })
-    .then((docs) => {
-      res.status(200).json(docs);
+    const tasks = await Task.find({
+        _id: taskId,
+        user_id: userId,
     })
-    .catch((err) => {
-      if (err) {
-        res.status(500);
-        throw new Error(`Could not fetch doc ${docs}`);
-      }
-    });
-  res.status(200).json(tasks);
+        .then((docs) => {
+            res.status(200).json(docs);
+        })
+        .catch((err) => {
+            if (err) {
+                res.status(500);
+                throw new Error(`Could not fetch doc ${docs}`);
+            }
+        });
+    res.status(200).json(tasks);
 });
 
 const getTasksByDay = asyncHandler(async (req, res) => {
-  const header = req.headers["authentication"];
-  const token = header.split(" ")[1];
+    const header = req.headers["authentication"];
+    const token = header.split(" ")[1];
 
-  const user_data = jwt.decode(token);
+    const user_data = jwt.decode(token);
 
-  const userId = user_data._id;
+    const userId = user_data._id;
 
-  const date = req.params.day; // get a day -> 26
-  // Users id -> Extract from JWT since GET does not take any body
-  let startDate = 0;
-  let endDate = 0;
+    const date = req.params.day; // get a day -> 26
+    // Users id -> Extract from JWT since GET does not take any body
+    let startDate = 0;
+    let endDate = 0;
 
-  if (date.length === 8) {
-    // parse
-    const year = parseInt(date.substring(0, 4));
-    const month = parseInt(date.substring(4, 6));
-    const day = parseInt(date.substring(6, 8));
+    if (date.length === 8) {
+        // parse
+        const year = parseInt(date.substring(0, 4));
+        const month = parseInt(date.substring(4, 6));
+        const day = parseInt(date.substring(6, 8));
 
-    try {
-      startDate = new Date(year, month - 1, day);
-      endDate = new Date(year, month - 1, day + 2);
-    } catch (error) {
-      res.status(400);
-      throw new Error("Invalid Date Input");
+        try {
+            startDate = new Date(year, month - 1, day);
+            endDate = new Date(year, month - 1, day + 2);
+        } catch (error) {
+            res.status(400);
+            throw new Error("Invalid Date Input");
+        }
     }
-  }
 
-  const tasks = await Task.find(
-    {
-      user_id: ObjectId(userId),
-      startDate: {
-        // $gte: startDate,
-        $gte: new Date(startDate),
-      },
-      endDate: {
-        $lte: new Date(endDate),
-      },
-      isStarted: true,
-    })
-    .then((tasks) => {
-      return tasks;
-    })
-    .catch((err) => {
-      res.status(500);
-      throw new Error(`Could not fetch doc ${docs}`);
-    });
+    const tasks = await Task.find(
+        {
+            user_id: ObjectId(userId),
+            startDate: {
+                // $gte: startDate,
+                $gte: new Date(startDate),
+            },
+            endDate: {
+                $lte: new Date(endDate),
+            },
+            isStarted: true,
+        })
+        .then((tasks) => {
+            return tasks;
+        })
+        .catch((err) => {
+            res.status(500);
+            throw new Error(`Could not fetch doc ${docs}`);
+        });
 
-  res.status(200).json(tasks);
+    res.status(200).json(tasks);
 });
 
 const toggleTask = asyncHandler(async (req, res) => {
-  const header = req.headers.authorization;
-  const token = header.split(" ")[1];
+    const header = req.headers.authorization;
+    const token = header.split(" ")[1];
 
-  const user_data = jwt.decode(token);
+    const user_data = jwt.decode(token);
 
-  const taskId = req.params.id;
+    const taskId = req.params.id;
 
-  const userId = user_data._id;
-  const curr_date = new Date();
-  const taskDate = new Date();
+    const userId = user_data._id;
+    const taskDate = new Date();
 
-  const task = await Task.findOne({
-    _id: taskId,
-    user_id: userId,
-  })
-
-    .then((docs) => {
-      return docs;
+    const task = await Task.findOne({
+        _id: taskId,
+        user_id: userId,
     })
-    .catch((err) => {
-      res.status(500);
-      throw new Error(`Could not fetch doc ${docs}`);
-    });
 
-  if(task && (dates.compare(task.endDate, curr_date) == -1)) {
-    res.status(500);
-    throw new Error("Task already ended.")
-  }
-  else if (task && task.isStarted) {
-    // stop the task
-    task.isStarted = false;
-    task.taskEndedDate = taskDate;
-    const updatedTask = await task.save();
-    res.json(updatedTask);
-  } else if (task && !task.isStarted) {
-    // start the task
-    task.isStarted = true;
-    task.taskStartedAt = taskDate;
-    const updatedTask = await task.save();
-    res.json(updatedTask);
-  }
-  else {
-    res.status(404);
-    throw new Error("Task not found");
-  }
+        .then((docs) => {
+            return docs;
+        })
+        .catch(() => {
+            res.status(500);
+            throw new Error(`Could not fetch doc ${docs}`);
+        });
+
+    if (!task) {
+        res.status(404);
+        throw new Error("Task not found")
+    }
+
+    if (task.isStarted) {
+        // stop the task
+        task.isStarted = false;
+        task.taskEndedAt = taskDate;
+        const updatedTask = await task.save();
+        res.json(updatedTask);
+    } else if (!task.isStarted && (task.taskEndedAt === undefined)) {
+        // start the task
+        task.isStarted = true;
+        task.taskStartedAt = taskDate;
+        const updatedTask = await task.save();
+        res.json(updatedTask);
+    } else {
+        res.status(401);
+        throw new Error("Couldn't start task. The task has already ended")
+    }
 });
 
 module.exports = {
-  createTask,
-  getTasks,
-  getTasksByDay,
-  getTasksById,
-  toggleTask,
+    createTask,
+    getTasks,
+    getTasksByDay,
+    getTasksById,
+    toggleTask,
 };
