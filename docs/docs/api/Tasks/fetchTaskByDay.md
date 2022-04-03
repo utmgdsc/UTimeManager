@@ -24,12 +24,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1OTU4MjQyN
 ```
 
 #### Parameters
-
-```json
-{
-  "day": "yyyymmdd"
-}
-```
+  day: yyyymmdd
 
 ### Possible Responses
 
@@ -47,26 +42,22 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1OTU4MjQyN
 
 ```json
 {
-  "code": 400,
   "message": "Invalid Date Input",
-  "stack": "",
-  "data": 
+  "stack": ""
 }
 ```
 
 ```json
 {
-  "code": 500,
   "message": "Not Authorized, token failed",
-  "data": {}
+  "stack": ""
 }
 ```
 
 ```json
 {
-  "code": 500,
   "message": "Could not fetch doc",
-  "data": {}
+  "stack": ""
 }
 ```
 
