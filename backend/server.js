@@ -10,12 +10,13 @@ require('dotenv').config()
 
 
 app.use(
-    cors({
-        origin: "http://localhost:3000",
-        credentials: true,
-        methods: "GET,POST,DELETE"
-    })
-)
+  cors({
+    origin: "http://localhost:3000",
+    credentials: true,
+    methods: "GET,POST,DELETE",
+  })
+);
+
 app.use(express.json()); // Allows us to accept JSON data in the body
 
 var router = express.Router();
@@ -26,8 +27,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/users", userRoutes);
-app.use("/api/task", taskRoutes);
-// app.use("/login", login);
+app.use("/api/tasks", taskRoutes);
 
 app.use(notFound);
 app.use(errorHandler);
