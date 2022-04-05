@@ -4,6 +4,7 @@ const {
   getTasks,
   getTasksById,
   getTasksByDay,
+  getTasksByMonth,
   toggleTask
 } = require("../controllers/taskController");
 
@@ -21,25 +22,26 @@ router.post("/", [authenticateToken, createTask]);
 // @access   Private
 router.get("/", [authenticateToken, getTasks]);
 
-// @desc     Fetch single task
-// @route    GET /api/tasks/task/:id
-// @acesss   Private
-router.get("/task/:id", [authenticateToken, getTasksById]);
+// @desc    Fetch task by month
+// @route   GET /api/tasks/month/:month
+// @access  Private
+router.get("/month/:month", [authenticateToken, getTasksByMonth]);
 
 // @desc     Fetch task with day query
 // @route    GET /api/tasks/day/:day
 // @access   Private
 router.get("/day/:day", [authenticateToken, getTasksByDay]);
 
+// @desc     Fetch single task
+// @route    GET /api/tasks/:id
+// @acesss   Private
+router.get("/task/:id", [authenticateToken, getTasksById]);
+// CHANGE: /task/:id
+// To avoid clashes with other routes
 
 // @desc     Update isStarted state to true
 // @route    PUT /api/tasks/startTask/:id
 // @access   Private
 router.put("/toggle/:id", [authenticateToken, toggleTask]);
-
-// @desc     Update isStarted state to false
-// @route    PUT /api/tasks/stopTask/:id
-// @access   Private
-// router.put("/stopTask/:id", [authenticateToken, stopTask]);
 
 module.exports = router;
