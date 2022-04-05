@@ -27,6 +27,15 @@ const taskSchema = mongoose.Schema(
       type: Boolean,
       required: true,
     },
+<<<<<<< HEAD
+=======
+    taskStartedAt: {
+      type: Date,
+    },
+    taskEndedAt: {
+      type: Date,
+    }
+>>>>>>> develop
   },
   {
     timestamps: true,
