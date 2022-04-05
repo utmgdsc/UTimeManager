@@ -1,22 +1,16 @@
-import React, { useState } from "react";
+import React from "react";
 import styles from "./DateSelector.module.css";
 import { PropTypes } from "prop-types";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-export const DateSelector = ({ onDateChanged, showTime }) => {
-  const [currDate, setCurrDate] = useState(new Date());
-
-  const _handleDateChanged = (newDate) => {
-    setCurrDate(newDate);
-    onDateChanged(newDate);
-  };
-
+export const DateSelector = ({ selectedDate, onDateChanged, showTime }) => {
   return (
     <DatePicker
-      selected={currDate}
-      onChange={_handleDateChanged}
+      selected={selectedDate}
+      onChange={onDateChanged}
       showTimeSelect={showTime}
+      dateFormat={showTime ? "MMMM d, yyyy h:mm aa" : "MMMM d, yyyy"}
       timeIntervals={10}
       className={styles.dateSelectorInputBox}
     />
@@ -24,6 +18,7 @@ export const DateSelector = ({ onDateChanged, showTime }) => {
 };
 
 DateSelector.propTypes = {
-  onDateChanged: PropTypes.func,
-  showTime: PropTypes.bool,
+  selectedDate: PropTypes.instanceOf(Date).isRequired,
+  onDateChanged: PropTypes.func.isRequired,
+  showTime: PropTypes.bool.isRequired,
 };
