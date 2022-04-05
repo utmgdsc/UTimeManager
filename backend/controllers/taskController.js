@@ -31,7 +31,6 @@ const getTasks = asyncHandler(async (req, res) => {
 });
 
 const getTasksById = asyncHandler(async (req, res) => {
-  console.log("getTASKbyID");
   const taskId = req.params.id;
   const userId = req.id;
 
