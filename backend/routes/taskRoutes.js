@@ -5,6 +5,7 @@ const {
   getTasksById,
   getTasksByDay,
   getTasksByMonth,
+  toggleTask
 } = require("../controllers/taskController");
 
 const { authenticateToken } = require("../middleware/authenticateToken");
@@ -37,5 +38,10 @@ router.get("/day/:day", [authenticateToken, getTasksByDay]);
 router.get("/task/:id", [authenticateToken, getTasksById]);
 // CHANGE: /task/:id
 // To avoid clashes with other routes
+
+// @desc     Update isStarted state to true
+// @route    PUT /api/tasks/startTask/:id
+// @access   Private
+router.put("/toggle/:id", [authenticateToken, toggleTask]);
 
 module.exports = router;

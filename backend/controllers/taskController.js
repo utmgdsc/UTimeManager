@@ -130,6 +130,53 @@ const getTasksByMonth = asyncHandler(async (req, res) => {
   res.status(200).json(tasks);
 });
 
+const toggleTask = asyncHandler(async (req, res) => {
+    const header = req.headers.authorization;
+    const token = header.split(" ")[1];
+
+    const user_data = jwt.decode(token);
+
+    const taskId = req.params.id;
+
+    const userId = user_data._id;
+    const taskDate = new Date();
+
+    const task = await Task.findOne({
+        _id: taskId,
+        user_id: userId,
+    })
+
+        .then((docs) => {
+            return docs;
+        })
+        .catch(() => {
+            res.status(500);
+            throw new Error(`Could not fetch doc ${docs}`);
+        });
+
+    if (!task) {
+        res.status(404);
+        throw new Error("Task not found")
+    }
+
+    if (task.isStarted) {
+        // stop the task
+        task.isStarted = false;
+        task.taskEndedAt = taskDate;
+        const updatedTask = await task.save();
+        res.json(updatedTask);
+    } else if (!task.isStarted && (task.taskEndedAt === undefined)) {
+        // start the task
+        task.isStarted = true;
+        task.taskStartedAt = taskDate;
+        const updatedTask = await task.save();
+        res.json(updatedTask);
+    } else {
+        res.status(401);
+        throw new Error("Couldn't start task. The task has already ended")
+    }
+});
+
 module.exports = {
   createTask,
   getTasks,

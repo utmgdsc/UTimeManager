@@ -27,11 +27,18 @@ const taskSchema = mongoose.Schema(
       type: Boolean,
       required: true,
     },
+    taskStartedAt: {
+      type: Date,
+    },
+    taskEndedAt: {
+      type: Date,
+    }
   },
   {
     timestamps: true,
   }
 );
+
 const Task = mongoose.model("Task", taskSchema);
 
 module.exports = Task;
