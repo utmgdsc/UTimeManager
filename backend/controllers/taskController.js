@@ -77,8 +77,7 @@ const getTasksByDay = asyncHandler(async (req, res) => {
     },
     endDate: {
       $gte: startDate,
-    },
-    isStarted: true,
+    }
   })
     .then((docs) => {
       res.status(200).json(docs);
@@ -117,8 +116,7 @@ const getTasksByMonth = asyncHandler(async (req, res) => {
     startDate: {
       $gte: startDate,
       $lte: endDate,
-    },
-    isStarted: true,
+    }
   })
     .then((docs) => {
       res.status(200).json(docs);
