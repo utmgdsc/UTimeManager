@@ -6,6 +6,7 @@ const Task = require("../models/userTasks");
 
 let server;
 let userId;
+let jwt;
 
 beforeAll(async () => {
     await mongoose.connect("mongodb://localhost:27017/", {
@@ -14,6 +15,8 @@ beforeAll(async () => {
         // useCreateIndex: true,
     });
     server = app.listen();
+
+    // Creating user that we're testing on
     const res = await request(app)
         .post("/api/users")
         .send({email: "nestor@mail.utoronto.ca", password: "abcd"})
@@ -36,6 +39,8 @@ describe("Login Test Suite", () => {
             .send({email: "nestor@mail.utoronto.ca", password: "abcd"})
         expect(res.statusCode).toEqual(200)
         expect(res.body).toHaveProperty("token")
+        jwt = res.body.token;
+
     })
 
     it("Invalid Login", async () => {
@@ -49,15 +54,8 @@ describe("Login Test Suite", () => {
 })
 
 describe("Toggle Task Test Suite", () => {
-    let jwt = "";
     let taskObjectId;
     beforeAll(async () => {
-        // Login
-        const loginRes = await request(app)
-            .post("/api/users/login")
-            .send({email: "nestor@mail.utoronto.ca", password: "abcd"})
-        jwt = loginRes.body.token;
-
         // Create task
         const taskRes = await request(app).post("/api/tasks").set("Authorization", `Bearer ${jwt}`).send({
             title: "Test Task",
