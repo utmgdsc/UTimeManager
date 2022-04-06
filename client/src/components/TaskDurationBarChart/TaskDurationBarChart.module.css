@@ -4,7 +4,7 @@
 }
 
 /* works in chrome and safari */
-.scrollableTaskChart ::-webkit-scrollbar {
+.scrollableTaskChart::-webkit-scrollbar {
   width: 0px !important;
   display: none;
 }
