@@ -6,9 +6,22 @@ const feedbackSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    user_id: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+    },
     task_id: {
       type: mongoose.Schema.Types.ObjectId,
+      required: true,
     },
+    satisfaction: {
+      type: Number,
+      required: false
+    },
+    createDate: {
+      type: Date,
+      requried: true
+    }
   },
   {
     timestamps: true,
