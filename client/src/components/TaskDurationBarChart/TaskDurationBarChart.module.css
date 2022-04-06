@@ -1,10 +1,4 @@
 .scrollableTaskChart {
   overflow: hidden;
-  overflow-x: scroll;
-}
-
-/* works in chrome and safari */
-.scrollableTaskChart::-webkit-scrollbar {
-  width: 0px !important;
-  display: none;
+  overflow-x: auto;
 }
