@@ -6,8 +6,6 @@ import {
   Bar,
   XAxis,
   YAxis,
-  CartesianGrid,
-  Legend,
   ReferenceLine,
   ResponsiveContainer,
 } from "recharts";
@@ -49,8 +47,14 @@ export const TaskDurationBarChart = ({ taskResponseData }) => {
           }}
         >
           <XAxis dataKey="taskName" stroke="black" />
-          <YAxis stroke="black" />
-          <Legend />
+          <YAxis
+            stroke="black"
+            label={{
+              value: "Difference (%) in Time Spent",
+              angle: -90,
+              position: "insideBottomLeft",
+            }}
+          />
           <ReferenceLine y={0} stroke="#000" />
           <Bar dataKey="percentDifference" barSize={20} fill="#c97085" />
         </BarChart>
