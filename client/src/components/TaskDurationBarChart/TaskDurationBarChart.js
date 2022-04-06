@@ -1,16 +1,9 @@
 import React from "react";
 import styles from "./TaskDurationBarChart.module.css";
 import PropTypes from "prop-types";
-import {
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  ReferenceLine,
-  ResponsiveContainer,
-} from "recharts";
+import { BarChart, Bar, XAxis, YAxis, ReferenceLine } from "recharts";
 
-export const TaskDurationBarChart = ({ taskResponseData }) => {
+const computeDurationDifference = (taskResponseData) => {
   const taskDurationDifferences = [];
 
   for (const task of taskResponseData) {
@@ -28,6 +21,12 @@ export const TaskDurationBarChart = ({ taskResponseData }) => {
     if (task.taskStatus === "DONE")
       taskDurationDifferences.push(taskDifference);
   }
+
+  return taskDurationDifferences;
+};
+
+export const TaskDurationBarChart = ({ taskResponseData }) => {
+  const taskDurationDifferences = computeDurationDifference(taskResponseData);
 
   return (
     <div className={styles.scrollableTaskChart}>
