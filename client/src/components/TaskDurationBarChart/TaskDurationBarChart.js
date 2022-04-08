@@ -3,29 +3,29 @@ import styles from "./TaskDurationBarChart.module.css";
 import PropTypes from "prop-types";
 import { BarChart, Bar, XAxis, YAxis, ReferenceLine } from "recharts";
 
-const computeDurationDifference = (taskResponseData) => {
-  const taskDurationDifferences = [];
-
-  for (const task of taskResponseData) {
-    const taskDifference = {
-      taskName: task.title,
-      percentDifference: 0,
-    };
-
-    const plannedDuration =
-      task.originalEndDate.getTime() - task.originalStartDate.getTime();
-    const actualDuration = task.endDate.getTime() - task.startDate.getTime();
-    taskDifference.percentDifference =
-      (actualDuration - plannedDuration) / plannedDuration;
-
-    if (task.taskStatus === "DONE")
-      taskDurationDifferences.push(taskDifference);
-  }
-
-  return taskDurationDifferences;
-};
-
 export const TaskDurationBarChart = ({ taskResponseData }) => {
+  const computeDurationDifference = (taskResponseData) => {
+    const taskDurationDifferences = [];
+
+    for (const task of taskResponseData) {
+      const taskDifference = {
+        taskName: task.title,
+        percentDifference: 0,
+      };
+
+      const plannedDuration =
+        task.originalEndDate.getTime() - task.originalStartDate.getTime();
+      const actualDuration = task.endDate.getTime() - task.startDate.getTime();
+      taskDifference.percentDifference =
+        (actualDuration - plannedDuration) / plannedDuration;
+
+      if (task.taskStatus === "DONE")
+        taskDurationDifferences.push(taskDifference);
+    }
+
+    return taskDurationDifferences;
+  };
+
   const taskDurationDifferences = computeDurationDifference(taskResponseData);
 
   return (
