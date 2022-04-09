@@ -16,12 +16,12 @@ const feedbackSchema = mongoose.Schema(
     },
     satisfaction: {
       type: Number,
-      required: false
+      required: true,
     },
     createDate: {
       type: Date,
-      requried: true
-    }
+      requried: true,
+    },
   },
   {
     timestamps: true,
