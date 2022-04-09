@@ -38,48 +38,50 @@ const getTasks = asyncHandler(async (req, res) => {
       } catch (error) {
         throw new Error("Invalid Date Input");
       }
-    }
-    const tasks = await Task.find({
-      $or: [
-        {
-          user_id: userId,
-          startDate: {
-            $lte: startDate,
+      const tasks = await Task.find({
+        $or: [
+          {
+            user_id: userId,
+            startDate: {
+              $lte: startDate,
+            },
+            endDate: {
+              $gte: startDate,
+            },
           },
-          endDate: {
-            $gte: startDate,
+          {
+            user_id: userId,
+            startDate: {
+              $lte: startDate,
+            },
+            endDate: {
+              $gte: startDate,
+              $lte: endDate,
+            },
           },
-        },
-        {
-          user_id: userId,
-          startDate: {
-            $lte: startDate,
+          {
+            user_id: userId,
+            startDate: {
+              $gte: startDate,
+              $lt: endDate,
+            },
+            endDate: {
+              $gt: startDate,
+            },
           },
-          endDate: {
-            $gte: startDate,
-            $lte: endDate,
-          },
-        },
-        {
-          user_id: userId,
-          startDate: {
-            $gte: startDate,
-            $lt: endDate,
-          },
-          endDate: {
-            $gt: startDate,
-          },
-        },
-      ],
-    })
-      .then((docs) => {
-        res.status(200).json(docs);
+        ],
       })
-      .catch((err) => {
-        res.status(500);
-        throw new Error(`Could not fetch doc ${err}`);
-      });
-    res.status(200).json(tasks);
+        .then((docs) => {
+          res.status(200).json(docs);
+        })
+        .catch((err) => {
+          res.status(500);
+          throw new Error(`Could not fetch doc ${err}`);
+        });
+      res.status(200).json(tasks);
+    } else {
+      throw new Error("Invalid Date Input");
+    }
   } else if (!startDateParam && !endDateParam) {
     await Task.find({ user_id: userId })
       .then((docs) => {
