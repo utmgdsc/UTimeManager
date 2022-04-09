@@ -6,7 +6,6 @@ const createFeedback = asyncHandler(async (req, res) => {
 
   const userId = req.id;
   feedback.user_id = userId;
-  feedback.createDate = new Date();
 
   const createdFeedback = await feedback.save();
   res.status(201).json(createdFeedback);

@@ -20,7 +20,7 @@ const feedbackSchema = mongoose.Schema(
     },
     createDate: {
       type: Date,
-      requried: true,
+      default: Date.now(),
     },
   },
   {
