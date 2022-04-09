@@ -2,16 +2,18 @@ import React, { useState } from "react";
 import styles from "./TaskFormPage.module.css";
 import { InputBox } from "../../components/InputBox/InputBox";
 import { CredentialsButton } from "../../components/CredentialsButton/CredentialsButton.js";
+import { instance } from "../../axios";
 
 const TaskFormPage = () => {
   // TODO : limit to 500 characters
+  const [errorMessage, setErrorMessage] = useState("");
   const [taskFormData, setTaskFormData] = useState({
     title: "",
-    user_id: "", // TODO : figure out where to get it from
+    user_id: "620710de5b72a4271a59eabe", // TODO : figure out where to get it from
     location: "",
     description: "",
-    startDate: new Date(), // TODO : change to use date selector
-    endDate: new Date(), // TODO : change to use date selector
+    startDate: "2022-02-25T15:02:08", // TODO : change to use date selector
+    endDate: "2022-02-27T15:02:08", // TODO : change to use date selector
     isStarted: false,
   });
 
@@ -21,8 +23,40 @@ const TaskFormPage = () => {
     setTaskFormData(newTaskFormData);
   };
 
-  const createTask = () => {
-    console.log(taskFormData);
+  const validateTaskFormData = () => {
+    if (!taskFormData.title || taskFormData.title.length > 500) {
+      return "Invalid Task Title (max: 500 characters)";
+    }
+
+    if (!taskFormData.location || taskFormData.location.length > 500) {
+      return "Invalid Task Location (max: 500 characters)";
+    }
+
+    if (!taskFormData.description || taskFormData.description.length > 500) {
+      return "Invalid Task Description (max: 500 characters)";
+    }
+
+    return ""; // empty string means successful validation
+  };
+
+  const createTaskHandler = async () => {
+    setErrorMessage("");
+    const validationResult = validateTaskFormData();
+    console.log(validationResult);
+    if (!validationResult) {
+      console.log(taskFormData);
+      await instance
+        .post("/api/tasks", taskFormData)
+        .then((res) => {
+          console.log(`Response: ${res.data}`);
+        })
+        .catch((e) => {
+          console.log(e);
+          setErrorMessage("Request Failed");
+        });
+    } else {
+      setErrorMessage(validationResult);
+    }
   };
 
   return (
@@ -61,7 +95,7 @@ const TaskFormPage = () => {
           />
         </div>
         <div className={styles.button}>
-          <CredentialsButton text={"Create"} authAction={createTask} />
+          <CredentialsButton text={"Create"} authAction={createTaskHandler} />
         </div>
       </div>
     </div>
