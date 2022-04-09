@@ -32,5 +32,4 @@ const authenticateToken = asyncHandler(async (req, res, next) => {
   }
 });
 
-
 module.exports = { authenticateToken };
