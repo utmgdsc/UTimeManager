@@ -3,6 +3,9 @@ const Task = require("../models/userTasks");
 
 const createTask = asyncHandler(async (req, res) => {
     const task = await new Task(req.body);
+    const userId = req.id;
+    task.user_id = userId;
+
     const createdTask = await task.save();
     res.status(201).json(createdTask);
 
@@ -104,8 +107,6 @@ const toggleTask = asyncHandler(async (req, res) => {
     const taskId = req.params.id;
     const userId = req.id;
     const taskDate = new Date();
-    console.log(taskId)
-    console.log(userId)
     const task = await Task.findOne({
         _id: taskId, user_id: userId,
     }).then((docs) => {
