@@ -37,9 +37,10 @@ describe("Login Test Suite", () => {
         const res = await request(app)
             .post("/api/users/login")
             .send({email: "nestor@mail.utoronto.ca", password: "abcd"})
-        expect(res.statusCode).toEqual(200)
-        expect(res.body).toHaveProperty("token")
-        jwt = res.body.token;
+        expect(res.statusCode).toEqual(200);
+        // expect(res.headers).toHaveProperty()
+        expect(res.headers['set-cookie'][0]).toEqual(expect.stringContaining("token"))
+        jwt = res.headers['set-cookie'][0].split(";")[0];
 
     })
 
@@ -57,7 +58,7 @@ describe("Toggle Task Test Suite", () => {
     let taskObjectId;
     beforeAll(async () => {
         // Create task
-        const taskRes = await request(app).post("/api/tasks").set("Authorization", `Bearer ${jwt}`).send({
+        const taskRes = await request(app).post("/api/tasks").set("cookie", jwt).send({
             title: "Test Task",
             "user_id": userId,
             description: "Test Task",
@@ -68,17 +69,17 @@ describe("Toggle Task Test Suite", () => {
     });
 
     it("Toggle Task (Not Started Yet)", async () => {
-        const toggleTaskRes = await request(app).put(`/api/tasks/toggle/${taskObjectId}`).set("Authorization", `Bearer ${jwt}`)
+        const toggleTaskRes = await request(app).put(`/api/tasks/toggle/${taskObjectId}`).set("cookie", jwt)
         expect(toggleTaskRes.body.isStarted).toEqual(true);
     })
 
     it("Toggle Task (Already Started)", async () => {
-        const toggleTaskRes = await request(app).put(`/api/tasks/toggle/${taskObjectId}`).set("Authorization", `Bearer ${jwt}`)
+        const toggleTaskRes = await request(app).put(`/api/tasks/toggle/${taskObjectId}`).set("cookie", jwt)
         expect(toggleTaskRes.body.isStarted).toEqual(false);
     })
 
     it("Toggle Task (Already Ended)", async () => {
-        const toggleTaskRes = await request(app).put(`/api/tasks/toggle/${taskObjectId}`).set("Authorization", `Bearer ${jwt}`)
+        const toggleTaskRes = await request(app).put(`/api/tasks/toggle/${taskObjectId}`).set("cookie", jwt)
         expect(toggleTaskRes.body.message).toEqual(`Couldn't start task. The task has already ended`);
         expect(toggleTaskRes.statusCode).toEqual(401);
     })
