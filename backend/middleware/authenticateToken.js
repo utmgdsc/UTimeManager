@@ -7,7 +7,7 @@ const authenticateToken = asyncHandler(async (req, res, next) => {
   let token;
   if (
     req.headers.cookie &&
-    req.headers.cookie.includes("token=")
+    req.headers.cookie.includes("token")
   ) {
     token = req.headers.cookie.split("token=")[1].split(" ")[0];
   }

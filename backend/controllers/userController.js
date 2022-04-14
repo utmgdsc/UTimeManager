@@ -47,8 +47,6 @@ const loginUser = asyncHandler(async (req, res) => {
         throw new Error("Wrong password");
     }
 
-    const {password, ...others} = user._doc;
-
     const token = jwt.sign(
         {
             email: user.email,
