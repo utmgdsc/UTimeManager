@@ -1,6 +1,5 @@
 const asyncHandler = require("express-async-handler");
 const Task = require("../models/userTasks");
-const jwt = require("jsonwebtoken");
 
 const createTask = asyncHandler(async (req, res) => {
   const task = await new Task(req.body);
@@ -115,14 +114,8 @@ const getTasksById = asyncHandler(async (req, res) => {
 });
 
 const toggleTask = asyncHandler(async (req, res) => {
-  const header = req.headers.authorization;
-  const token = header.split(" ")[1];
-
-  const user_data = jwt.decode(token);
-
   const taskId = req.params.id;
-
-  const userId = user_data._id;
+  const userId = req.id;
   const taskDate = new Date();
 
   const task = await Task.findOne({

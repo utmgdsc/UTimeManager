@@ -5,7 +5,6 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
 const registerUser = asyncHandler(async (req, res) => {
-  console.log("HERE");
   const { email, password } = req.body;
 
   const userExists = await User.findOne({ email });
