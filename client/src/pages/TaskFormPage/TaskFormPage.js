@@ -6,30 +6,21 @@ import { DateSelector } from "../../components/DateSelector/DateSelector.js";
 import { instance } from "../../axios";
 
 const TaskFormPage = () => {
-  const getISOString = (date) => {
-    return date.toISOString().slice(0, -5);
-  };
-
   const [errorMessage, setErrorMessage] = useState("");
   const [taskFormData, setTaskFormData] = useState({
     title: "",
     user_id: "620710de5b72a4271a59eabe", // TODO : figure out where to get it from
     location: "",
     description: "",
-    startDate: getISOString(new Date()),
-    endDate: getISOString(new Date()),
+    startDate: new Date(),
+    endDate: new Date(),
     isStarted: false,
   });
 
   const updateTaskFormData = (e, value) => {
     const newTaskFormData = { ...taskFormData };
-    newTaskFormData[value] = e.target.value;
-    setTaskFormData(newTaskFormData);
-  };
-
-  const updateTaskDate = (newDate, value) => {
-    const newTaskFormData = { ...taskFormData };
-    newTaskFormData[value] = getISOString(newDate);
+    newTaskFormData[value] =
+      value !== "startDate" && value !== "endDate" ? e.target.value : e;
     setTaskFormData(newTaskFormData);
   };
 
@@ -48,8 +39,11 @@ const TaskFormPage = () => {
 
     const startDate = new Date(taskFormData.startDate);
     const endDate = new Date(taskFormData.endDate);
-    if (startDate.getTime() > endDate.getTime()) {
-      return "Start date must come before end date";
+    if (
+      startDate.getTime() > endDate.getTime() ||
+      startDate.getTime() < new Date().getTime()
+    ) {
+      return "Start time must come before end time and after the current time";
     }
 
     return ""; // empty string means successful validation
@@ -58,21 +52,25 @@ const TaskFormPage = () => {
   const createTaskHandler = async () => {
     setErrorMessage("");
     const validationResult = validateTaskFormData();
-    console.log(validationResult);
-    if (!validationResult) {
-      console.log(taskFormData);
-      await instance
-        .post("/api/tasks", taskFormData)
-        .then((res) => {
-          console.log(`Response: ${res.data}`);
-        })
-        .catch((e) => {
-          console.log(e);
-          setErrorMessage("Request Failed");
-        });
-    } else {
+
+    if (validationResult !== "") {
       setErrorMessage(validationResult);
+      return;
     }
+
+    const taskFormUploadData = { ...taskFormData };
+    taskFormUploadData.startDate = taskFormUploadData.startDate.toISOString();
+    taskFormUploadData.endDate = taskFormUploadData.endDate.toISOString();
+
+    await instance
+      .post("/api/tasks", taskFormUploadData)
+      .then((res) => {
+        console.log(`Response: ${res.data}`);
+      })
+      .catch((e) => {
+        console.log(e);
+        setErrorMessage("Request Failed");
+      });
   };
 
   return (
@@ -112,15 +110,17 @@ const TaskFormPage = () => {
           <p className={styles.inputHeader}>Start</p>
           <DateSelector
             showTime={true}
-            selectedDate={new Date(taskFormData.startDate)}
-            onDateChanged={(newDate) => updateTaskDate(newDate, "startDate")}
+            selectedDate={taskFormData.startDate}
+            onDateChanged={(newDate) =>
+              updateTaskFormData(newDate, "startDate")
+            }
           />
 
           <p className={styles.inputHeader}>End</p>
           <DateSelector
             showTime={true}
-            selectedDate={new Date(taskFormData.endDate)}
-            onDateChanged={(newDate) => updateTaskDate(newDate, "endDate")}
+            selectedDate={taskFormData.endDate}
+            onDateChanged={(newDate) => updateTaskFormData(newDate, "endDate")}
           />
         </div>
 
