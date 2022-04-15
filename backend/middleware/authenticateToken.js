@@ -5,13 +5,11 @@ const User = require("../models/userModel");
 const authenticateToken = asyncHandler(async (req, res, next) => {
   // Get the token from the auth header (where it would be stored)
   let token;
-
   if (
-    req.headers.authorization &&
-    req.headers.authorization.startsWith("Bearer")
+    req.headers.cookie &&
+    req.headers.cookie.includes("token")
   ) {
-    const authHeader = req.headers.authorization;
-    token = authHeader.split(" ")[1];
+    token = req.headers.cookie.split("token=")[1].split(" ")[0];
   }
 
   // Verify that there is a token
