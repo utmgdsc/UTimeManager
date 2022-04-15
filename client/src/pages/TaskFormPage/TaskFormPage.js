@@ -4,6 +4,7 @@ import styles from "./TaskFormPage.module.css";
 import { InputBox } from "../../components/InputBox/InputBox";
 import { CredentialsButton } from "../../components/CredentialsButton/CredentialsButton.js";
 import { DateSelector } from "../../components/DateSelector/DateSelector.js";
+import { ErrorMessage } from "../../components/ErrorMessage/ErrorMessage.js";
 import { instance } from "../../axios";
 
 const TaskFormPage = () => {
@@ -26,6 +27,7 @@ const TaskFormPage = () => {
     newTaskFormData[value] =
       value !== "startDate" && value !== "endDate" ? e.target.value : e;
     setTaskFormData(newTaskFormData);
+    setErrorMessage("");
   };
 
   const validateTaskFormData = () => {
@@ -83,56 +85,54 @@ const TaskFormPage = () => {
 
   return (
     <div className={styles.bg}>
-      <div>
-        <p className={styles.header}>Create a Task</p>
-        <div className={styles.inputBox}>
-          <InputBox
-            header={"Task Title"}
-            type={"text"}
-            placeholder={"Task Name"}
-            onChange={(e) => updateTaskFormData(e, "title")}
-            value={taskFormData.title}
-          />
-          <InputBox
-            header={"Location"}
-            type={"text"}
-            placeholder={"Location Name"}
-            onChange={(e) => updateTaskFormData(e, "location")}
-            value={taskFormData.location}
-          />
-          <InputBox
-            header={"Description"}
-            type={"text"}
-            placeholder={""}
-            expanded={true}
-            onChange={(e) => updateTaskFormData(e, "description")}
-            value={taskFormData.description}
-          />
-          <p className={styles.inputHeader}>Start</p>
-          <DateSelector
-            showTime={true}
-            selectedDate={taskFormData.startDate}
-            onDateChanged={(newDate) =>
-              updateTaskFormData(newDate, "startDate")
-            }
-          />
+      <p className={styles.header}>Create a Task</p>
+      <div className={styles.inputBox}>
+        <InputBox
+          header={"Task Title"}
+          type={"text"}
+          placeholder={"Task Name"}
+          onChange={(e) => updateTaskFormData(e, "title")}
+          value={taskFormData.title}
+        />
+        <InputBox
+          header={"Location"}
+          type={"text"}
+          placeholder={"Location Name"}
+          onChange={(e) => updateTaskFormData(e, "location")}
+          value={taskFormData.location}
+        />
+        <InputBox
+          header={"Description"}
+          type={"text"}
+          placeholder={""}
+          expanded={true}
+          onChange={(e) => updateTaskFormData(e, "description")}
+          value={taskFormData.description}
+        />
+        <p className={styles.inputHeader}>Start</p>
+        <DateSelector
+          showTime={true}
+          selectedDate={taskFormData.startDate}
+          onDateChanged={(newDate) => updateTaskFormData(newDate, "startDate")}
+        />
 
-          <p className={styles.inputHeader}>End</p>
-          <DateSelector
-            showTime={true}
-            selectedDate={taskFormData.endDate}
-            onDateChanged={(newDate) => updateTaskFormData(newDate, "endDate")}
-          />
+        <p className={styles.inputHeader}>End</p>
+        <DateSelector
+          showTime={true}
+          selectedDate={taskFormData.endDate}
+          onDateChanged={(newDate) => updateTaskFormData(newDate, "endDate")}
+        />
+      </div>
+
+      {errorMessage ? <ErrorMessage errorMessage={errorMessage} /> : <></>}
+
+      <div className={styles.buttonBar}>
+        <div className={styles.button}>
+          <CredentialsButton text={"Cancel"} authAction={routeToCalendar} />
         </div>
 
-        <div className={styles.buttonBar}>
-          <div className={styles.button}>
-            <CredentialsButton text={"Cancel"} authAction={routeToCalendar} />
-          </div>
-
-          <div className={styles.button}>
-            <CredentialsButton text={"Create"} authAction={createTaskHandler} />
-          </div>
+        <div className={styles.button}>
+          <CredentialsButton text={"Create"} authAction={createTaskHandler} />
         </div>
       </div>
     </div>
