@@ -8,6 +8,7 @@ import { instance } from "../../axios";
 
 const TaskFormPage = () => {
   const navigate = useNavigate();
+  const routeToCalendar = () => navigate("/calendar");
 
   const [errorMessage, setErrorMessage] = useState("");
   const [taskFormData, setTaskFormData] = useState({
@@ -72,6 +73,7 @@ const TaskFormPage = () => {
       .post("/api/tasks", taskFormUploadData)
       .then((res) => {
         console.log(`Response: ${res.data}`);
+        routeToCalendar();
       })
       .catch((e) => {
         console.log(e);
@@ -125,10 +127,7 @@ const TaskFormPage = () => {
 
         <div className={styles.buttonBar}>
           <div className={styles.button}>
-            <CredentialsButton
-              text={"Cancel"}
-              authAction={() => navigate("/calendar")}
-            />
+            <CredentialsButton text={"Cancel"} authAction={routeToCalendar} />
           </div>
 
           <div className={styles.button}>
