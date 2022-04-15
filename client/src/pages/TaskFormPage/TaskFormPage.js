@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styles from "./TaskFormPage.module.css";
 import { InputBox } from "../../components/InputBox/InputBox";
 import { CredentialsButton } from "../../components/CredentialsButton/CredentialsButton.js";
@@ -6,6 +7,8 @@ import { DateSelector } from "../../components/DateSelector/DateSelector.js";
 import { instance } from "../../axios";
 
 const TaskFormPage = () => {
+  const navigate = useNavigate();
+
   const [errorMessage, setErrorMessage] = useState("");
   const [taskFormData, setTaskFormData] = useState({
     title: "",
@@ -55,12 +58,15 @@ const TaskFormPage = () => {
 
     if (validationResult !== "") {
       setErrorMessage(validationResult);
+      console.log(validationResult);
       return;
     }
 
     const taskFormUploadData = { ...taskFormData };
     taskFormUploadData.startDate = taskFormUploadData.startDate.toISOString();
     taskFormUploadData.endDate = taskFormUploadData.endDate.toISOString();
+
+    console.log(taskFormUploadData);
 
     await instance
       .post("/api/tasks", taskFormUploadData)
@@ -76,13 +82,6 @@ const TaskFormPage = () => {
   return (
     <div className={styles.bg}>
       <div>
-        <button
-          type={"button"}
-          className={styles.closeButton}
-          aria-label={"Close"}
-        >
-          &times;
-        </button>
         <p className={styles.header}>Create a Task</p>
         <div className={styles.inputBox}>
           <InputBox
@@ -124,8 +123,17 @@ const TaskFormPage = () => {
           />
         </div>
 
-        <div className={styles.button}>
-          <CredentialsButton text={"Create"} authAction={createTaskHandler} />
+        <div className={styles.buttonBar}>
+          <div className={styles.button}>
+            <CredentialsButton
+              text={"Cancel"}
+              authAction={() => navigate("/calendar")}
+            />
+          </div>
+
+          <div className={styles.button}>
+            <CredentialsButton text={"Create"} authAction={createTaskHandler} />
+          </div>
         </div>
       </div>
     </div>
