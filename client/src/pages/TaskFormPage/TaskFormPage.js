@@ -85,54 +85,59 @@ const TaskFormPage = () => {
 
   return (
     <div className={styles.bg}>
-      <p className={styles.header}>Create a Task</p>
-      <div className={styles.inputBox}>
-        <InputBox
-          header={"Task Title"}
-          type={"text"}
-          placeholder={"Task Name"}
-          onChange={(e) => updateTaskFormData(e, "title")}
-          value={taskFormData.title}
-        />
-        <InputBox
-          header={"Location"}
-          type={"text"}
-          placeholder={"Location Name"}
-          onChange={(e) => updateTaskFormData(e, "location")}
-          value={taskFormData.location}
-        />
-        <InputBox
-          header={"Description"}
-          type={"text"}
-          placeholder={""}
-          expanded={true}
-          onChange={(e) => updateTaskFormData(e, "description")}
-          value={taskFormData.description}
-        />
-        <p className={styles.inputHeader}>Start</p>
-        <DateSelector
-          showTime={true}
-          selectedDate={taskFormData.startDate}
-          onDateChanged={(newDate) => updateTaskFormData(newDate, "startDate")}
-        />
+      <div>
+        <p className={styles.header}>Create a Task</p>
+        <div className={styles.inputBox}>
+          <InputBox
+            header={"Task Title"}
+            type={"text"}
+            placeholder={"Task Name"}
+            onChange={(e) => updateTaskFormData(e, "title")}
+            value={taskFormData.title}
+          />
+          <InputBox
+            header={"Location"}
+            type={"text"}
+            placeholder={"Location Name"}
+            onChange={(e) => updateTaskFormData(e, "location")}
+            value={taskFormData.location}
+          />
+          <InputBox
+            header={"Description"}
+            type={"text"}
+            placeholder={""}
+            expanded={true}
+            onChange={(e) => updateTaskFormData(e, "description")}
+            multiline={true}
+            value={taskFormData.description}
+          />
+          <p className={styles.inputHeader}>Start</p>
+          <DateSelector
+            showTime={true}
+            selectedDate={taskFormData.startDate}
+            onDateChanged={(newDate) =>
+              updateTaskFormData(newDate, "startDate")
+            }
+          />
 
-        <p className={styles.inputHeader}>End</p>
-        <DateSelector
-          showTime={true}
-          selectedDate={taskFormData.endDate}
-          onDateChanged={(newDate) => updateTaskFormData(newDate, "endDate")}
-        />
-      </div>
-
-      {errorMessage ? <ErrorMessage errorMessage={errorMessage} /> : <></>}
-
-      <div className={styles.buttonBar}>
-        <div className={styles.button}>
-          <CredentialsButton text={"Cancel"} authAction={routeToCalendar} />
+          <p className={styles.inputHeader}>End</p>
+          <DateSelector
+            showTime={true}
+            selectedDate={taskFormData.endDate}
+            onDateChanged={(newDate) => updateTaskFormData(newDate, "endDate")}
+          />
         </div>
 
-        <div className={styles.button}>
-          <CredentialsButton text={"Create"} authAction={createTaskHandler} />
+        {errorMessage ? <ErrorMessage errorMessage={errorMessage} /> : <></>}
+
+        <div className={styles.buttonBar}>
+          <div className={styles.button}>
+            <CredentialsButton text={"Cancel"} authAction={routeToCalendar} />
+          </div>
+
+          <div className={styles.button}>
+            <CredentialsButton text={"Create"} authAction={createTaskHandler} />
+          </div>
         </div>
       </div>
     </div>
