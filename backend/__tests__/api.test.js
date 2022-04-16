@@ -57,8 +57,9 @@ describe("Login Test Suite", () => {
 
 describe("Getting Tasks Suite", () => {
   let taskObjectId;
+  let taskObjectIdNotExist;
   beforeAll(async () => {
-    // Create task
+    // Create task (Case 1)
     const taskRes = await request(app)
       .post("/api/tasks")
       .set("cookie", jwt)
@@ -110,6 +111,20 @@ describe("Getting Tasks Suite", () => {
         endDate: "2022-04-18T00:00:08",
         isStarted: false,
       });
+    // Case 4
+    const taskRes4 = await request(app)
+      .post("/api/tasks")
+      .set("cookie", jwt)
+      .send({
+        title: "Test Task 4",
+        user_id: userId,
+        description: "Test Task",
+        startDate: "2022-04-01T04:00:00.000Z",
+        endDate: "2022-04-18T00:00:08",
+        isStarted: false,
+      });
+    taskObjectIdNotExist = taskRes4._body._id;
+    await Task.deleteMany({ title: "Test Task 4", user_id: userId });
   });
 
   it("Getting All Tasks (Valid token)", async () => {
@@ -149,9 +164,7 @@ describe("Getting Tasks Suite", () => {
       .get(`/api/tasks/task/${taskObjectId}`)
       .set("cookie", jwt);
     expect(res.statusCode).toEqual(200);
-    expect(res.body).toEqual(
-      expect.arrayContaining([expect.objectContaining({ title: "Test Task" })])
-    );
+    expect(res.body).toEqual(expect.objectContaining({ title: "Test Task" }));
   });
 
   it("Getting Tasks by id (Invalid Token)", async () => {
@@ -163,7 +176,25 @@ describe("Getting Tasks Suite", () => {
     expect(res.body.message).toEqual("Not authorized, token failed");
   });
 
-  it("Getting Tasks by Date Range (Case 1)", async () => {
+  it("Getting Tasks by id (Invalid id)", async () => {
+    const res = await request(app)
+      .get("/api/tasks/task/abdcd12334")
+      .set("cookie", jwt);
+
+    expect(res.statusCode).toEqual(400);
+    // expect(res.body.message).toEqual("Not authorized, token failed");
+  });
+
+  it("Getting Tasks by id (Id that does not exist)", async () => {
+    const res = await request(app)
+      .get(`/api/tasks/task/${taskObjectIdNotExist}`)
+      .set("cookie", jwt);
+
+    expect(res.statusCode).toEqual(404);
+    expect(res.body.message).toEqual("Unable to get a task");
+  });
+
+  it("Getting Tasks by Date Range (3 Cases)", async () => {
     const res = await request(app)
       .get("/api/tasks?start=20220413&end=20220415")
       .set("cookie", jwt);
@@ -192,6 +223,17 @@ describe("Create Task Suite", () => {
     expect(res.body.user_id).toEqual(userId);
     expect(res.body.description).toEqual("Test Task");
     expect(res.body.isStarted).toEqual(false);
+  });
+
+  it("Create Task (False input)", async () => {
+    const res = await request(app).post("/api/tasks").set("cookie", jwt).send({
+      user_id: userId,
+      description: "Test Task",
+      endDate: new Date().toISOString(),
+      isStarted: false,
+    });
+    expect(res.statusCode).toEqual(400);
+    expect(res.body.message).toEqual("Invalid Create Task Input");
   });
 
   it("Create Task (Invalid token)", async () => {

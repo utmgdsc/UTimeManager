@@ -14,7 +14,7 @@ const createTask = asyncHandler(async (req, res) => {
     .catch((err) => {
       if (err.name === "ValidationError") {
         res.status(400);
-        throw new Error("Invalid Feedback Input");
+        throw new Error("Invalid Create Task Input");
       }
       res.status(500);
       throw new Error("Unable to create feedback");
@@ -108,18 +108,26 @@ const getTasksById = asyncHandler(async (req, res) => {
   const taskId = req.params.id;
   const userId = req.id;
 
-  const tasks = await Task.find({
+  const tasks = await Task.findOne({
     _id: taskId,
     user_id: userId,
   })
     .then((docs) => {
+      if (docs === null) {
+        res.status(404);
+        res.send({ message: "Unable to get a task" });
+        return;
+      }
       res.status(200).json(docs);
     })
     .catch((err) => {
+      if (err.name === "CastError") {
+        res.status(400);
+        throw new Error("Invalid id provided");
+      }
       res.status(500);
-      throw new Error(`Could not fetch doc ${err}`);
+      throw new Error("Unable to get a task");
     });
-  res.status(200).json(tasks);
 });
 
 const toggleTask = asyncHandler(async (req, res) => {
