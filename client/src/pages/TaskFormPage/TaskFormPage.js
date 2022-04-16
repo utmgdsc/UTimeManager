@@ -13,7 +13,6 @@ const TaskFormPage = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [taskFormData, setTaskFormData] = useState({
     title: "",
-    user_id: "620710de5b72a4271a59eabe", // TODO : figure out where to get it from
     location: "",
     description: "",
     startDate: new Date(),
