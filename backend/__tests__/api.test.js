@@ -39,7 +39,6 @@ describe("Login Test Suite", () => {
       .post("/api/users/login")
       .send({ email: "nestor@mail.utoronto.ca", password: "abcd" });
     expect(res.statusCode).toEqual(200);
-    // expect(res.headers).toHaveProperty()
     expect(res.headers["set-cookie"][0]).toEqual(
       expect.stringContaining("token")
     );
@@ -67,18 +66,51 @@ describe("Getting Tasks Suite", () => {
         title: "Test Task",
         user_id: userId,
         description: "Test Task",
+        startDate: "2022-04-14T04:00:00.000Z",
         endDate: new Date().toISOString(),
         isStarted: false,
       });
     taskObjectId = taskRes.body._id;
-  });
 
-  // it("Toggle Task (Already Started)", async () => {
-  // //   const toggleTaskRes = await request(app)
-  // //     .put(`/api/tasks/toggle/${taskObjectId}`)
-  // //     .set("cookie", jwt);
-  // //   expect(toggleTaskRes.body.isStarted).toEqual(false);
-  // // });
+    // Case 2
+    const taskRes1 = await request(app)
+      .post("/api/tasks")
+      .set("cookie", jwt)
+      .send({
+        title: "Test Task 1",
+        user_id: userId,
+        description: "Test Task",
+        startDate: "2022-04-12T04:00:00.000Z",
+        endDate: "2022-04-14T00:00:08",
+        isStarted: false,
+      });
+
+    // Case 3
+    const taskRes2 = await request(app)
+      .post("/api/tasks")
+      .set("cookie", jwt)
+      .send({
+        title: "Test Task 2",
+        user_id: userId,
+        description: "Test Task",
+        startDate: "2022-04-01T04:00:00.000Z",
+        endDate: "2022-04-18T00:00:08",
+        isStarted: false,
+      });
+
+    // Case 4
+    const taskRes3 = await request(app)
+      .post("/api/tasks")
+      .set("cookie", jwt)
+      .send({
+        title: "Test Task 3",
+        user_id: userId,
+        description: "Test Task",
+        startDate: "2022-04-01T04:00:00.000Z",
+        endDate: "2022-04-18T00:00:08",
+        isStarted: false,
+      });
+  });
 
   it("Getting All Tasks (Valid token)", async () => {
     const res = await request(app).get("/api/tasks").set("cookie", jwt);
@@ -129,6 +161,21 @@ describe("Getting Tasks Suite", () => {
 
     expect(res.statusCode).toEqual(401);
     expect(res.body.message).toEqual("Not authorized, token failed");
+  });
+
+  it("Getting Tasks by Date Range (Case 1)", async () => {
+    const res = await request(app)
+      .get("/api/tasks?start=20220413&end=20220415")
+      .set("cookie", jwt);
+    expect(res.statusCode).toEqual(200);
+    expect(res.body).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({ title: "Test Task" }),
+        expect.objectContaining({ title: "Test Task 1" }),
+        expect.objectContaining({ title: "Test Task 2" }),
+        expect.not.objectContaining({ title: "Test Task 3" }),
+      ])
+    );
   });
 });
 
@@ -208,17 +255,6 @@ describe("Create Feedback Suite", () => {
       });
     expect(res.body.message).toEqual("Invalid Feedback Input");
     expect(res.statusCode).toEqual(400);
-
-    // 1. Add this for creating task
-        // - Make changes to the controller similar to feedback
-        // - I can do this all in this branch
-    // 2. Add cleanup for feedback test cases
-    // 3. Add additional test cases
-            // - Cover more possible cases
-            // - random false input
-              // - Needs to be handled appropriately
-            // - Cover all scenarios for get tasks route - 3 cases
-            // - getting task by Id - test case with invalid id
   });
 });
 
