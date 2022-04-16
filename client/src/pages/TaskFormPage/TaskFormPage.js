@@ -44,10 +44,9 @@ const TaskFormPage = () => {
     const startDate = new Date(taskFormData.startDate);
     const endDate = new Date(taskFormData.endDate);
     if (
-      startDate.getTime() > endDate.getTime() ||
-      startDate.getTime() < new Date().getTime()
+      startDate.getTime() > endDate.getTime()
     ) {
-      return "Start time must come before end time and after the current time";
+      return "Start time must come before end time";
     }
 
     return ""; // empty string means successful validation
