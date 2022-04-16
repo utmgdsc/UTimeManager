@@ -130,14 +130,13 @@ const TaskFormPage = () => {
 
         <div className={styles.buttonBar}>
           <div className={styles.button}>
+            <CredentialsButton text={"Create"} authAction={createTaskHandler} />
+          </div>
+          <div className={styles.button}>
             <CredentialsButton
               text={"Cancel"}
               authAction={() => navigate("/calendar")}
             />
-          </div>
-
-          <div className={styles.button}>
-            <CredentialsButton text={"Create"} authAction={createTaskHandler} />
           </div>
         </div>
       </div>
