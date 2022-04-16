@@ -13,6 +13,16 @@
   background-color: white;
   border-color: transparent;
   max-width: 300px;
+  overflow: scroll;
+  resize: both;
+}
+
+.inputBox::-webkit-scrollbar {
+  visibility: hidden;
+}
+
+.inputBox::-webkit-scrollbar-corner {
+  visibility: hidden;
 }
 
 .inputHeader {
