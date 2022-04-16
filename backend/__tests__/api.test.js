@@ -3,6 +3,7 @@ const { app } = require("../server");
 const mongoose = require("mongoose");
 const User = require("../models/userModel");
 const Task = require("../models/userTasks");
+const Feedback = require("../models/feedbackModel");
 
 let server;
 let userId;
@@ -61,7 +62,7 @@ describe("Getting Tasks Suite", () => {
     // Create task
     const taskRes = await request(app)
       .post("/api/tasks")
-      .set("Authorization", `Bearer ${jwt}`)
+      .set("cookie", jwt)
       .send({
         title: "Test Task",
         user_id: userId,
@@ -72,10 +73,15 @@ describe("Getting Tasks Suite", () => {
     taskObjectId = taskRes.body._id;
   });
 
+  // it("Toggle Task (Already Started)", async () => {
+  // //   const toggleTaskRes = await request(app)
+  // //     .put(`/api/tasks/toggle/${taskObjectId}`)
+  // //     .set("cookie", jwt);
+  // //   expect(toggleTaskRes.body.isStarted).toEqual(false);
+  // // });
+
   it("Getting All Tasks (Valid token)", async () => {
-    const res = await request(app)
-      .get("/api/tasks")
-      .set("Authorization", `Bearer ${jwt}`);
+    const res = await request(app).get("/api/tasks").set("cookie", jwt);
     expect(res.statusCode).toEqual(200);
     expect(res.body).toEqual(
       expect.arrayContaining([expect.objectContaining({ title: "Test Task" })])
@@ -83,9 +89,7 @@ describe("Getting Tasks Suite", () => {
   });
 
   it("Getting All Tasks (Invalid token)", async () => {
-    const res = await request(app)
-      .get("/api/tasks")
-      .set("Authorization", `Bearer `);
+    const res = await request(app).get("/api/tasks").set("cookie", "jwt");
     expect(res.statusCode).toEqual(401);
     expect(res.body.message).toEqual("Not authorized, token failed");
   });
@@ -93,7 +97,7 @@ describe("Getting Tasks Suite", () => {
   it("Getting Tasks by Date Range (Valid Token)", async () => {
     const res = await request(app)
       .get("/api/tasks?start=20220401&end=20270407")
-      .set("Authorization", `Bearer ${jwt}`);
+      .set("cookie", jwt);
     expect(res.statusCode).toEqual(200);
     expect(res.body).toEqual(
       expect.arrayContaining([expect.objectContaining({ title: "Test Task" })])
@@ -103,7 +107,7 @@ describe("Getting Tasks Suite", () => {
   it("Getting Tasks By Date Range (Invalid token)", async () => {
     const res = await request(app)
       .get("/api/tasks?start=20220401&end=20270407")
-      .set("Authorization", `Bearer `);
+      .set("cookie", "jwt");
     expect(res.statusCode).toEqual(401);
     expect(res.body.message).toEqual("Not authorized, token failed");
   });
@@ -111,8 +115,7 @@ describe("Getting Tasks Suite", () => {
   it("Getting Tasks by id (Valid Token)", async () => {
     const res = await request(app)
       .get(`/api/tasks/task/${taskObjectId}`)
-      .set("Authorization", `Bearer ${jwt}`);
-
+      .set("cookie", jwt);
     expect(res.statusCode).toEqual(200);
     expect(res.body).toEqual(
       expect.arrayContaining([expect.objectContaining({ title: "Test Task" })])
@@ -122,7 +125,7 @@ describe("Getting Tasks Suite", () => {
   it("Getting Tasks by id (Invalid Token)", async () => {
     const res = await request(app)
       .get(`/api/tasks/task/${taskObjectId}`)
-      .set("Authorization", `Bearer `);
+      .set("cookie", "jwt");
 
     expect(res.statusCode).toEqual(401);
     expect(res.body.message).toEqual("Not authorized, token failed");
@@ -131,16 +134,13 @@ describe("Getting Tasks Suite", () => {
 
 describe("Create Task Suite", () => {
   it("Create Task (Valid Token)", async () => {
-    const res = await request(app)
-      .post("/api/tasks")
-      .set("Authorization", `Bearer ${jwt}`)
-      .send({
-        title: "Test Task",
-        user_id: userId,
-        description: "Test Task",
-        endDate: new Date().toISOString(),
-        isStarted: false,
-      });
+    const res = await request(app).post("/api/tasks").set("cookie", jwt).send({
+      title: "Test Task",
+      user_id: userId,
+      description: "Test Task",
+      endDate: new Date().toISOString(),
+      isStarted: false,
+    });
     expect(res.body.title).toEqual("Test Task");
     expect(res.body.user_id).toEqual(userId);
     expect(res.body.description).toEqual("Test Task");
@@ -148,9 +148,7 @@ describe("Create Task Suite", () => {
   });
 
   it("Create Task (Invalid token)", async () => {
-    const res = await request(app)
-      .post("/api/tasks")
-      .set("Authorization", `Bearer `);
+    const res = await request(app).post("/api/tasks").set("cookie", "jwt");
     expect(res.statusCode).toEqual(401);
     expect(res.body.message).toEqual("Not authorized, token failed");
   });
@@ -162,7 +160,7 @@ describe("Create Feedback Suite", () => {
     // Create task
     const taskRes = await request(app)
       .post("/api/tasks")
-      .set("Authorization", `Bearer ${jwt}`)
+      .set("cookie", jwt)
       .send({
         title: "Test Task",
         user_id: userId,
@@ -176,7 +174,7 @@ describe("Create Feedback Suite", () => {
   it("Create Feedback (Valid Token)", async () => {
     const res = await request(app)
       .post("/api/feedback")
-      .set("Authorization", `Bearer ${jwt}`)
+      .set("cookie", jwt)
       .send({
         body: "Feedback from Chris on feedback branch: fix this",
         satisfaction: 9,
@@ -194,11 +192,33 @@ describe("Create Feedback Suite", () => {
   });
 
   it("Create Task (Invalid token)", async () => {
-    const res = await request(app)
-      .post("/api/feedback")
-      .set("Authorization", `Bearer `);
+    const res = await request(app).post("/api/feedback").set("cookie", "jwt");
     expect(res.statusCode).toEqual(401);
     expect(res.body.message).toEqual("Not authorized, token failed");
+  });
+
+  it("Create Feedback (Valid Token)", async () => {
+    const res = await request(app)
+      .post("/api/feedback")
+      .set("cookie", jwt)
+      .send({
+        body: "Feedback from Chris on feedback branch: fix this",
+        user_id: userId,
+        task_id: taskObjectId,
+      });
+    expect(res.body.message).toEqual("Invalid Feedback Input");
+    expect(res.statusCode).toEqual(400);
+
+    // 1. Add this for creating task
+        // - Make changes to the controller similar to feedback
+        // - I can do this all in this branch
+    // 2. Add cleanup for feedback test cases
+    // 3. Add additional test cases
+            // - Cover more possible cases
+            // - random false input
+              // - Needs to be handled appropriately
+            // - Cover all scenarios for get tasks route - 3 cases
+            // - getting task by Id - test case with invalid id
   });
 });
 
@@ -248,6 +268,9 @@ afterAll(async () => {
   const user = await User.findOne({ email: "nestor@mail.utoronto.ca" });
   await User.deleteOne(user);
   await Task.deleteMany({ title: "Test Task", user_id: userId });
+  await Feedback.deleteMany({
+    body: "Feedback from Chris on feedback branch: fix this",
+  });
   mongoose.connection.close();
   server.close();
 });
