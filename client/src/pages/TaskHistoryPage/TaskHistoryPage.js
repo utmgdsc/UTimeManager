@@ -38,9 +38,10 @@ const TaskHistoryPage = () => {
 
   useEffect(() => {
     let startDate, endDate;
+    const nowDate = new Date();
     switch (filter) {
       case dayFilter:
-        fetchTasks(buildDailyTaskRoute(new Date()));
+        fetchTasks(buildDateRangeRoute(nowDate, nowDate));
         break;
       case weekFilter:
         [startDate, endDate] = getWeekRange();

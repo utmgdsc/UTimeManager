@@ -6,10 +6,6 @@ export const formatDateforAPI = (currDate) => {
   return currDate.getFullYear().toString() + currMonthStr + currDayStr;
 };
 
-export const buildDailyTaskRoute = (currDate) => {
-  return "/api/tasks/day/" + formatDateforAPI(currDate);
-};
-
 export const buildDateRangeRoute = (startDate, endDate) => {
   return `/api/tasks?start=${formatDateforAPI(
     startDate
