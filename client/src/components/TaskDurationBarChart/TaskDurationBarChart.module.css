@@ -1,0 +1,4 @@
+.scrollableTaskChart {
+  overflow: hidden;
+  overflow-x: auto;
+}

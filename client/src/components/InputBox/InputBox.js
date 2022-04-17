@@ -9,17 +9,28 @@ export const InputBox = ({
   onChange,
   value,
   expanded,
+  multiline,
 }) => {
   return (
     <>
       <p className={styles.inputHeader}>{header}</p>
-      <input
-        className={`${styles.inputBox} ${expanded ? styles.description : ""}`}
-        type={type}
-        placeholder={placeholder}
-        onChange={(e) => onChange(e)}
-        value={value}
-      />
+      {multiline ? (
+        <textarea
+          className={`${styles.inputBox} ${expanded ? styles.description : ""}`}
+          type={type}
+          placeholder={placeholder}
+          onChange={(e) => onChange(e)}
+          value={value}
+        />
+      ) : (
+        <input
+          className={`${styles.inputBox} ${expanded ? styles.description : ""}`}
+          type={type}
+          placeholder={placeholder}
+          onChange={(e) => onChange(e)}
+          value={value}
+        />
+      )}
     </>
   );
 };
@@ -31,4 +42,5 @@ InputBox.propTypes = {
   onChange: PropTypes.func.isRequired,
   value: PropTypes.string.isRequired,
   expanded: PropTypes.bool,
+  multiline: PropTypes.bool,
 };
