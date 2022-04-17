@@ -1,33 +1,33 @@
-const jwt = require("jsonwebtoken")
+const jwt = require("jsonwebtoken");
+const asyncHandler = require("express-async-handler");
+const User = require("../models/userModel");
 
+const authenticateToken = asyncHandler(async (req, res, next) => {
+  // Get the token from the auth header (where it would be stored)
+  let token;
+  if (
+    req.headers.cookie &&
+    req.headers.cookie.includes("token")
+  ) {
+    token = req.headers.cookie.split("token=")[1].split(" ")[0];
+  }
 
-const authenticateToken = (req, res, next) => {
+  // Verify that there is a token
+  if (!token) {
+    // Bad request
+    // Code subject to change
+    res.status(401);
+  }
 
-    // Get the token from the auth header (where it would be stored)
-    const authHeader = req.headers["authentication"];
-    const token = authHeader.split(' ')[1]
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-    console.log(authHeader);
+    req.id = decoded._id;
+    next();
+  } catch (error) {
+    res.status(401);
+    throw new Error("Not authorized, token failed");
+  }
+});
 
-    // Verify that there is a token
-    if(!token) {
-        // Bad request
-        // Code subject to change
-        res.sendStatus(401);
-    }
-
-    jwt.verify(token, process.env.JWT_SECRET, (err, id) => {
-        
-        if(err) {
-            // Status subject to change
-            res.sendStatus(403);
-        }
-
-        req.id = id;
-
-        next();
-    })
-
-}
-
-module.exports = {authenticateToken}
+module.exports = { authenticateToken };
