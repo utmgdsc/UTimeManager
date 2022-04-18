@@ -40,7 +40,7 @@ const getTasks = asyncHandler(async (req, res) => {
             } catch (error) {
                 throw new Error("Invalid Date Input");
             }
-            const tasks = await Task.find({
+            await Task.find({
                 $or: [{
                     user_id: userId, startDate: {
                         $lte: startDate,
@@ -68,7 +68,6 @@ const getTasks = asyncHandler(async (req, res) => {
                     res.status(500);
                     throw new Error(`Could not fetch doc ${err}`);
                 });
-            res.status(200).json(tasks);
         } else {
             throw new Error("Invalid Date Input");
         }
