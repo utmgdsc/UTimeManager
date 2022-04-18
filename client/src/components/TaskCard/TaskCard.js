@@ -8,17 +8,27 @@ const TaskCard = ({
   location,
   startTime,
   endTime,
-  isOngoing,
+  ongoing,
+  finished,
   showDetailsDialog,
   edittable,
 }) => {
-  const [taskOngoing, setOngoing] = useState(isOngoing);
-  const taskTextStyle = !taskOngoing ? styles.taskDone : "";
+  const [taskFinished, setTaskFinished] = useState(finished);
+  const [taskOngoing, setTaskOngoing] = useState(ongoing);
+  const taskTextStyle = taskFinished ? styles.taskDone : "";
   const actionBtn = edittable ? (
     <SmallActionButton
       text={!taskOngoing ? "Start" : "End"}
       toggleButton={() => {
-        setOngoing(!taskOngoing);
+        if (taskOngoing) {
+          // task already ongoing --> toggle to finish
+          setTaskOngoing(false);
+          setTaskFinished(true);
+        } else {
+          // task not yet started --> toggle to ongoing
+          setTaskOngoing(true);
+          setTaskFinished(false);
+        }
       }}
     />
   ) : (
@@ -38,7 +48,9 @@ const TaskCard = ({
       <div className={styles.timeInfo}>
         <p className={taskTextStyle}>{startTime}</p>
         <p
-          className={taskOngoing ? styles.endTimeStyle : styles.taskDoneEndTime}
+          className={
+            !taskFinished ? styles.endTimeStyle : styles.taskDoneEndTime
+          }
         >
           to {endTime}
         </p>
@@ -53,7 +65,8 @@ TaskCard.propTypes = {
   location: PropTypes.string.isRequired,
   startTime: PropTypes.string.isRequired,
   endTime: PropTypes.string.isRequired,
-  isOngoing: PropTypes.bool.isRequired,
+  ongoing: PropTypes.bool.isRequired,
+  finished: PropTypes.bool.isRequired,
   showDetailsDialog: PropTypes.func,
   edittable: PropTypes.bool.isRequired,
 };

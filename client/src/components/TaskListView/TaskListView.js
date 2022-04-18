@@ -11,7 +11,8 @@ const TaskListView = ({ tasks, edittable }) => {
         location={task.location}
         startTime={task.startTime}
         endTime={task.endTime}
-        isOngoing={task.isOngoing}
+        ongoing={task.ongoing}
+        finished={task.finished}
         showDetailsDialog={() => {}}
         edittable={edittable}
       />
