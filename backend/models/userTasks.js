@@ -6,6 +6,10 @@ const taskSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    location: {
+      type: String,
+      required: true,
+    },
     user_id: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
