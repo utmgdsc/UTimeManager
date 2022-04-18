@@ -3,7 +3,6 @@ import styles from "./TaskHistoryPage.module.css";
 import TaskListView from "../../components/TaskListView/TaskListView.js";
 import {
   buildDateRangeRoute,
-  convertTaskData,
   getWeekRange,
   getMonthRange,
 } from "../../utils.js";
@@ -70,7 +69,7 @@ const TaskHistoryPage = () => {
           <ErrorMessage errorMessage={loadingErrorMessage} />
         </div>
       ) : (
-        <TaskListView tasks={convertTaskData(taskData)} edittable={false} />
+        <TaskListView tasks={taskData} edittable={false} />
       )}
     </div>
   );

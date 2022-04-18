@@ -12,31 +12,6 @@ export const buildDateRangeRoute = (startDate, endDate) => {
   )}&end=${formatDateforAPI(endDate)}`;
 };
 
-const getDateTime = (taskDateISOString) => {
-  const taskDate = new Date(taskDateISOString);
-
-  return [
-    taskDate.toLocaleDateString(),
-    taskDate.toTimeString().substring(0, 5),
-  ];
-};
-
-export const convertTaskData = (fetchedTaskData) => {
-  return fetchedTaskData.map(function (task) {
-    const [taskDate, startTime] = getDateTime(task.startDate);
-    const endTime = getDateTime(task.endDate)[1];
-    return {
-      title: task.title,
-      location: task.location,
-      startTime: `${taskDate} ${startTime}`,
-      endTime: endTime,
-      date: taskDate,
-      ongoing: task.isStarted && !("taskEndedAt" in task),
-      finished: task.isStarted && "taskEndedAt" in task,
-    };
-  });
-};
-
 export const getMonthRange = () => {
   const firstDay = new Date();
   firstDay.setDate(1);
