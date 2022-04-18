@@ -25,7 +25,7 @@ Cookie:token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1OTU4MjQyNzUsImlhdC
 
 #### Parameters
 
-start: yyyymmdd\
+start: yyyymmdd,
 end: yyyymmdd
 
 #### Body
