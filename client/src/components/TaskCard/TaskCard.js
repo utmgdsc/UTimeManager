@@ -6,13 +6,25 @@ import styles from "./TaskCard.module.css";
 const TaskCard = ({
   title,
   location,
-  startTime,
-  endTime,
+  startDate,
+  endDate,
   ongoing,
   finished,
   showDetailsDialog,
   edittable,
 }) => {
+  const getDateTime = (taskDateISOString) => {
+    const taskDate = new Date(taskDateISOString);
+
+    return [
+      taskDate.toLocaleDateString(),
+      taskDate.toTimeString().substring(0, 5),
+    ];
+  };
+
+  const [taskDate, startTime] = getDateTime(startDate);
+  const endTime = getDateTime(endDate)[1];
+
   const taskTextStyle = finished ? styles.taskDone : "";
   const actionBtn = edittable ? (
     <SmallActionButton
@@ -36,7 +48,7 @@ const TaskCard = ({
         <p className={taskTextStyle}>{location}</p>
       </div>
       <div className={styles.timeInfo}>
-        <p className={taskTextStyle}>{startTime}</p>
+        <p className={taskTextStyle}>{`${taskDate} ${startTime}`}</p>
         <p className={!finished ? styles.endTimeStyle : styles.taskDoneEndTime}>
           to {endTime}
         </p>
@@ -49,8 +61,8 @@ const TaskCard = ({
 TaskCard.propTypes = {
   title: PropTypes.string.isRequired,
   location: PropTypes.string.isRequired,
-  startTime: PropTypes.string.isRequired,
-  endTime: PropTypes.string.isRequired,
+  startDate: PropTypes.instanceOf(Date).isRequired,
+  endDate: PropTypes.instanceOf(Date).isRequired,
   ongoing: PropTypes.bool.isRequired,
   finished: PropTypes.bool.isRequired,
   showDetailsDialog: PropTypes.func,
