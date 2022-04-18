@@ -9,6 +9,10 @@ color: '#E83E8C',
 
 <Endpoint>GET /tasks?start=yyyymmdd&end=yyyymmdd</Endpoint>: Get all tasks <br></br>
 
+### Description
+
+If start and end dates parameters are not specified, then it will return all the user's tasks. Otherwise, it will filter out the tasks within the range specified by start and end parameters.
+
 ### Example Request
 
 This is a **protected route**, a **valid JWT is required** in the header field
