@@ -66,6 +66,7 @@ describe("Getting Tasks Suite", () => {
             .send({
                 title: "Test Task",
                 description: "Test Task",
+                location: "Test Location",
                 startDate: "2022-04-14T04:00:00.000Z",
                 endDate: new Date().toISOString(),
                 isStarted: false,
@@ -79,6 +80,7 @@ describe("Getting Tasks Suite", () => {
             .send({
                 title: "Test Task 1",
                 description: "Test Task",
+                location: "Test Location",
                 startDate: "2022-04-12T04:00:00.000Z",
                 endDate: "2022-04-14T00:00:08",
                 isStarted: false,
@@ -91,6 +93,7 @@ describe("Getting Tasks Suite", () => {
             .send({
                 title: "Test Task 2",
                 description: "Test Task",
+                location: "Test Location",
                 startDate: "2022-04-01T04:00:00.000Z",
                 endDate: "2022-04-18T00:00:08",
                 isStarted: false,
@@ -103,6 +106,7 @@ describe("Getting Tasks Suite", () => {
             .send({
                 title: "Test Task 3",
                 description: "Test Task",
+                location: "Test Location",
                 startDate: "2022-04-14T04:00:00.000Z",
                 endDate: "2022-04-18T00:00:08",
                 isStarted: false,
@@ -114,6 +118,7 @@ describe("Getting Tasks Suite", () => {
             .send({
                 title: "Out of range task",
                 description: "Test Task",
+                location: "Test Location",
                 startDate: "2022-03-14T04:00:00.000Z",
                 endDate: "2022-03-18T00:00:08",
                 isStarted: false,
@@ -125,6 +130,7 @@ describe("Getting Tasks Suite", () => {
             .send({
                 title: "Test Task 4",
                 description: "Test Task",
+                location: "Test Location",
                 startDate: "2022-04-01T04:00:00.000Z",
                 endDate: "2022-04-18T00:00:08",
                 isStarted: false,
@@ -214,6 +220,7 @@ describe("Create Task Suite", () => {
         const res = await request(app).post("/api/tasks").set("cookie", jwt).send({
             title: "Test Task",
             description: "Test Task",
+            location: "Test Location",
             endDate: new Date().toISOString(),
             isStarted: false,
         });
@@ -250,6 +257,7 @@ describe("Create Feedback Suite", () => {
             .send({
                 title: "Test Task",
                 description: "Test Task",
+                location: "Test Location",
                 endDate: new Date().toISOString(),
                 isStarted: false,
             });
@@ -301,6 +309,7 @@ describe("Toggle Task Test Suite", () => {
             .send({
                 title: "Test Task",
                 description: "Test Task",
+                location: "Test Location",
                 endDate: new Date().toISOString(),
                 isStarted: false,
             });

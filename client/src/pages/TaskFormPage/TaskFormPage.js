@@ -43,9 +43,7 @@ const TaskFormPage = () => {
 
     const startDate = new Date(taskFormData.startDate);
     const endDate = new Date(taskFormData.endDate);
-    if (
-      startDate.getTime() > endDate.getTime()
-    ) {
+    if (startDate.getTime() > endDate.getTime()) {
       return "Start time must come before end time";
     }
 
