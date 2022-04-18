@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { PropTypes } from "prop-types";
 import SmallActionButton from "../SmallActionButton/SmallActionButton.js";
 import styles from "./TaskCard.module.css";
@@ -13,22 +13,12 @@ const TaskCard = ({
   showDetailsDialog,
   edittable,
 }) => {
-  const [taskFinished, setTaskFinished] = useState(finished);
-  const [taskOngoing, setTaskOngoing] = useState(ongoing);
-  const taskTextStyle = taskFinished ? styles.taskDone : "";
+  const taskTextStyle = finished ? styles.taskDone : "";
   const actionBtn = edittable ? (
     <SmallActionButton
-      text={!taskOngoing ? "Start" : "End"}
+      text={!ongoing ? "Start" : "End"}
       toggleButton={() => {
-        if (taskOngoing) {
-          // task already ongoing --> toggle to finish
-          setTaskOngoing(false);
-          setTaskFinished(true);
-        } else {
-          // task not yet started --> toggle to ongoing
-          setTaskOngoing(true);
-          setTaskFinished(false);
-        }
+        // TODO : API call here
       }}
     />
   ) : (
@@ -47,11 +37,7 @@ const TaskCard = ({
       </div>
       <div className={styles.timeInfo}>
         <p className={taskTextStyle}>{startTime}</p>
-        <p
-          className={
-            !taskFinished ? styles.endTimeStyle : styles.taskDoneEndTime
-          }
-        >
+        <p className={!finished ? styles.endTimeStyle : styles.taskDoneEndTime}>
           to {endTime}
         </p>
         {actionBtn}

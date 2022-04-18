@@ -32,7 +32,7 @@ export const TaskFilterSelector = ({
     <FilterButton
       key={ix}
       filterName={filter}
-      filterSelected={currentFilter}
+      currentFilter={currentFilter}
       onFilterChanged={onFilterChanged}
     />
   ));

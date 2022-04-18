@@ -60,7 +60,11 @@ const TaskHistoryPage = () => {
   return (
     <div className={styles.bg}>
       <div className={styles.taskHistoryHeader}>Your Tasks</div>
-      <TaskFilterSelector filterSelected={filter} onFilterChanged={setFilter} />
+      <TaskFilterSelector
+        filterSet={filterSet}
+        currentFilter={filter}
+        onFilterChanged={setFilter}
+      />
       {loadingError ? (
         <div className={styles.errorMessageStyle}>
           <ErrorMessage errorMessage={loadingErrorMessage} />
