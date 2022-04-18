@@ -36,15 +36,15 @@ token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1OTU4MjQyNzUsImlhdCI6IjIwM
 ```json
 {
   "title": "Task 2 - evvvve",
-  "user_id": "62227aab7a9965d0be73b052",
   "description": "john",
+  "location": "UTM",
   "startDate": "2022-02-25T15:02:08",
   "endDate": "2022-02-27T15:02:08",
   "isStarted": false
 }
 ```
 
-**Note**: Every attribute is required <br></br>
+**Note**: Every attribute is required except user_id<br></br>
 
 ### Possible Responses
 
