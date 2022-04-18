@@ -12,7 +12,7 @@ import { TaskFilterSelector } from "../../components/TaskFilterSelector/TaskFilt
 
 const TaskHistoryPage = () => {
   const filterSet = ["Day", "Week", "Month", "All"];
-  const [filter, setFilter] = useState(filterSet[0]);
+  const [currentFilter, setCurrentFilter] = useState(filterSet[0]);
   const [taskData, setTaskData] = useState([]);
   const [loadingError, setLoadingError] = useState(false);
   const [loadingErrorMessage, setLoadingErrorMessage] = useState("");
@@ -38,7 +38,7 @@ const TaskHistoryPage = () => {
   useEffect(() => {
     let startDate, endDate;
     const nowDate = new Date();
-    switch (filter) {
+    switch (currentFilter) {
       case filterSet[0]:
         fetchTasks(buildDateRangeRoute(nowDate, nowDate));
         break;
@@ -54,15 +54,15 @@ const TaskHistoryPage = () => {
         fetchTasks("/api/tasks/");
         break;
     }
-  }, [filter]);
+  }, [currentFilter]);
 
   return (
     <div className={styles.bg}>
       <div className={styles.taskHistoryHeader}>Your Tasks</div>
       <TaskFilterSelector
         filterSet={filterSet}
-        currentFilter={filter}
-        onFilterChanged={setFilter}
+        currentFilter={currentFilter}
+        onFilterChanged={setCurrentFilter}
       />
       {loadingError ? (
         <div className={styles.errorMessageStyle}>

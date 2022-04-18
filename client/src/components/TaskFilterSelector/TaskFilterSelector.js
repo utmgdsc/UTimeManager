@@ -28,10 +28,10 @@ export const TaskFilterSelector = ({
   currentFilter,
   onFilterChanged,
 }) => {
-  const filterButtons = filterSet.map((filter, ix) => (
+  const filterButtons = filterSet.map((filterName, ix) => (
     <FilterButton
       key={ix}
-      filterName={filter}
+      filterName={filterName}
       currentFilter={currentFilter}
       onFilterChanged={onFilterChanged}
     />
