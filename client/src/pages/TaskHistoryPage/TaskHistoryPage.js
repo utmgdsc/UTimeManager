@@ -12,10 +12,8 @@ import { instance } from "../../axios.js";
 import { TaskFilterSelector } from "../../components/TaskFilterSelector/TaskFilterSelector.js";
 
 const TaskHistoryPage = () => {
-  const dayFilter = "Day";
-  const weekFilter = "Week";
-  const monthFilter = "Month";
-  const [filter, setFilter] = useState(dayFilter);
+  const filterSet = ["Day", "Week", "Month", "All"];
+  const [filter, setFilter] = useState(filterSet[0]);
   const [taskData, setTaskData] = useState([]);
   const [loadingError, setLoadingError] = useState(false);
   const [loadingErrorMessage, setLoadingErrorMessage] = useState("");
@@ -42,14 +40,14 @@ const TaskHistoryPage = () => {
     let startDate, endDate;
     const nowDate = new Date();
     switch (filter) {
-      case dayFilter:
+      case filterSet[0]:
         fetchTasks(buildDateRangeRoute(nowDate, nowDate));
         break;
-      case weekFilter:
+      case filterSet[1]:
         [startDate, endDate] = getWeekRange();
         fetchTasks(buildDateRangeRoute(startDate, endDate));
         break;
-      case monthFilter:
+      case filterSet[2]:
         [startDate, endDate] = getMonthRange();
         fetchTasks(buildDateRangeRoute(startDate, endDate));
         break;

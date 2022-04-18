@@ -2,32 +2,37 @@ import React from "react";
 import styles from "./TaskFilterSelector.module.css";
 import { PropTypes } from "prop-types";
 
-const FilterButton = ({ filter, filterSelected, onFilterChanged }) => {
+const FilterButton = ({ filterName, currentFilter, onFilterChanged }) => {
   return (
     <button
       className={
-        filter === filterSelected ? styles.selectedFilter : styles.filterButton
+        filterName === currentFilter
+          ? styles.selectedFilter
+          : styles.filterButton
       }
-      onClick={() => onFilterChanged(filter)}
+      onClick={() => onFilterChanged(filterName)}
     >
-      {filter}
+      {filterName}
     </button>
   );
 };
 
 FilterButton.propTypes = {
-  filter: PropTypes.string.isRequired,
-  filterSelected: PropTypes.string.isRequired,
+  filterName: PropTypes.string.isRequired,
+  currentFilter: PropTypes.string.isRequired,
   onFilterChanged: PropTypes.func.isRequired,
 };
 
-export const TaskFilterSelector = ({ filterSelected, onFilterChanged }) => {
-  const filters = ["Day", "Week", "Month", "All"];
-  const filterButtons = filters.map((filter, ix) => (
+export const TaskFilterSelector = ({
+  filterSet,
+  currentFilter,
+  onFilterChanged,
+}) => {
+  const filterButtons = filterSet.map((filter, ix) => (
     <FilterButton
       key={ix}
-      filter={filter}
-      filterSelected={filterSelected}
+      filterName={filter}
+      filterSelected={currentFilter}
       onFilterChanged={onFilterChanged}
     />
   ));
@@ -35,6 +40,7 @@ export const TaskFilterSelector = ({ filterSelected, onFilterChanged }) => {
 };
 
 TaskFilterSelector.propTypes = {
-  filterSelected: PropTypes.string.isRequired,
+  filterSet: PropTypes.arrayOf(PropTypes.string).isRequired,
+  currentFilter: PropTypes.string.isRequired,
   onFilterChanged: PropTypes.func.isRequired,
 };

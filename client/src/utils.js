@@ -22,13 +22,12 @@ const getDateTime = (taskDateISOString) => {
 };
 
 export const convertTaskData = (fetchedTaskData) => {
-  // TODO : get task location from fetched tasks
   return fetchedTaskData.map(function (task) {
     const [taskDate, startTime] = getDateTime(task.startDate);
     const endTime = getDateTime(task.endDate)[1];
     return {
       title: task.title,
-      location: "task location to be added",
+      location: task.location,
       startTime: `${taskDate} ${startTime}`,
       endTime: endTime,
       date: taskDate,
