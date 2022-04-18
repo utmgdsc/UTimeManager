@@ -17,11 +17,7 @@ const feedbackSchema = mongoose.Schema(
     satisfaction: {
       type: Number,
       required: true,
-    },
-    createDate: {
-      type: Date,
-      default: Date.now(),
-    },
+    }
   },
   {
     timestamps: true,
