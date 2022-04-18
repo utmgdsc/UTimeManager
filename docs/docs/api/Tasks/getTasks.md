@@ -7,7 +7,7 @@ borderRadius: '2px',
 color: '#E83E8C',
 }}>{children}</span> );
 
-<Endpoint>GET /tasks</Endpoint>: Get all tasks <br></br>
+<Endpoint>GET /tasks?start=yyyymmdd&end=yyyymmdd</Endpoint>: Get all tasks <br></br>
 
 ### Example Request
 
@@ -16,8 +16,13 @@ This is a **protected route**, a **valid JWT is required** in the header field
 #### Header
 
 ```
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1OTU4MjQyNzUsImlhdCI6IjIwMjAtMDctMjdUMDA6MjY6MTUuNzg5NTg0Mi0wNDowMCIsInN1YiI6ImNocmlzIn0.5US2_ITKcfgkpEbfsR-gxXbGPFY6XsgJPcGA5qaBD1M
+Cookie: token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1OTU4MjQyNzUsImlhdCI6IjIwMjAtMDctMjdUMDA6MjY6MTUuNzg5NTg0Mi0wNDowMCIsInN1YiI6ImNocmlzIn0.5US2_ITKcfgkpEbfsR-gxXbGPFY6XsgJPcGA5qaBD1M
 ```
+
+#### Parameters
+
+start: yyyymmdd\
+end: yyyymmdd
 
 #### Body
 
@@ -63,6 +68,27 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1OTU4MjQyN
 ```json
 {
   "message": "Not authorized, token failed",
-  "stack": "Error: Not authorized, token failed\n at C:\\Users\\karan\\Desktop\\UTimeManager\\backend\\middleware\\authenticateToken.js:31:11\n at asyncUtilWrap"
+  "stack": ""
+}
+```
+
+```json
+{
+  "message": "Invalid Date Input",
+  "stack": ""
+}
+```
+
+```json
+{
+  "message": "Not Authorized, token failed",
+  "stack": ""
+}
+```
+
+```json
+{
+  "message": "Could not fetch doc",
+  "stack": ""
 }
 ```
