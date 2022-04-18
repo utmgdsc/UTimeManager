@@ -13,9 +13,7 @@ const TaskCard = ({
   showDetailsDialog,
   edittable,
 }) => {
-  const getDateTime = (taskDateISOString) => {
-    const taskDate = new Date(taskDateISOString);
-
+  const getDateTime = (taskDate) => {
     return [
       taskDate.toLocaleDateString(),
       taskDate.toTimeString().substring(0, 5),
