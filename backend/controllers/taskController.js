@@ -6,7 +6,7 @@ const createTask = asyncHandler(async (req, res) => {
   const userId = req.id;
   task.user_id = userId;
 
-  const createdTask = await task
+  await task
     .save()
     .then((result) => {
       res.status(201).json(result);
@@ -17,7 +17,7 @@ const createTask = asyncHandler(async (req, res) => {
         throw new Error("Invalid Create Task Input");
       }
       res.status(500);
-      throw new Error("Unable to create feedback");
+      throw new Error("Unable to create task");
     });
 });
 
@@ -108,7 +108,7 @@ const getTasksById = asyncHandler(async (req, res) => {
   const taskId = req.params.id;
   const userId = req.id;
 
-  const tasks = await Task.findOne({
+  await Task.findOne({
     _id: taskId,
     user_id: userId,
   })

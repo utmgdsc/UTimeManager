@@ -6,7 +6,7 @@ const createFeedback = asyncHandler(async (req, res) => {
   const userId = req.id;
   feedback.user_id = userId;
 
-  const createdFeedback = await feedback
+  await feedback
     .save()
     .then((result) => {
       res.status(201).json(result);
