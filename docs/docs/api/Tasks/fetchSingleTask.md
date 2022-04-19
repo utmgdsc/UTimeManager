@@ -5,7 +5,7 @@ title: Fetch Single Task
 export const Endpoint = ({children, color}) => ( <span style={{ borderRadius: '2px', color: '#E83E8C', }}>
 {children}</span> );
 
-<Endpoint>GET /tasks/task/:id</Endpoint>: Fetch a single Task
+<Endpoint>GET /tasks/:id</Endpoint>: Fetch a single Task
 
 ```json
 {}

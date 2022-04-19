@@ -7,9 +7,9 @@ export const formatDateforAPI = (currDate) => {
 };
 
 export const buildDateRangeRoute = (startDate, endDate) => {
-  return `/api/tasks?start=${formatDateforAPI(
-    startDate
-  )}&end=${formatDateforAPI(endDate)}`;
+  return `/tasks?start=${formatDateforAPI(startDate)}&end=${formatDateforAPI(
+    endDate
+  )}`;
 };
 
 export const getMonthRange = () => {

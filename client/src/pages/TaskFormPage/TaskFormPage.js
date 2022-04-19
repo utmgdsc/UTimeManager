@@ -67,7 +67,7 @@ const TaskFormPage = () => {
     console.log(taskFormUploadData);
 
     await instance
-      .post("/api/tasks", taskFormUploadData)
+      .post("/tasks", taskFormUploadData)
       .then((res) => {
         console.log(`Response: ${res.data}`);
         navigate("/calendar");

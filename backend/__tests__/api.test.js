@@ -164,7 +164,7 @@ describe("Getting Tasks Suite", () => {
 
     it("Getting Tasks by id (Valid Token)", async () => {
         const res = await request(app)
-            .get(`/api/tasks/task/${taskObjectId}`)
+            .get(`/api/tasks/${taskObjectId}`)
             .set("cookie", jwt);
         expect(res.statusCode).toEqual(200);
         expect(res.body).toEqual(expect.objectContaining({title: "Test Task"}));
@@ -172,7 +172,7 @@ describe("Getting Tasks Suite", () => {
 
     it("Getting Tasks by id (Invalid Token)", async () => {
         const res = await request(app)
-            .get(`/api/tasks/task/${taskObjectId}`)
+            .get(`/api/tasks/${taskObjectId}`)
             .set("cookie", "jwt");
 
         expect(res.statusCode).toEqual(401);
@@ -181,7 +181,7 @@ describe("Getting Tasks Suite", () => {
 
     it("Getting Tasks by id (Invalid id)", async () => {
         const res = await request(app)
-            .get("/api/tasks/task/abdcd12334")
+            .get("/api/tasks/abdcd12334")
             .set("cookie", jwt);
 
         expect(res.statusCode).toEqual(400);
@@ -190,7 +190,7 @@ describe("Getting Tasks Suite", () => {
 
     it("Getting Tasks by id (Id that does not exist)", async () => {
         const res = await request(app)
-            .get(`/api/tasks/task/${taskObjectIdNotExist}`)
+            .get(`/api/tasks/${taskObjectIdNotExist}`)
             .set("cookie", jwt);
 
         expect(res.statusCode).toEqual(404);

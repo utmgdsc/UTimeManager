@@ -51,7 +51,7 @@ const TaskHistoryPage = () => {
         fetchTasks(buildDateRangeRoute(startDate, endDate));
         break;
       default:
-        fetchTasks("/api/tasks/");
+        fetchTasks("/tasks/");
         break;
     }
   }, [currentFilter]);
