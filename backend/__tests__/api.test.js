@@ -215,6 +215,114 @@ describe("Getting Tasks Suite", () => {
     });
 });
 
+describe("Update Tasks Suite", () => {
+    let taskObjectId;
+    beforeAll(async () => {
+        const taskRes = await request(app)
+            .post("/api/tasks")
+            .set("cookie", jwt)
+            .send({
+                title: "Test Task",
+                description: "Test Task",
+                location: "Test Location",
+                startDate: "2022-04-14T04:00:00.000Z",
+                endDate: new Date().toISOString(),
+                isStarted: false,
+            });
+        taskObjectId = taskRes.body._id;
+    });
+
+    it("Update Task (Valid information)", async () => {
+        const updatedTask = {
+            title: "Updated Test Task",
+            description: "Updated Description",
+            location: "Updated Location",
+            startDate: "2022-04-01T04:00:00.000Z",
+            endDate: "2022-05-01T04:00:00.000Z"
+        }
+        const res = await request(app)
+            .put(`/api/tasks/${taskObjectId}`)
+            .set("cookie", jwt)
+            .send(updatedTask);
+        expect(res.statusCode).toEqual(200);
+        expect(res.body).toEqual(expect.objectContaining(updatedTask));
+    });
+
+    it("Update Task (Invalid information)", async () => {
+        const invalidUpdatedTask = {
+            title: "Updated Test Task",
+            description: "Updated Description",
+            location: "Updated Location"
+        }
+        const res = await request(app)
+            .put(`/api/tasks/${taskObjectId}`)
+            .set("cookie", jwt)
+            .send(invalidUpdatedTask);
+        expect(res.statusCode).toEqual(400);
+        expect(res.body.message).toEqual("Invalid Update Task Input");
+    });
+
+    it("Update Task (Invalid ID)", async () => {
+        const updatedTask = {
+            title: "Updated Test Task",
+            description: "Updated Description",
+            location: "Updated Location",
+            startDate: "2022-04-01T04:00:00.000Z",
+            endDate: "2022-05-01T04:00:00.000Z"
+        }
+        const res = await request(app)
+            .put(`/api/tasks/invalidTaskId`)
+            .set("cookie", jwt)
+            .send(updatedTask);
+        expect(res.statusCode).toEqual(400);
+        expect(res.body.message).toEqual("Invalid id provided");
+    });
+});
+
+describe("Delete Tasks Suite", () => {
+    let taskObjectId;
+    beforeAll(async () => {
+        const taskRes = await request(app)
+            .post("/api/tasks")
+            .set("cookie", jwt)
+            .send({
+                title: "Test Task",
+                description: "Test Task",
+                location: "Test Location",
+                startDate: "2022-04-14T04:00:00.000Z",
+                endDate: new Date().toISOString(),
+                isStarted: false,
+            });
+        taskObjectId = taskRes.body._id;
+
+        await request(app)
+            .post("/api/feedback")
+            .set("cookie", jwt)
+            .send({
+                body: "Sample feedback",
+                task_id: taskObjectId,
+                satisfaction: 8
+            })
+    });
+
+    it("Successful Deletion", async () => {
+        const res = await request(app)
+            .delete(`/api/tasks/${taskObjectId}`)
+            .set("cookie", jwt);
+        expect(res.statusCode).toEqual(200);
+        expect(res.body.message).toEqual("Successfully deleted task and feedbacks");
+    });
+
+    it("Unsuccessful Deletion", async () => {
+        const res = await request(app)
+            .delete(`/api/tasks/abcdefg`)
+            .set("cookie", jwt);
+        expect(res.statusCode).toEqual(400);
+        expect(res.body.message).toEqual("Invalid id provided");
+    });
+
+});
+
 describe("Create Task Suite", () => {
     it("Create Task (Valid Token)", async () => {
         const res = await request(app).post("/api/tasks").set("cookie", jwt).send({

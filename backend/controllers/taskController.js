@@ -1,6 +1,7 @@
 const asyncHandler = require("express-async-handler");
 const Task = require("../models/userTasks");
 const Feedback = require("../models/feedbackModel");
+const mongoose = require("mongoose");
 
 const createTask = asyncHandler(async (req, res) => {
     const task = await new Task(req.body);
@@ -180,6 +181,11 @@ const editTaskById = asyncHandler(async (req, res) => {
 const deleteTaskById = asyncHandler(async (req, res) => {
     const taskId = req.params.id;
     const userId = req.id;
+
+    if (!mongoose.isValidObjectId(taskId)) {
+        res.status(400);
+        throw new Error("Invalid id provided")
+    }
 
     const taskDeleted = await Task.deleteOne({_id: taskId, user_id: userId}).then(() => {
         return true;
