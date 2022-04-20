@@ -4,6 +4,8 @@ const {
   getTasks,
   getTasksById,
   toggleTask,
+  editTaskById,
+  deleteTaskById
 } = require("../controllers/taskController");
 
 const { authenticateToken } = require("../middleware/authenticateToken");
@@ -24,6 +26,16 @@ router.get("/", [authenticateToken, getTasks]);
 // @route    GET /api/tasks/:id
 // @acesss   Private
 router.get("/:id", [authenticateToken, getTasksById]);
+
+// @desc     Edit single task
+// @route    PUT /api/tasks/:id
+// @acesss   Private
+router.put("/:id", [authenticateToken, editTaskById]);
+
+// @desc     Delete single task
+// @route    DELETE /api/tasks/:id
+// @acesss   Private
+router.delete("/:id", [authenticateToken, deleteTaskById]);
 
 // @desc     Update isStarted state to true
 // @route    PUT /api/tasks/startTask/:id
