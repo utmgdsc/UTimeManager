@@ -5,11 +5,13 @@ import SignUpPage from "./pages/CredentialsPage/SignUpPage.js";
 import PageNotFound from "./pages/PageNotFound/PageNotFound.js";
 import CalendarPage from "./pages/CalendarPage/CalendarPage.js";
 import TaskHistoryPage from "./pages/TaskHistoryPage/TaskHistoryPage.js";
+import InsightsPage from "./pages/InsightsPage/InsightsPage.js";
 
 const App = () => {
   return (
     <BrowserRouter>
       <Routes>
+        <Route path="/insights" element={<InsightsPage />} />
         <Route path="/task_history" element={<TaskHistoryPage />} />
         <Route path="/" element={<LoginPage />} />
         <Route path="/calendar" element={<CalendarPage />} />
