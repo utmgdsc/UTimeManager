@@ -8,6 +8,7 @@ const TaskListView = ({ tasks, edittable }) => {
     return (
       <li key={ix} style={{ listStyle: "none" }}>
         <TaskCard
+          id={task._id}
           title={task.title}
           location={task.location}
           startDate={new Date(task.startDate)}
