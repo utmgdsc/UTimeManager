@@ -8,6 +8,7 @@ import TaskDetails from "../../components/TaskDetails/TaskDetails";
 import { instance } from "../../axios.js";
 import TaskListView from "../../components/TaskListView/TaskListView.js";
 import { ErrorMessage } from "../../components/ErrorMessage/ErrorMessage";
+import { buildDateRangeRoute } from "../../utils.js";
 
 const getDayAbbreviation = (_, label) => {
   return label.toString().slice(0, 1);
@@ -33,34 +34,18 @@ const dailyTaskDateFormatter = (date) => {
   } ${date.getDate()}, ${date.getFullYear()}`;
 };
 
-// Convert the task data fetched from the server into JS objects of the
-// {title, locationText, startTimeText, endTimeText, isOngoing}
-const convertTaskData = (fetchedTaskData) => {
-  return [];
-};
-
-const buildDailyTaskRoute = (currDate) => {
-  // getMonth returns 0-11
-  const currMonthStr = String(currDate.getMonth() + 1).padStart(2, "0");
-  // getDate returns 1-31
-  const currDayStr = String(currDate.getDate()).padStart(2, "0");
-  return (
-    "/api/tasks/day/" +
-    currDate.getFullYear().toString() +
-    currMonthStr +
-    currDayStr
-  );
-};
-
 const CalendarPage = () => {
   const getTasks = async () => {
     setLoadingErrorMessage("");
+    setLoadingError(false);
     await instance
-      .get(buildDailyTaskRoute(currDate))
+      .get(buildDateRangeRoute(currDate, currDate))
       .then((taskData) => {
-        console.log(taskData);
-        setTaskData(taskData);
-        setLoadingError(false);
+        setTaskData(taskData.data);
+        if (taskData.data.length === 0) {
+          setLoadingErrorMessage("No tasks yet");
+          setLoadingError(true);
+        } else setLoadingError(false);
       })
       .catch(() => {
         setLoadingErrorMessage("Unable to load tasks!");
@@ -123,7 +108,7 @@ const CalendarPage = () => {
           <ErrorMessage errorMessage={loadingErrorMessage} />
         </div>
       ) : (
-        <TaskListView tasks={convertTaskData(taskData)} edittable={true} />
+        <TaskListView tasks={taskData} edittable={true} />
       )}
       {toggleError ? (
         <div className={styles.errorMessageStyle}>
