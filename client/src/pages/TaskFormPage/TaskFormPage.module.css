@@ -1,0 +1,49 @@
+.header {
+  color: white;
+  font-weight: 400;
+  font-size: 2rem;
+  font-weight: 600;
+  padding: 0px 15px 0px 20px;
+  font-family: "Source Sans Pro", sans-serif;
+}
+
+.bg {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  background: #032a5c;
+  height: 100vh;
+}
+
+.inputBox {
+  border-radius: 1px;
+  padding: 10px 15px 10px;
+  font-size: 1.125rem;
+  font-family: "Source Sans Pro", sans-serif;
+  margin-bottom: 10px;
+  border-color: transparent;
+}
+
+.inputHeader {
+  color: white;
+  font-weight: 400;
+  font-size: 1.5rem;
+  margin: 0px 0px 3px 10px;
+  font-family: "Source Sans Pro", sans-serif;
+}
+
+.button {
+  padding: 5px 15px;
+}
+
+button {
+  background-color: white;
+  font-weight: bold;
+  color: grey;
+}
+
+.buttonBar {
+  display: flex;
+  margin-top: 10px;
+}
