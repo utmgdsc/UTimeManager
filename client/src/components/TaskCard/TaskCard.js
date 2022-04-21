@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { PropTypes } from "prop-types";
 import SmallActionButton from "../SmallActionButton/SmallActionButton.js";
 import styles from "./TaskCard.module.css";
@@ -6,19 +6,29 @@ import styles from "./TaskCard.module.css";
 const TaskCard = ({
   title,
   location,
-  startTime,
-  endTime,
-  isOngoing,
+  startDate,
+  endDate,
+  ongoing,
+  finished,
   showDetailsDialog,
   edittable,
   toggleTaskHandler,
   id,
 }) => {
-  const [taskOngoing, setOngoing] = useState(isOngoing);
-  const taskTextStyle = !taskOngoing ? styles.taskDone : "";
+  const getDateTime = (taskDate) => {
+    return [
+      taskDate.toLocaleDateString(),
+      taskDate.toTimeString().substring(0, 5),
+    ];
+  };
+
+  const [taskDate, startTime] = getDateTime(startDate);
+  const endTime = getDateTime(endDate)[1];
+
+  const taskTextStyle = finished ? styles.taskDone : "";
   const actionBtn = edittable ? (
     <SmallActionButton
-      text={!taskOngoing ? "Start" : "End"}
+      text={!ongoing ? "Start" : "End"}
       toggleButton={() => {
         toggleTaskHandler(id);
         // setOngoing(!taskOngoing);
@@ -39,10 +49,8 @@ const TaskCard = ({
         <p className={taskTextStyle}>{location}</p>
       </div>
       <div className={styles.timeInfo}>
-        <p className={taskTextStyle}>{startTime}</p>
-        <p
-          className={taskOngoing ? styles.endTimeStyle : styles.taskDoneEndTime}
-        >
+        <p className={taskTextStyle}>{`${taskDate} ${startTime}`}</p>
+        <p className={!finished ? styles.endTimeStyle : styles.taskDoneEndTime}>
           to {endTime}
         </p>
         {actionBtn}
@@ -54,9 +62,10 @@ const TaskCard = ({
 TaskCard.propTypes = {
   title: PropTypes.string.isRequired,
   location: PropTypes.string.isRequired,
-  startTime: PropTypes.string.isRequired,
-  endTime: PropTypes.string.isRequired,
-  isOngoing: PropTypes.bool.isRequired,
+  startDate: PropTypes.instanceOf(Date).isRequired,
+  endDate: PropTypes.instanceOf(Date).isRequired,
+  ongoing: PropTypes.bool.isRequired,
+  finished: PropTypes.bool.isRequired,
   showDetailsDialog: PropTypes.func,
   edittable: PropTypes.bool.isRequired,
   toggleTaskHandler: PropTypes.func,
