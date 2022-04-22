@@ -44,6 +44,7 @@ const CalendarPage = () => {
   const [loadingErrorMessage, setLoadingErrorMessage] = useState("");
   const filterSet = ["Not Started", "Ongoing", "Completed", "All"];
   const [currentFilter, setCurrentFilter] = useState(filterSet[0]);
+  const [showModal, setModal] = useState(false);
 
   const filterTask = (task) => {
     switch (currentFilter) {
@@ -75,8 +76,6 @@ const CalendarPage = () => {
         if (filteredTaskData.length === 0) {
           setLoadingErrorMessage("No tasks yet");
           setLoadingError(true);
-        } else {
-          setLoadingError(false);
         }
         setTaskData(filteredTaskData);
       })
@@ -99,8 +98,6 @@ const CalendarPage = () => {
         setToggleError(true);
       });
   };
-
-  const [showModal, setModal] = useState(false);
 
   const toggleModal = () => {
     setModal(!showModal);
