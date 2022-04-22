@@ -43,7 +43,7 @@ const CalendarPage = () => {
   const [toggleErrorMessage, setToggleErrorMessage] = useState("");
   const [loadingErrorMessage, setLoadingErrorMessage] = useState("");
   const filterSet = ["Not Started", "Ongoing", "Completed", "All"];
-  const [currentFilter, setCurrentFilter] = useState(filterSet[0]);
+  const [currentFilter, setCurrentFilter] = useState(filterSet[3]);
   const [showModal, setModal] = useState(false);
 
   const filterTask = (task) => {
