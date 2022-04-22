@@ -42,7 +42,7 @@ const CalendarPage = () => {
   const [loadingError, setLoadingError] = useState(false);
   const [toggleErrorMessage, setToggleErrorMessage] = useState("");
   const [loadingErrorMessage, setLoadingErrorMessage] = useState("");
-  const filterSet = ["Not Started", "Ongoing", "Completed"];
+  const filterSet = ["Not Started", "Ongoing", "Completed", "All"];
   const [currentFilter, setCurrentFilter] = useState(filterSet[0]);
 
   const filterTask = (task) => {
@@ -57,6 +57,8 @@ const CalendarPage = () => {
         return task.isStarted && "taskStartedAt" in task;
       case filterSet[2]:
         return !task.isStarted && "taskEndedAt" in task;
+      default:
+        return true;
     }
   };
 
@@ -66,7 +68,10 @@ const CalendarPage = () => {
     await instance
       .get(buildDateRangeRoute(currDate, currDate))
       .then((taskData) => {
-        const filteredTaskData = taskData.data.filter(filterTask);
+        const filteredTaskData =
+          currentFilter !== filterSet[3]
+            ? taskData.data.filter(filterTask)
+            : taskData.data;
         if (filteredTaskData.length === 0) {
           setLoadingErrorMessage("No tasks yet");
           setLoadingError(true);
