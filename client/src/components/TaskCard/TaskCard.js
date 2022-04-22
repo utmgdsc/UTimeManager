@@ -26,17 +26,18 @@ const TaskCard = ({
   const endTime = getDateTime(endDate)[1];
 
   const taskTextStyle = finished ? styles.taskDone : "";
-  const actionBtn = edittable ? (
-    <SmallActionButton
-      text={!ongoing ? "Start" : "End"}
-      toggleButton={() => {
-        toggleTaskHandler(id);
-        // setOngoing(!taskOngoing);
-      }}
-    />
-  ) : (
-    <SmallActionButton text={"View"} toggleButton={showDetailsDialog} />
-  );
+  const actionBtn =
+    edittable && !finished ? (
+      <SmallActionButton
+        text={!ongoing ? "Start" : "End"}
+        toggleButton={() => {
+          toggleTaskHandler(id);
+          // setOngoing(!taskOngoing);
+        }}
+      />
+    ) : (
+      <SmallActionButton text={"View"} toggleButton={showDetailsDialog} />
+    );
 
   return (
     <div className={styles.taskContainer}>

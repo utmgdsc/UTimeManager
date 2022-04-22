@@ -48,11 +48,15 @@ const CalendarPage = () => {
   const filterTask = (task) => {
     switch (currentFilter) {
       case filterSet[0]: // not started
-        return !task.isStarted;
+        return (
+          !task.isStarted &&
+          !("taskStartedAt" in task) &&
+          !("taskEndedAt" in task)
+        );
       case filterSet[1]: // ongoing
-        return task.isStarted && !("taskEndedAt" in task);
+        return task.isStarted && "taskStartedAt" in task;
       case filterSet[2]:
-        return task.isStarted && "taskEndedAt" in task;
+        return !task.isStarted && "taskEndedAt" in task;
     }
   };
 
@@ -80,7 +84,7 @@ const CalendarPage = () => {
   const toggleTaskHandler = async (id) => {
     setToggleErrorMessage("");
     await instance
-      .put(`/tasks/${id}/toggle`)
+      .put(`/tasks/toggle/${id}`)
       .then(() => {
         getTasks();
         setToggleError(false);
@@ -98,6 +102,8 @@ const CalendarPage = () => {
   };
 
   useEffect(() => {
+    setToggleError(false);
+    setLoadingError(false);
     getTasks();
   }, [currDate, currentFilter]);
 
@@ -123,19 +129,23 @@ const CalendarPage = () => {
         currentFilter={currentFilter}
         onFilterChanged={setCurrentFilter}
       />
-      {loadingError ? (
-        <div className={styles.errorMessageStyle}>
-          <ErrorMessage errorMessage={loadingErrorMessage} />
-        </div>
-      ) : (
-        <TaskListView tasks={taskData} edittable={true} />
-      )}
       {toggleError ? (
         <div className={styles.errorMessageStyle}>
           <ErrorMessage errorMessage={toggleErrorMessage} />
         </div>
       ) : (
         <> </>
+      )}
+      {loadingError ? (
+        <div className={styles.errorMessageStyle}>
+          <ErrorMessage errorMessage={loadingErrorMessage} />
+        </div>
+      ) : (
+        <TaskListView
+          tasks={taskData}
+          edittable={true}
+          toggleTaskHandler={toggleTaskHandler}
+        />
       )}
     </div>
   );
