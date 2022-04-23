@@ -13,20 +13,30 @@ export const TaskDurationBarChart = ({ taskResponseData }) => {
         percentDifference: 0,
       };
 
-      const plannedDuration =
-        task.originalEndDate.getTime() - task.originalStartDate.getTime();
-      const actualDuration = task.endDate.getTime() - task.startDate.getTime();
-      taskDifference.percentDifference =
-        (actualDuration - plannedDuration) / plannedDuration;
+      // !task.isStarted && startDate, endDate exists
+      if (task.startDate != null && task.endDate != null) {
+        const plannedDuration =
+          task.originalEndDate.getTime() - task.originalStartDate.getTime();
+        const actualDuration =
+          task.endDate.getTime() - task.startDate.getTime();
 
-      if (task.taskStatus === "DONE")
-        taskDurationDifferences.push(taskDifference);
+        console.log("actualDuration: ", actualDuration);
+        console.log("plannedDuration: ", plannedDuration);
+        taskDifference.percentDifference =
+          (actualDuration - plannedDuration) / plannedDuration;
+
+        if (!task.isStarted) {
+          taskDurationDifferences.push(taskDifference);
+        }
+      }
     }
 
     return taskDurationDifferences;
   };
 
   const taskDurationDifferences = computeDurationDifference(taskResponseData);
+  console.log("taskDurationDifferences:");
+  console.log("taskDurationDifferences: ", taskDurationDifferences);
 
   return (
     <div className={styles.scrollableTaskChart}>
