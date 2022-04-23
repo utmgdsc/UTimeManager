@@ -147,6 +147,7 @@ const CalendarPage = () => {
           tasks={taskData}
           edittable={true}
           toggleTaskHandler={toggleTaskHandler}
+          showDetailsDialog={toggleModal}
         />
       )}
     </div>

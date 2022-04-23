@@ -6,8 +6,8 @@ import styles from "./TaskCard.module.css";
 const TaskCard = ({
   title,
   location,
-  startDate,
-  endDate,
+  startDateTime,
+  endDateTime,
   ongoing,
   finished,
   showDetailsDialog,
@@ -22,8 +22,8 @@ const TaskCard = ({
     ];
   };
 
-  const [taskDate, startTime] = getDateTime(startDate);
-  const endTime = getDateTime(endDate)[1];
+  const [startDate, startTime] = getDateTime(startDateTime);
+  const [endDate, endTime] = getDateTime(endDateTime);
 
   const taskTextStyle = finished ? styles.taskDone : "";
   const actionBtn =
@@ -50,9 +50,9 @@ const TaskCard = ({
         <p className={taskTextStyle}>{location}</p>
       </div>
       <div className={styles.timeInfo}>
-        <p className={taskTextStyle}>{`${taskDate} ${startTime}`}</p>
+        <p className={taskTextStyle}>{`${startDate} ${startTime}`}</p>
         <p className={!finished ? styles.endTimeStyle : styles.taskDoneEndTime}>
-          to {endTime}
+          to {`${endDate} ${endTime}`}
         </p>
         {actionBtn}
       </div>
@@ -63,8 +63,8 @@ const TaskCard = ({
 TaskCard.propTypes = {
   title: PropTypes.string.isRequired,
   location: PropTypes.string.isRequired,
-  startDate: PropTypes.instanceOf(Date).isRequired,
-  endDate: PropTypes.instanceOf(Date).isRequired,
+  startDateTime: PropTypes.instanceOf(Date).isRequired,
+  endDateTime: PropTypes.instanceOf(Date).isRequired,
   ongoing: PropTypes.bool.isRequired,
   finished: PropTypes.bool.isRequired,
   showDetailsDialog: PropTypes.func,
