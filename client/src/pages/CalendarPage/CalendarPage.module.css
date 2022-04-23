@@ -10,6 +10,11 @@
   flex-direction: column;
 }
 
+.headerContainer {
+  display: flex;
+  justify-content: space-between;
+}
+
 .calendarHeader {
   color: white;
   font-weight: 600;
@@ -18,6 +23,17 @@
   margin-left: 25px;
   margin-top: 10px;
   text-decoration: underline;
+}
+
+.createTaskButton {
+  background-color: #eaf3fe;
+  color: black;
+  border: none;
+  border-radius: 10px;
+  padding: 3px 7px;
+  margin: 5px 30px;
+  height: min-content;
+  align-self: flex-end;
 }
 
 .filterButton {

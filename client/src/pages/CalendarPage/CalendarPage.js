@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import "react-calendar/dist/Calendar.css";
 import "./CalendarOverride.css";
 import Calendar from "react-calendar";
@@ -35,6 +36,7 @@ const dailyTaskDateFormatter = (date) => {
 };
 
 const CalendarPage = () => {
+  const navigate = useNavigate();
   const [currDate, setCurrDate] = useState(new Date());
   const [taskData, setTaskData] = useState([]);
   const [toggleError, setToggleError] = useState(false);
@@ -113,9 +115,17 @@ const CalendarPage = () => {
         value={currDate}
         formatShortWeekday={getDayAbbreviation}
       />
-      <p className={styles.calendarHeader}>
-        {dailyTaskDateFormatter(currDate)}
-      </p>
+      <div className={styles.headerContainer}>
+        <p className={styles.calendarHeader}>
+          {dailyTaskDateFormatter(currDate)}
+        </p>
+        <button
+          className={styles.createTaskButton}
+          onClick={() => navigate("/task_form")}
+        >
+          Add Task
+        </button>
+      </div>
       <TaskFilterSelector
         filterSet={filterSet}
         currentFilter={currentFilter}
