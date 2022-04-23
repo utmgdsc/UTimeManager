@@ -4,7 +4,6 @@ import "./CalendarOverride.css";
 import Calendar from "react-calendar";
 import styles from "./CalendarPage.module.css";
 import CalendarHeader from "../../components/CalendarHeader/CalendarHeader.js";
-import TaskDetails from "../../components/TaskDetails/TaskDetails";
 import { TaskFilterSelector } from "../../components/TaskFilterSelector/TaskFilterSelector.js";
 import { instance } from "../../axios.js";
 import TaskListView from "../../components/TaskListView/TaskListView.js";
@@ -44,7 +43,6 @@ const CalendarPage = () => {
   const [loadingErrorMessage, setLoadingErrorMessage] = useState("");
   const filterSet = ["Not Started", "Ongoing", "Completed", "All"];
   const [currentFilter, setCurrentFilter] = useState(filterSet[3]);
-  const [showModal, setModal] = useState(false);
 
   const filterTask = (task) => {
     switch (currentFilter) {
@@ -99,10 +97,6 @@ const CalendarPage = () => {
       });
   };
 
-  const toggleModal = () => {
-    setModal(!showModal);
-  };
-
   useEffect(() => {
     setToggleError(false);
     setLoadingError(false);
@@ -116,7 +110,6 @@ const CalendarPage = () => {
 
   return (
     <div className={styles.bg}>
-      {showModal ? <TaskDetails closeModalHandler={toggleModal} /> : <></>}
       <CalendarHeader />
       <Calendar
         onChange={dateChangeGetter}
@@ -147,7 +140,6 @@ const CalendarPage = () => {
           tasks={taskData}
           edittable={true}
           toggleTaskHandler={toggleTaskHandler}
-          showDetailsDialog={toggleModal}
         />
       )}
     </div>
