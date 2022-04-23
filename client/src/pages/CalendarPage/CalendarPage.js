@@ -56,8 +56,6 @@ const CalendarPage = () => {
         return task.isStarted && "taskStartedAt" in task;
       case filterSet[2]:
         return !task.isStarted && "taskEndedAt" in task;
-      default:
-        return true;
     }
   };
 
@@ -84,6 +82,7 @@ const CalendarPage = () => {
   };
 
   const toggleTaskHandler = async (id) => {
+    setToggleError(false);
     setToggleErrorMessage("");
     await instance
       .put(`/tasks/toggle/${id}`)
@@ -98,8 +97,6 @@ const CalendarPage = () => {
   };
 
   useEffect(() => {
-    setToggleError(false);
-    setLoadingError(false);
     getTasks();
   }, [currDate, currentFilter]);
 
