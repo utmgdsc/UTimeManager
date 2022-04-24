@@ -43,7 +43,10 @@ const InsightsPage = () => {
   const cleanData = () => {
     const mapped = taskData.map((task) => {
       return {
-        title: task.title,
+        title:
+          task.title.length > 10
+            ? `${task.title.substring(0, 10)}...`
+            : task.title,
         description: task.description,
         startDate: task.taskStartedAt ? new Date(task.taskStartedAt) : null,
         endDate: task.taskEndedAt ? new Date(task.taskEndedAt) : null,
