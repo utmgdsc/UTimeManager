@@ -13,17 +13,22 @@ export const TaskDurationBarChart = ({ taskResponseData }) => {
         percentDifference: 0,
       };
 
-      // !task.isStarted && startDate, endDate exists
       if (task.startDate != null && task.endDate != null) {
         const plannedDuration =
           task.originalEndDate.getTime() - task.originalStartDate.getTime();
         const actualDuration =
           task.endDate.getTime() - task.startDate.getTime();
 
-        console.log("actualDuration: ", actualDuration);
-        console.log("plannedDuration: ", plannedDuration);
         taskDifference.percentDifference =
           (actualDuration - plannedDuration) / plannedDuration;
+
+        if (taskDifference.percentDifference > 100) {
+          taskDifference.percentDifference = 100;
+        }
+
+        if (taskDifference.percentDifference < -100) {
+          taskDifference.percentDifference = -100;
+        }
 
         if (!task.isStarted) {
           taskDurationDifferences.push(taskDifference);
@@ -35,9 +40,6 @@ export const TaskDurationBarChart = ({ taskResponseData }) => {
   };
 
   const taskDurationDifferences = computeDurationDifference(taskResponseData);
-  console.log("taskDurationDifferences:");
-  console.log("taskDurationDifferences: ", taskDurationDifferences);
-
   return (
     <div className={styles.scrollableTaskChart}>
       <BarChart
@@ -51,7 +53,16 @@ export const TaskDurationBarChart = ({ taskResponseData }) => {
           bottom: 5,
         }}
       >
-        <XAxis dataKey="taskName" stroke="black" />
+        <XAxis
+          dataKey="taskName"
+          stroke="black"
+          label={{
+            value: "Tasks",
+            angle: "0",
+            position: "insideBottom",
+          }}
+          height={60}
+        />
         <YAxis
           stroke="black"
           label={{
