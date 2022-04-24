@@ -117,7 +117,7 @@ const CalendarPage = () => {
     setToggleErrorMessage("");
 
     await instance
-      .get("/tasks/:taskId/feedback")
+      .get(`/feedback/tasks/${id}`)
       .then((taskReflectionData) => {
         return taskReflectionData.data;
       })
