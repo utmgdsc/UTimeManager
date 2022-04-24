@@ -1,0 +1,93 @@
+.taskReflectionModal {
+  max-height: 50vh;
+  max-width: 80vw;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  position: fixed;
+  background-color: white;
+  text-align: center;
+  border-radius: 30px;
+  overflow: auto;
+}
+
+.taskReflectionTitle {
+  color: #000000;
+  font-weight: bold;
+  font-family: "Roboto", sans-serif;
+  font-size: 1.5rem;
+  margin-top: 20px;
+  margin-bottom: 15px;
+}
+
+.taskReflectionContent {
+  color: #000000;
+  font-weight: 400;
+  font-family: "Roboto", sans-serif;
+  font-size: 0.9rem;
+  text-align: left;
+  margin-left: 30px;
+}
+
+.taskReflectionComments {
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid #000000;
+  flex: 1;
+}
+
+.taskReflectionComments:focus {
+  outline: none;
+  border: none;
+  border-bottom: 2px solid #032a5c;
+}
+
+.ratingDotContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 30px;
+}
+
+.ratingDot {
+  border-radius: 50%;
+  min-height: 20px;
+  min-width: 20px;
+  background-color: #dadada;
+  display: inline-block;
+  margin: 0px 4px;
+}
+
+.chosenDot {
+  border-radius: 50%;
+  min-height: 20px;
+  min-width: 20px;
+  background-color: #032a5c;
+  display: inline-block;
+  margin: 0px 4px;
+}
+
+.actionContainer {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.doneBtn {
+  border: none;
+  border-radius: 10px;
+  color: white;
+  background-color: #032a5c;
+  margin-bottom: 20px;
+  margin-right: 30px;
+  padding: 4px 8px;
+}
+
+.closeBtn {
+  border: none;
+  border-radius: 10px;
+  color: black;
+  background-color: #dadada;
+  margin-bottom: 20px;
+  margin-right: 10px;
+  padding: 4px 8px;
+}

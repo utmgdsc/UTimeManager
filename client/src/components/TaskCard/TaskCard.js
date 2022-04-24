@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { PropTypes } from "prop-types";
 import SmallActionButton from "../SmallActionButton/SmallActionButton.js";
 import TaskDetails from "../../components/TaskDetails/TaskDetails";
+import TaskReflectionModal from "../../components/TaskReflectionModal/TaskReflectionModal";
 import styles from "./TaskCard.module.css";
 
 const TaskCard = ({
@@ -30,6 +31,7 @@ const TaskCard = ({
   const [startDate, startTime] = getDateTime(startDateTime);
   const [endDate, endTime] = getDateTime(endDateTime);
   const [showModal, setModal] = useState(false);
+  const [showReflection, setReflection] = useState(false);
 
   const taskTextStyle = finished ? styles.taskDone : "";
   const actionBtn =
@@ -42,12 +44,17 @@ const TaskCard = ({
         }}
       />
     ) : (
-      <SmallActionButton text={"View"} toggleButton={toggleModal} />
+      <SmallActionButton
+        text={"View"}
+        toggleButton={() => setReflection(!showReflection)}
+      />
     );
 
   const startDateTimeString = `${startDate} ${startTime}`;
   const endDateTimeString = `${endDate} ${endTime}`;
 
+  // todo: modal should not both be visible
+  // todo: scrollbar shouldn't be visible
   return (
     <div className={styles.taskContainer}>
       {showModal ? (
@@ -59,6 +66,11 @@ const TaskCard = ({
           startDateTimeString={startDateTimeString}
           endDateTimeString={endDateTimeString}
         />
+      ) : (
+        <></>
+      )}
+      {showReflection ? (
+        <TaskReflectionModal onClose={() => setReflection(!showReflection)} />
       ) : (
         <></>
       )}
