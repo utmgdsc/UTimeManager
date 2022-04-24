@@ -11,6 +11,11 @@
   overflow: auto;
 }
 
+.taskReflectionModal::-webkit-scrollbar {
+  width: 0px !important;
+  display: none;
+}
+
 .taskReflectionTitle {
   color: #000000;
   font-weight: bold;

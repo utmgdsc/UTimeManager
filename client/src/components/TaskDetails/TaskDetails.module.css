@@ -21,6 +21,11 @@
   padding: 20px 0px;
 }
 
+.modal::-webkit-scrollbar {
+  width: 0px !important;
+  display: none;
+}
+
 .overlay {
   background: rgba(49, 49, 49, 0.8);
 }

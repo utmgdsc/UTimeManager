@@ -21,6 +21,10 @@ const TaskCard = ({
     setModal(!showModal);
   };
 
+  const toggleReflection = () => {
+    setReflection(!showReflection);
+  };
+
   const getDateTime = (taskDate) => {
     return [
       taskDate.toLocaleDateString(),
@@ -40,21 +44,17 @@ const TaskCard = ({
         text={!ongoing ? "Start" : "End"}
         toggleButton={() => {
           toggleTaskHandler(id);
-          // setOngoing(!taskOngoing);
+          if (ongoing) toggleReflection();
         }}
       />
     ) : (
-      <SmallActionButton
-        text={"View"}
-        toggleButton={() => setReflection(!showReflection)}
-      />
+      <SmallActionButton text={"View"} toggleButton={toggleReflection} />
     );
 
   const startDateTimeString = `${startDate} ${startTime}`;
   const endDateTimeString = `${endDate} ${endTime}`;
 
   // todo: modal should not both be visible
-  // todo: scrollbar shouldn't be visible
   return (
     <div className={styles.taskContainer}>
       {showModal ? (
@@ -70,7 +70,7 @@ const TaskCard = ({
         <></>
       )}
       {showReflection ? (
-        <TaskReflectionModal onClose={() => setReflection(!showReflection)} />
+        <TaskReflectionModal onClose={toggleReflection} />
       ) : (
         <></>
       )}
