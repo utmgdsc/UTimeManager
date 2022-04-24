@@ -106,15 +106,10 @@ const CalendarPage = () => {
       task_id: id,
       satisfaction: satisfaction,
     };
-    await instance
-      .post(`/feedback`, reflectionData)
-      .then(() => {
-        getTasks();
-      })
-      .catch(() => {
-        setToggleError(true);
-        setToggleErrorMessage("Unable to create task reflection");
-      });
+    await instance.post(`/feedback`, reflectionData).catch(() => {
+      setToggleError(true);
+      setToggleErrorMessage("Unable to create task reflection");
+    });
   };
 
   useEffect(() => {

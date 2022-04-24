@@ -35,6 +35,7 @@ const TaskCard = ({
 
   const reflectionDoneHandler = async (reflectionComments, satisfaction) => {
     await createTaskReflection(id, reflectionComments, satisfaction);
+    await toggleTaskHandler(id);
     toggleReflection();
   };
 
@@ -49,8 +50,8 @@ const TaskCard = ({
       <SmallActionButton
         text={!ongoing ? "Start" : "End"}
         toggleButton={() => {
-          toggleTaskHandler(id);
           if (ongoing) toggleReflection();
+          else toggleTaskHandler(id);
         }}
       />
     ) : (
@@ -77,6 +78,7 @@ const TaskCard = ({
       )}
       {showReflection ? (
         <TaskReflectionModal
+          readOnly={finished}
           onClose={toggleReflection}
           onDone={reflectionDoneHandler}
         />

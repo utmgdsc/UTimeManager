@@ -10,7 +10,7 @@ const RatingDot = ({ chosen, onChosen }) => {
     ></span>
   );
 };
-const TaskReflectionModal = ({ onClose, onDone }) => {
+const TaskReflectionModal = ({ onClose, onDone, readOnly }) => {
   // chosenDot is the index of the chosen dot (0-9)
   const [chosenDot, setChosenDot] = useState(0);
   const [reflectionComments, setReflectionComments] = useState("");
@@ -53,9 +53,13 @@ const TaskReflectionModal = ({ onClose, onDone }) => {
         <button className={styles.closeBtn} onClick={onClose}>
           Cancel
         </button>
-        <button className={styles.doneBtn} onClick={submitHandler}>
-          Done
-        </button>
+        {!readOnly ? (
+          <button className={styles.doneBtn} onClick={submitHandler}>
+            Done
+          </button>
+        ) : (
+          <></>
+        )}
       </div>
     </div>
   );
@@ -69,6 +73,7 @@ RatingDot.propTypes = {
 TaskReflectionModal.propTypes = {
   onClose: PropTypes.func.isRequired,
   onDone: PropTypes.func,
+  readOnly: PropTypes.bool.isRequired,
 };
 
 export default TaskReflectionModal;
