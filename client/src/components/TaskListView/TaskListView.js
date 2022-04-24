@@ -3,7 +3,12 @@ import styles from "./TaskListView.module.css";
 import TaskCard from "../TaskCard/TaskCard";
 import { PropTypes } from "prop-types";
 
-const TaskListView = ({ tasks, edittable, toggleTaskHandler }) => {
+const TaskListView = ({
+  tasks,
+  edittable,
+  toggleTaskHandler,
+  createTaskReflection,
+}) => {
   const cards = tasks.map(function (task, ix) {
     return (
       <li key={ix} style={{ listStyle: "none" }}>
@@ -17,6 +22,7 @@ const TaskListView = ({ tasks, edittable, toggleTaskHandler }) => {
           ongoing={task.isStarted && "taskStartedAt" in task}
           finished={!task.isStarted && "taskEndedAt" in task}
           toggleTaskHandler={toggleTaskHandler}
+          createTaskReflection={createTaskReflection}
           edittable={edittable}
         />
       </li>
@@ -30,5 +36,6 @@ TaskListView.propTypes = {
   tasks: PropTypes.arrayOf(PropTypes.object).isRequired,
   edittable: PropTypes.bool.isRequired,
   toggleTaskHandler: PropTypes.func,
+  createTaskReflection: PropTypes.func.isRequired,
 };
 export default TaskListView;

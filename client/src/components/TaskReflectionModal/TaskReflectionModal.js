@@ -10,7 +10,7 @@ const RatingDot = ({ chosen, onChosen }) => {
     ></span>
   );
 };
-const TaskReflectionModal = ({ onSubmit, onClose, onDone }) => {
+const TaskReflectionModal = ({ onClose, onDone }) => {
   // chosenDot is the index of the chosen dot (0-9)
   const [chosenDot, setChosenDot] = useState(0);
   const [reflectionComments, setReflectionComments] = useState("");
@@ -27,6 +27,10 @@ const TaskReflectionModal = ({ onSubmit, onClose, onDone }) => {
       );
     }
     return dots;
+  };
+
+  const submitHandler = () => {
+    onDone(reflectionComments, chosenDot + 1);
   };
 
   return (
@@ -49,7 +53,7 @@ const TaskReflectionModal = ({ onSubmit, onClose, onDone }) => {
         <button className={styles.closeBtn} onClick={onClose}>
           Cancel
         </button>
-        <button className={styles.doneBtn} onClick={() => {}}>
+        <button className={styles.doneBtn} onClick={submitHandler}>
           Done
         </button>
       </div>
@@ -63,7 +67,6 @@ RatingDot.propTypes = {
 };
 
 TaskReflectionModal.propTypes = {
-  onSubmit: PropTypes.func,
   onClose: PropTypes.func.isRequired,
   onDone: PropTypes.func,
 };

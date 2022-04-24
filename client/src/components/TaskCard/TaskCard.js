@@ -15,6 +15,7 @@ const TaskCard = ({
   finished,
   edittable,
   toggleTaskHandler,
+  createTaskReflection,
   id,
 }) => {
   const toggleModal = () => {
@@ -30,6 +31,11 @@ const TaskCard = ({
       taskDate.toLocaleDateString(),
       taskDate.toTimeString().substring(0, 5),
     ];
+  };
+
+  const reflectionDoneHandler = async (reflectionComments, satisfaction) => {
+    await createTaskReflection(id, reflectionComments, satisfaction);
+    toggleReflection();
   };
 
   const [startDate, startTime] = getDateTime(startDateTime);
@@ -70,7 +76,10 @@ const TaskCard = ({
         <></>
       )}
       {showReflection ? (
-        <TaskReflectionModal onClose={toggleReflection} />
+        <TaskReflectionModal
+          onClose={toggleReflection}
+          onDone={reflectionDoneHandler}
+        />
       ) : (
         <></>
       )}
@@ -103,6 +112,7 @@ TaskCard.propTypes = {
   finished: PropTypes.bool.isRequired,
   edittable: PropTypes.bool.isRequired,
   toggleTaskHandler: PropTypes.func,
+  createTaskReflection: PropTypes.func.isRequired,
   id: PropTypes.string.isRequired,
 };
 

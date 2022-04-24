@@ -98,6 +98,25 @@ const CalendarPage = () => {
       });
   };
 
+  const createTaskReflection = async (id, reflectionComments, satisfaction) => {
+    setToggleError(false);
+    setToggleErrorMessage("");
+    const reflectionData = {
+      body: reflectionComments,
+      task_id: id,
+      satisfaction: satisfaction,
+    };
+    await instance
+      .post(`/feedback`, reflectionData)
+      .then(() => {
+        getTasks();
+      })
+      .catch(() => {
+        setToggleError(true);
+        setToggleErrorMessage("Unable to create task reflection");
+      });
+  };
+
   useEffect(() => {
     getTasks();
   }, [currDate, currentFilter]);
@@ -147,6 +166,7 @@ const CalendarPage = () => {
           tasks={taskData}
           edittable={true}
           toggleTaskHandler={toggleTaskHandler}
+          createTaskReflection={createTaskReflection}
         />
       )}
     </div>
