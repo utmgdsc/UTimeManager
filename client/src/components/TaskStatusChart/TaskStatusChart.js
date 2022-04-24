@@ -3,8 +3,7 @@ import styles from "./TaskStatusChart.module.css";
 import { PieChart, Pie, Cell, Legend } from "recharts";
 import { PropTypes } from "prop-types";
 
-const RADIAN = Math.PI / 180;
-const renderCustomizedLabel = ({
+const chartLabel = ({
   cx,
   cy,
   midAngle,
@@ -13,6 +12,7 @@ const renderCustomizedLabel = ({
   percent,
   index,
 }) => {
+  const RADIAN = Math.PI / 180;
   const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
   const x = cx + radius * Math.cos(-midAngle * RADIAN);
   const y = cy + radius * Math.sin(-midAngle * RADIAN);
@@ -32,32 +32,41 @@ const renderCustomizedLabel = ({
 
 const COLORS = ["#629632", "#F6BE00", "#FF0000"];
 
-export const TaskStatusChart = ({ tempData }) => {
+export const TaskStatusChart = ({ tasksData, chartHeader }) => {
   return (
     <div>
       <PieChart width={380} height={380}>
         <Pie
-          data={tempData}
+          data={tasksData}
           cx={100}
           cy={200}
           labelLine={false}
-          label={renderCustomizedLabel}
+          label={chartLabel}
           outerRadius={80}
           fill="#8884d8"
           dataKey="value"
         >
-          {tempData.map((entry, index) => (
+          {tasksData.map((entry, index) => (
             <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
           ))}
         </Pie>
-        <Legend verticalAlign="middle" align="right" layout="vertical" />
+        <text x={200} y={30} fill="black" textAnchor="middle">
+          <tspan className={styles.tspan}>{chartHeader}</tspan>
+        </text>
+        <Legend
+          verticalAlign="middle"
+          align="right"
+          layout="vertical"
+          wrapperStyle={{ fontFamily: "Source Sans Pro,  sans-serif" }}
+        />
       </PieChart>
     </div>
   );
 };
 
 TaskStatusChart.propTypes = {
-  tempData: PropTypes.arrayOf(PropTypes.object),
+  tasksData: PropTypes.arrayOf(PropTypes.object),
+  chartHeader: PropTypes.string.isRequired,
 };
 
 export default TaskStatusChart;

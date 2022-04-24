@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import styles from "../Carousel/Carousel.module.css";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from "react-responsive-carousel";
@@ -6,61 +6,56 @@ import TaskStatusChart from "../TaskStatusChart/TaskStatusChart";
 import PropTypes from "prop-types";
 
 export const InsightsCarousel = ({ taskData }) => {
-  const startedTasks = {
-    early: [],
-    onTime: [],
-    late: [],
-  };
+  const formatTasks = (sampleTaskData) => {
+    const startedTasks = {
+      early: [],
+      onTime: [],
+      late: [],
+    };
 
-  const EndedTasks = {
-    early: [],
-    onTime: [],
-    late: [],
-  };
+    const endedTasks = {
+      early: [],
+      onTime: [],
+      late: [],
+    };
 
-  const summaryTasks = {
-    completed: [],
-    onGoing: [],
-    notStarted: [],
-  };
+    const summaryTasks = {
+      completed: [],
+      onGoing: [],
+      notStarted: [],
+    };
 
-  const manageStartedTasks = (
-    sampleTaskData,
-    startedTasks,
-    EndedTasks,
-    summaryTasks
-  ) => {
     const totalTasks = sampleTaskData.length;
 
-    for (const t of sampleTaskData) {
-      const actualTime = Math.floor(t.startDate.getTime() / 60000);
-      const plannedTime = Math.floor(t.originalStartDate.getTime() / 60000);
+    for (const task of sampleTaskData) {
+      const actualTime = Math.floor(task.startDate.getTime() / 60000);
+      const plannedTime = Math.floor(task.originalStartDate.getTime() / 60000);
 
-      const actualEndTime = Math.floor(t.endDate.getTime() / 60000);
-      const plannedEndTime = Math.floor(t.originalEndDate.getTime() / 60000);
+      const actualEndTime = Math.floor(task.endDate.getTime() / 60000);
+      const plannedEndTime = Math.floor(task.originalEndDate.getTime() / 60000);
 
       if (actualTime === plannedTime) {
-        startedTasks.onTime.push(t);
+        startedTasks.onTime.push(task);
       } else if (actualTime < plannedTime - 5) {
-        startedTasks.early.push(t);
+        startedTasks.early.push(task);
       } else if (actualTime > plannedTime + 5) {
-        startedTasks.late.push(t);
+        startedTasks.late.push(task);
       }
 
       if (actualEndTime === plannedEndTime) {
-        EndedTasks.onTime.push(t);
+        endedTasks.onTime.push(task);
       } else if (actualEndTime < plannedEndTime - 5) {
-        EndedTasks.early.push(t);
+        endedTasks.early.push(task);
       } else if (actualEndTime > plannedEndTime + 5) {
-        EndedTasks.late.push(t);
+        endedTasks.late.push(task);
       }
 
-      if (t.taskStatus === "DONE") {
-        summaryTasks.completed.push(t);
-      } else if (t.taskStatus === "NOT STARTED") {
-        summaryTasks.notStarted.push(t);
+      if (task.taskStatus === "DONE") {
+        summaryTasks.completed.push(task);
+      } else if (task.taskStatus === "NOT STARTED") {
+        summaryTasks.notStarted.push(task);
       } else {
-        summaryTasks.onGoing.push(t);
+        summaryTasks.onGoing.push(task);
       }
     }
 
@@ -68,9 +63,9 @@ export const InsightsCarousel = ({ taskData }) => {
     const onTimePercentageVal = (100 * startedTasks.onTime.length) / totalTasks;
     const latePercentageVal = (100 * startedTasks.late.length) / totalTasks;
 
-    const earlyEndedVal = (100 * EndedTasks.early.length) / totalTasks;
-    const onTimeEndedVal = (100 * EndedTasks.onTime.length) / totalTasks;
-    const lateEndedVal = (100 * EndedTasks.late.length) / totalTasks;
+    const earlyEndedVal = (100 * endedTasks.early.length) / totalTasks;
+    const onTimeEndedVal = (100 * endedTasks.onTime.length) / totalTasks;
+    const lateEndedVal = (100 * endedTasks.late.length) / totalTasks;
 
     const completedVal = (100 * summaryTasks.completed.length) / totalTasks;
     const onGoingVal = (100 * summaryTasks.onGoing.length) / totalTasks;
@@ -97,27 +92,17 @@ export const InsightsCarousel = ({ taskData }) => {
     return [startedSummary, endedSummary, statusSummary];
   };
 
-  const [startedSummary, endedSummary, statusSummary] = manageStartedTasks(
-    taskData,
-    startedTasks,
-    EndedTasks,
-    summaryTasks
-  );
+  const [startedSummary, endedSummary, statusSummary] = formatTasks(taskData);
 
   return (
-    <>
-      <Carousel className={styles.mainSlide}>
-        <div>
-          <TaskStatusChart tempData={startedSummary} />
-        </div>
-        <div>
-          <TaskStatusChart tempData={endedSummary} />
-        </div>
-        <div>
-          <TaskStatusChart tempData={statusSummary} />
-        </div>
-      </Carousel>
-    </>
+    <Carousel className={styles.mainSlide}>
+      <TaskStatusChart
+        tasksData={startedSummary}
+        chartHeader="Task Start Times"
+      />
+      <TaskStatusChart tasksData={endedSummary} chartHeader="Task End Times" />
+      <TaskStatusChart tasksData={statusSummary} chartHeader="Task Status" />
+    </Carousel>
   );
 };
 
