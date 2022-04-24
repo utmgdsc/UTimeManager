@@ -5,7 +5,6 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
 const registerUser = asyncHandler(async (req, res) => {
-  console.log("HERE");
   const { email, password } = req.body;
 
   const userExists = await User.findOne({ email });
@@ -48,23 +47,28 @@ const loginUser = asyncHandler(async (req, res) => {
     throw new Error("Wrong password");
   }
 
-  const { password, ...others } = user._doc;
+  const token = jwt.sign(
+    {
+      email: user.email,
+      name: user.name,
+      isAdmin: user.isAdmin,
+      _id: user._id,
+    },
+    process.env.JWT_SECRET,
+    {
+      expiresIn: "12000s",
+    }
+  );
 
-  //TODO: Return a cookie? How do you return a cookie?
-  res.status(200).json({
-    token: jwt.sign(
-      {
-        email: user.email,
-        name: user.name,
-        isAdmin: user.isAdmin,
-        _id: user._id,
-      },
-      process.env.JWT_SECRET,
-      {
-        expiresIn: "12000s",
-      }
-    ),
-  });
+  const options = {
+    maxAge: 60 * 60 * 1000,
+    httpOnly: true,
+    secure: true,
+    sameSite: "Lax",
+  };
+
+  res.cookie("token", token, options);
+  res.status(200).json();
 });
 
 module.exports = { registerUser, loginUser };

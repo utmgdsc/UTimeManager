@@ -1,3 +1,9 @@
+.credLayout {
+  display: flex;
+  flex-direction: column;
+  margin: 10% 0%;
+}
+
 .inputBox {
   border-radius: 20px;
   padding: 7px 10px;
@@ -7,6 +13,16 @@
   background-color: white;
   border-color: transparent;
   max-width: 300px;
+  overflow: scroll;
+  resize: both;
+}
+
+.inputBox::-webkit-scrollbar {
+  visibility: hidden;
+}
+
+.inputBox::-webkit-scrollbar-corner {
+  visibility: hidden;
 }
 
 .inputHeader {
@@ -15,4 +31,8 @@
   font-size: 1.5rem;
   margin: 0px 0px 3px 10px;
   font-family: "Source Sans Pro", sans-serif;
+}
+
+.description {
+  height: 100px;
 }

@@ -5,8 +5,9 @@ title: Configuration
 The following is a list of the environment variables, their uses and their default values
 
 ### app.env
+
 | Env Name             | About                                               | Default value(s)                                                                        | Note                                                                                        |
-|----------------------|-----------------------------------------------------|-----------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------|
+| -------------------- | --------------------------------------------------- | --------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- |
 | FRONTEND_URL         | URL for frontend                                    | `localhost:3000`                                                                        | N/A                                                                                         |
 | DB_HOST              | The hostname of the database                        | `db`                                                                                    | `db` is the service name in the `docker-compose.yaml` file                                  |
 | DB_PORT              | The database port                                   | `5432`                                                                                  | N/A                                                                                         |
@@ -32,13 +33,15 @@ The following is a list of the environment variables, their uses and their defau
 | EMAIL_PASSWORD       | The email password                                  | N/A                                                                                     | This field is for the credentials of the no-reply reset email                               |
 
 ### db.env
+
 | Env Name          | About                 | Default value(s) | Note |
-|-------------------|-----------------------|------------------|------|
+| ----------------- | --------------------- | ---------------- | ---- |
 | POSTGRES_USER     | Username for database | `postgres`       | N/A  |
 | POSTGRES_PASSWORD | Password for database | `postgres`       | N/A  |
 | POSTGRES_DB       | Database name         | `cdb`            | N/A  |
 
 ---
+
 :::caution
 2ofClubs is under active development. This page is subject to change.
 :::
