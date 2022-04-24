@@ -17,6 +17,8 @@ const TaskCard = ({
   toggleTaskHandler,
   createTaskReflection,
   id,
+  reflectionBody,
+  satisfaction,
 }) => {
   const toggleModal = () => {
     setModal(!showModal);
@@ -79,6 +81,8 @@ const TaskCard = ({
       {showReflection ? (
         <TaskReflectionModal
           readOnly={finished}
+          satisfaction={satisfaction}
+          reflectionBody={reflectionBody}
           onClose={toggleReflection}
           onDone={reflectionDoneHandler}
         />
@@ -116,6 +120,8 @@ TaskCard.propTypes = {
   toggleTaskHandler: PropTypes.func,
   createTaskReflection: PropTypes.func.isRequired,
   id: PropTypes.string.isRequired,
+  reflectionBody: PropTypes.string.isRequired,
+  satisfaction: PropTypes.number.isRequired,
 };
 
 export default TaskCard;

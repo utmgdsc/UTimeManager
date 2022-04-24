@@ -10,10 +10,16 @@ const RatingDot = ({ chosen, onChosen }) => {
     ></span>
   );
 };
-const TaskReflectionModal = ({ onClose, onDone, readOnly }) => {
+const TaskReflectionModal = ({
+  onClose,
+  onDone,
+  readOnly,
+  satisfaction,
+  reflectionBody,
+}) => {
   // chosenDot is the index of the chosen dot (0-9)
-  const [chosenDot, setChosenDot] = useState(0);
-  const [reflectionComments, setReflectionComments] = useState("");
+  const [chosenDot, setChosenDot] = useState(satisfaction);
+  const [reflectionComments, setReflectionComments] = useState(reflectionBody);
 
   const ratingDots = () => {
     const dots = [];
@@ -74,6 +80,8 @@ TaskReflectionModal.propTypes = {
   onClose: PropTypes.func.isRequired,
   onDone: PropTypes.func,
   readOnly: PropTypes.bool.isRequired,
+  reflectionBody: PropTypes.string.isRequired,
+  satisfaction: PropTypes.number.isRequired,
 };
 
 export default TaskReflectionModal;

@@ -8,8 +8,11 @@ const TaskListView = ({
   edittable,
   toggleTaskHandler,
   createTaskReflection,
+  getTaskReflection,
 }) => {
-  const cards = tasks.map(function (task, ix) {
+  const cards = tasks.map(async function (task, ix) {
+    const taskReflection = await getTaskReflection(task._id);
+    // if one call fails, then only the error message will be shown in calendar
     return (
       <li key={ix} style={{ listStyle: "none" }}>
         <TaskCard
@@ -24,6 +27,8 @@ const TaskListView = ({
           toggleTaskHandler={toggleTaskHandler}
           createTaskReflection={createTaskReflection}
           edittable={edittable}
+          reflectionBody={taskReflection.body}
+          satisfaction={taskReflection.satisfaction}
         />
       </li>
     );
@@ -37,5 +42,6 @@ TaskListView.propTypes = {
   edittable: PropTypes.bool.isRequired,
   toggleTaskHandler: PropTypes.func,
   createTaskReflection: PropTypes.func.isRequired,
+  getTaskReflection: PropTypes.func.isRequired,
 };
 export default TaskListView;

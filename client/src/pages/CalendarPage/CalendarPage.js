@@ -112,6 +112,25 @@ const CalendarPage = () => {
     });
   };
 
+  const getTaskReflection = async (id) => {
+    setToggleError(false);
+    setToggleErrorMessage("");
+
+    await instance
+      .get("/tasks/:taskId/feedback")
+      .then((taskReflectionData) => {
+        return taskReflectionData.data;
+      })
+      .catch(() => {
+        setToggleError(true);
+        setToggleErrorMessage("Failed to record task reflection!");
+
+        // this value doesn't matter since no task cards will be shown if
+        // at least one get task reflection fails
+        return { body: "", satisfaction: 0 };
+      });
+  };
+
   useEffect(() => {
     getTasks();
   }, [currDate, currentFilter]);
@@ -162,6 +181,7 @@ const CalendarPage = () => {
           edittable={true}
           toggleTaskHandler={toggleTaskHandler}
           createTaskReflection={createTaskReflection}
+          getTaskReflection={getTaskReflection}
         />
       )}
     </div>
