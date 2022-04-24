@@ -8,6 +8,7 @@ import TaskHistoryPage from "./pages/TaskHistoryPage/TaskHistoryPage.js";
 import InsightsPage from "./pages/InsightsPage/InsightsPage.js";
 import TaskFormPage from "./pages/TaskFormPage/TaskFormPage.js";
 
+
 const App = () => {
   return (
     <BrowserRouter>
