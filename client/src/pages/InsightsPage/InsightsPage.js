@@ -87,6 +87,4 @@ const InsightsPage = () => {
   );
 };
 
-// note: the 300px margin is just for demonstration purposes
-// To see how the colors will look like against the lighter part of the gradient
 export default InsightsPage;
