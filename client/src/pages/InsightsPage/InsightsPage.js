@@ -2,27 +2,23 @@ import React, { useEffect, useState } from "react";
 import styles from "./InsightsPage.module.css";
 import { DateSelector } from "../../components/DateSelector/DateSelector.js";
 import { TaskDurationBarChart } from "../../components/TaskDurationBarChart/TaskDurationBarChart.js";
+import { InsightsCarousel } from "../../components/Carousel/Carousel.js";
 import { instance } from "../../axios";
 import { ErrorMessage } from "../../components/ErrorMessage/ErrorMessage";
-import { formatDateforAPI } from "../../utils";
+import { buildDateRangeRoute } from "../../utils";
 
 const InsightsPage = () => {
-  const [currDate1, setCurrDate1] = useState(new Date());
-  const [currDate2, setCurrDate2] = useState(new Date());
+  const [startDate, setCurrDate1] = useState(new Date());
+  const [endDate, setCurrDate2] = useState(new Date());
   const [taskData, setTaskData] = useState([]);
   const [loadingError, setLoadingError] = useState(false);
   const [loadingErrorMessage, setLoadingErrorMessage] = useState("");
-
-  const startDate = formatDateforAPI(currDate1);
-  const endDate = formatDateforAPI(currDate2);
-
-  const route = `/tasks?start=${startDate}&end=${endDate}`;
 
   const fetchTasks = async () => {
     setLoadingErrorMessage("");
     setLoadingError(false);
     await instance
-      .get(route)
+      .get(buildDateRangeRoute(startDate, endDate))
       .then((response) => {
         setTaskData(response.data);
         if (response.data.length === 0) {
@@ -38,7 +34,7 @@ const InsightsPage = () => {
 
   useEffect(() => {
     fetchTasks();
-  }, [currDate1, currDate2]);
+  }, [startDate, endDate]);
 
   const cleanData = () => {
     const mapped = taskData.map((task) => {
@@ -58,29 +54,36 @@ const InsightsPage = () => {
     return mapped;
   };
 
+  const cleanedData = cleanData();
+
   return (
     <div className={styles.bg}>
       <DateSelector
         showTime={true}
-        selectedDate={currDate1}
+        selectedDate={startDate}
         onDateChanged={(newDate) => {
           setCurrDate1(newDate);
         }}
       />
       <DateSelector
         showTime={true}
-        selectedDate={currDate2}
+        selectedDate={endDate}
         onDateChanged={(newDate) => {
           setCurrDate2(newDate);
         }}
       />
+
+      <div>
+        <InsightsCarousel taskData={cleanedData} />
+      </div>
+
       {loadingError ? (
         <div className={styles.errorMessageStyle}>
           <ErrorMessage errorMessage={loadingErrorMessage} />
         </div>
       ) : (
-        <div style={{ marginTop: "300px" }}>
-          <TaskDurationBarChart taskResponseData={cleanData()} />
+        <div>
+          <TaskDurationBarChart taskResponseData={cleanedData} />
         </div>
       )}
     </div>
