@@ -9,6 +9,7 @@ import {
 import { ErrorMessage } from "../../components/ErrorMessage/ErrorMessage.js";
 import { instance } from "../../axios.js";
 import { TaskFilterSelector } from "../../components/TaskFilterSelector/TaskFilterSelector.js";
+import PageHeader from "../../components/PageHeader/PageHeader.js";
 
 const TaskHistoryPage = () => {
   const filterSet = ["Day", "Week", "Month", "All"];
@@ -58,7 +59,7 @@ const TaskHistoryPage = () => {
 
   return (
     <div className={styles.bg}>
-      <div className={styles.taskHistoryHeader}>Your Tasks</div>
+      <PageHeader pageTitle={"Your Tasks"} />
       <TaskFilterSelector
         filterSet={filterSet}
         currentFilter={currentFilter}

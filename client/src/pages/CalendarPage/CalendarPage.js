@@ -3,7 +3,7 @@ import "react-calendar/dist/Calendar.css";
 import "./CalendarOverride.css";
 import Calendar from "react-calendar";
 import styles from "./CalendarPage.module.css";
-import CalendarHeader from "../../components/CalendarHeader/CalendarHeader.js";
+import PageHeader from "../../components/PageHeader/PageHeader.js";
 import TaskDetails from "../../components/TaskDetails/TaskDetails";
 import TaskListView from "../../components/TaskListView/TaskListView.js";
 
@@ -58,7 +58,7 @@ const CalendarPage = () => {
   return (
     <div className={styles.bg}>
       {showModal ? <TaskDetails closeModalHandler={toggleModal} /> : <></>}
-      <CalendarHeader />
+      <PageHeader pageTitle={"Daily Tasks"} />
       <Calendar
         onChange={dateChangeGetter}
         value={currDate}

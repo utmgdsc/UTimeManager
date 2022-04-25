@@ -1,0 +1,64 @@
+.calendarPageHeader {
+  color: white;
+  font-weight: 600;
+  font-family: "Source Sans Pro", sans-serif;
+  font-size: 1.875rem;
+  margin: 5px 10px;
+}
+
+.calendarHeaderContainer {
+  display: flex;
+  background: #032a5c;
+  align-items: center;
+}
+
+.hamburgerIcon {
+  height: 1.875rem;
+  width: 1.875rem;
+  background: transparent;
+  color: #dadada;
+}
+
+.closeIcon {
+  height: 1.875rem;
+  width: 1.875rem;
+  background: transparent;
+  color: #828282;
+  padding-top: 0.3em;
+}
+
+.navButton {
+  background: transparent;
+  border: none;
+  margin-left: 10px;
+  padding-top: 0.4em;
+  cursor: pointer;
+}
+
+.navDropdown {
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: #eaf3fe;
+  border-radius: 0px 0px 30px 0px;
+}
+
+.navDropdownItem {
+  background-color: #032a5c;
+  color: white;
+  font-weight: 600;
+  font-family: "Source Sans Pro", sans-serif;
+  font-size: 1.1rem;
+  border: none;
+  border-radius: 10px;
+  height: 50px;
+  width: 120px;
+  margin: 5px 10px;
+}
+
+.menuItemContainer {
+  display: flex;
+  flex-direction: column;
+  margin: 0px 30px;
+  margin-bottom: 20px;
+}
