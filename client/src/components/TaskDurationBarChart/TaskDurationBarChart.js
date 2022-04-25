@@ -60,7 +60,6 @@ export const TaskDurationBarChart = ({ taskResponseData }) => {
           left: 20,
           bottom: 5,
         }}
-        barCategoryGap={1000}
         cursor="pointer"
       >
         <Tooltip
