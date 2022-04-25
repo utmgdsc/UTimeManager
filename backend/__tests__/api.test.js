@@ -14,7 +14,6 @@ beforeAll(async () => {
   await mongoose.connect("mongodb://localhost:27017/", {
     useUnifiedTopology: true,
     useNewUrlParser: true,
-    // useCreateIndex: true,
   });
   server = app.listen();
 
@@ -296,7 +295,6 @@ describe("Create Feedback Suite", () => {
     const res = await request(app)
       .get(`/api/feedback/tasks/${taskObjectId}`)
       .set("cookie", jwt);
-    console.log("ASAHASLDHALSJDHKAJSHDKLJJASHD 1");
     expect(res.statusCode).toEqual(200);
     expect(res.body.user_id).toEqual(userId);
     expect(res.body.satisfaction).toEqual(9);
