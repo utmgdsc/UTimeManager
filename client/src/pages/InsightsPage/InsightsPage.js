@@ -2,6 +2,7 @@ import React from "react";
 import TaskStatusChart from "../../components/TaskStatusChart/TaskStatusChart";
 import styles from "./InsightsPage.module.css";
 import { InsightsCarousel } from "../../components/Carousel/Carousel";
+import PageHeader from "../../components/PageHeader/PageHeader.js";
 
 const InsightsPage = () => {
   const nHoursAhead = (nHours) => {
@@ -78,6 +79,7 @@ const InsightsPage = () => {
 
   return (
     <div>
+      <PageHeader pageTitle={"Insights"} />
       <InsightsCarousel taskData={sampleTaskData} />
     </div>
   );
