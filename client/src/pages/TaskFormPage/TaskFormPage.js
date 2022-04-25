@@ -43,9 +43,7 @@ const TaskFormPage = () => {
 
     const startDate = new Date(taskFormData.startDate);
     const endDate = new Date(taskFormData.endDate);
-    if (
-      startDate.getTime() > endDate.getTime()
-    ) {
+    if (startDate.getTime() > endDate.getTime()) {
       return "Start time must come before end time";
     }
 
@@ -69,7 +67,7 @@ const TaskFormPage = () => {
     console.log(taskFormUploadData);
 
     await instance
-      .post("/api/tasks", taskFormUploadData)
+      .post("/tasks", taskFormUploadData)
       .then((res) => {
         console.log(`Response: ${res.data}`);
         navigate("/calendar");

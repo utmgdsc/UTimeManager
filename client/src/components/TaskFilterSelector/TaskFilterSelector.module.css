@@ -1,0 +1,25 @@
+.selectedFilter {
+  margin: 5px 10px;
+  border-color: #8498b2;
+  border-width: 2px;
+  border-radius: 10px;
+  border-style: solid;
+  color: white;
+  background: #032a5c;
+  width: 15%;
+}
+
+.filterButton {
+  margin: 5px 10px;
+  border: none;
+  border-radius: 10px;
+  color: black;
+  background: white;
+  width: 15%;
+}
+
+.filterBar {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}

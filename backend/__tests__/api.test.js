@@ -66,6 +66,7 @@ describe("Getting Tasks Suite", () => {
       .send({
         title: "Test Task",
         description: "Test Task",
+        location: "Test Location",
         startDate: "2022-04-14T04:00:00.000Z",
         endDate: new Date().toISOString(),
         isStarted: false,
@@ -76,6 +77,7 @@ describe("Getting Tasks Suite", () => {
     await request(app).post("/api/tasks").set("cookie", jwt).send({
       title: "Test Task 1",
       description: "Test Task",
+      location: "Test Location",
       startDate: "2022-04-12T04:00:00.000Z",
       endDate: "2022-04-14T00:00:08",
       isStarted: false,
@@ -85,6 +87,7 @@ describe("Getting Tasks Suite", () => {
     await request(app).post("/api/tasks").set("cookie", jwt).send({
       title: "Test Task 2",
       description: "Test Task",
+      location: "Test Location",
       startDate: "2022-04-01T04:00:00.000Z",
       endDate: "2022-04-18T00:00:08",
       isStarted: false,
@@ -94,6 +97,7 @@ describe("Getting Tasks Suite", () => {
     await request(app).post("/api/tasks").set("cookie", jwt).send({
       title: "Test Task 3",
       description: "Test Task",
+      location: "Test Location",
       startDate: "2022-04-14T04:00:00.000Z",
       endDate: "2022-04-18T00:00:08",
       isStarted: false,
@@ -102,6 +106,7 @@ describe("Getting Tasks Suite", () => {
     await request(app).post("/api/tasks").set("cookie", jwt).send({
       title: "Out of range task",
       description: "Test Task",
+      location: "Test Location",
       startDate: "2022-03-14T04:00:00.000Z",
       endDate: "2022-03-18T00:00:08",
       isStarted: false,
@@ -113,6 +118,7 @@ describe("Getting Tasks Suite", () => {
       .send({
         title: "Test Task 4",
         description: "Test Task",
+        location: "Test Location",
         startDate: "2022-04-01T04:00:00.000Z",
         endDate: "2022-04-18T00:00:08",
         isStarted: false,
@@ -152,7 +158,7 @@ describe("Getting Tasks Suite", () => {
 
   it("Getting Tasks by id (Valid Token)", async () => {
     const res = await request(app)
-      .get(`/api/tasks/task/${taskObjectId}`)
+      .get(`/api/tasks/${taskObjectId}`)
       .set("cookie", jwt);
     expect(res.statusCode).toEqual(200);
     expect(res.body).toEqual(expect.objectContaining({ title: "Test Task" }));
@@ -160,7 +166,7 @@ describe("Getting Tasks Suite", () => {
 
   it("Getting Tasks by id (Invalid Token)", async () => {
     const res = await request(app)
-      .get(`/api/tasks/task/${taskObjectId}`)
+      .get(`/api/tasks/${taskObjectId}`)
       .set("cookie", "jwt");
 
     expect(res.statusCode).toEqual(401);
@@ -169,7 +175,7 @@ describe("Getting Tasks Suite", () => {
 
   it("Getting Tasks by id (Invalid id)", async () => {
     const res = await request(app)
-      .get("/api/tasks/task/abdcd12334")
+      .get("/api/tasks/abdcd12334")
       .set("cookie", jwt);
 
     expect(res.statusCode).toEqual(400);
@@ -178,7 +184,7 @@ describe("Getting Tasks Suite", () => {
 
   it("Getting Tasks by id (Id that does not exist)", async () => {
     const res = await request(app)
-      .get(`/api/tasks/task/${taskObjectIdNotExist}`)
+      .get(`/api/tasks/${taskObjectIdNotExist}`)
       .set("cookie", jwt);
 
     expect(res.statusCode).toEqual(404);
@@ -208,6 +214,7 @@ describe("Create Task Suite", () => {
     const res = await request(app).post("/api/tasks").set("cookie", jwt).send({
       title: "Test Task",
       description: "Test Task",
+      location: "Test Location",
       endDate: new Date().toISOString(),
       isStarted: false,
     });
@@ -234,7 +241,7 @@ describe("Create Task Suite", () => {
   });
 });
 
-describe("Create & Get Feedback Suite", () => {
+describe("Create Feedback Suite", () => {
   let taskObjectId;
   beforeAll(async () => {
     // Create task
@@ -244,6 +251,7 @@ describe("Create & Get Feedback Suite", () => {
       .send({
         title: "Test Task",
         description: "Test Task",
+        location: "Test Location",
         endDate: new Date().toISOString(),
         isStarted: false,
       });
@@ -334,6 +342,7 @@ describe("Toggle Task Test Suite", () => {
       .send({
         title: "Test Task",
         description: "Test Task",
+        location: "Test Location",
         endDate: new Date().toISOString(),
         isStarted: false,
       });

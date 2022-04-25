@@ -23,7 +23,7 @@ router.get("/", [authenticateToken, getTasks]);
 // @desc     Fetch single task
 // @route    GET /api/tasks/:id
 // @acesss   Private
-router.get("/task/:id", [authenticateToken, getTasksById]);
+router.get("/:id", [authenticateToken, getTasksById]);
 
 // @desc     Update isStarted state to true
 // @route    PUT /api/tasks/startTask/:id

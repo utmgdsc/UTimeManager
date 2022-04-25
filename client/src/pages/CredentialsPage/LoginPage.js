@@ -12,7 +12,7 @@ const LoginPage = () => {
         nextPage="signup"
         nextPageDescription="Don't have an account?"
         nextPageText="Sign Up"
-        submitURL="/api/users/login"
+        submitURL="/users/login"
         errorMessage={"Invalid username or password"}
       />
     </div>
