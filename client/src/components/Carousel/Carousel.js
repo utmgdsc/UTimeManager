@@ -1,6 +1,7 @@
 import React from "react";
 import styles from "../Carousel/Carousel.module.css";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
+import "./CarouselOverride.css";
 import { Carousel } from "react-responsive-carousel";
 import TaskStatusChart from "../TaskStatusChart/TaskStatusChart";
 import PropTypes from "prop-types";

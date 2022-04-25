@@ -1,7 +1,8 @@
-import React from "react";
-import TaskStatusChart from "../../components/TaskStatusChart/TaskStatusChart";
+import React, { useState } from "react";
 import styles from "./InsightsPage.module.css";
 import { InsightsCarousel } from "../../components/Carousel/Carousel";
+import { TaskDurationBarChart } from "../../components/TaskDurationBarChart/TaskDurationBarChart";
+import { DateSelector } from "../../components/DateSelector/DateSelector";
 
 const InsightsPage = () => {
   const nHoursAhead = (nHours) => {
@@ -76,9 +77,32 @@ const InsightsPage = () => {
     },
   ];
 
+  const [startDate, setStartDate] = useState(new Date());
+  const [endDate, setEndDate] = useState(new Date());
+
   return (
-    <div>
-      <InsightsCarousel taskData={sampleTaskData} />
+    <div className={styles.bg}>
+      <div className={styles.dateSelectionBar}>
+        <div className={styles.container}>
+          <DateSelector
+            selectedDate={startDate}
+            onDateChanged={setStartDate}
+            showTime={false}
+          />
+        </div>
+        <div className={styles.dateRangeTo}>to</div>
+        <div className={styles.container}>
+          <DateSelector
+            selectedDate={endDate}
+            onDateChanged={setEndDate}
+            showTime={false}
+          />
+        </div>
+      </div>
+      <div>
+        <InsightsCarousel taskData={sampleTaskData} />
+      </div>
+      <TaskDurationBarChart taskResponseData={sampleTaskData} />
     </div>
   );
 };

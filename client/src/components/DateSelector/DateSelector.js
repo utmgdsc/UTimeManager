@@ -3,6 +3,7 @@ import styles from "./DateSelector.module.css";
 import { PropTypes } from "prop-types";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import "./DatePickerOverride.css";
 
 export const DateSelector = ({ selectedDate, onDateChanged, showTime }) => {
   return (
