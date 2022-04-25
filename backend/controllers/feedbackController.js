@@ -21,4 +21,30 @@ const createFeedback = asyncHandler(async (req, res) => {
     });
 });
 
-module.exports = { createFeedback };
+const getFeedback = asyncHandler(async (req, res) => {
+  const taskId = req.params.taskId;
+  const userId = req.id;
+
+  await Feedback.findOne({
+    user_id: userId,
+    task_id: taskId,
+  })
+    .then((docs) => {
+      if (docs === null) {
+        res.status(404);
+        res.send({ message: "Unable to get feedback" });
+        return;
+      }
+      res.status(200).json(docs);
+    })
+    .catch((err) => {
+      if (err.name === "CastError") {
+        res.status(400);
+        throw new Error("Invalid task id provided");
+      }
+      res.status(500);
+      throw new Error("Unable to get feedback");
+    });
+});
+
+module.exports = { createFeedback, getFeedback };
