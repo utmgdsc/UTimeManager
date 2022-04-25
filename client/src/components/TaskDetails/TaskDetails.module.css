@@ -19,6 +19,17 @@
   border-radius: 30px;
   overflow: auto;
   padding: 20px 0px;
+  z-index: 10;
+}
+
+.captureClicks {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  background: transparent;
+  z-index: 5;
 }
 
 .modal::-webkit-scrollbar {

@@ -54,33 +54,35 @@ const TaskReflectionModal = ({
   }, []);
 
   return (
-    <div className={styles.taskReflectionModal}>
-      <div className={styles.taskReflectionTitle}>Task Reflection</div>
-      <div className={styles.taskReflectionContent}>
-        How satisfied are you with your work?
-      </div>
-      <div className={styles.ratingDotContainer}>{ratingDots()}</div>
-      <div className={styles.taskReflectionContent}>Other comments</div>
-      <div className={styles.ratingDotContainer}>
-        <input
-          className={styles.taskReflectionComments}
-          placeholder={"e.g., why your task was delayed"}
-          value={reflectionComments}
-          onChange={(e) => setReflectionComments(e.target.value)}
-        />
-      </div>
-      <div className={styles.reflectionErrorMessage}>{errorMessage}</div>
-      <div className={styles.actionContainer}>
-        <button className={styles.closeBtn} onClick={onClose}>
-          Cancel
-        </button>
-        {!readOnly ? (
-          <button className={styles.doneBtn} onClick={submitHandler}>
-            Done
+    <div className={styles.captureClicks}>
+      <div className={styles.taskReflectionModal}>
+        <div className={styles.taskReflectionTitle}>Task Reflection</div>
+        <div className={styles.taskReflectionContent}>
+          How satisfied are you with your work?
+        </div>
+        <div className={styles.ratingDotContainer}>{ratingDots()}</div>
+        <div className={styles.taskReflectionContent}>Other comments</div>
+        <div className={styles.ratingDotContainer}>
+          <input
+            className={styles.taskReflectionComments}
+            placeholder={"e.g., why your task was delayed"}
+            value={reflectionComments}
+            onChange={(e) => setReflectionComments(e.target.value)}
+          />
+        </div>
+        <div className={styles.reflectionErrorMessage}>{errorMessage}</div>
+        <div className={styles.actionContainer}>
+          <button className={styles.closeBtn} onClick={onClose}>
+            Cancel
           </button>
-        ) : (
-          <></>
-        )}
+          {!readOnly ? (
+            <button className={styles.doneBtn} onClick={submitHandler}>
+              Done
+            </button>
+          ) : (
+            <></>
+          )}
+        </div>
       </div>
     </div>
   );

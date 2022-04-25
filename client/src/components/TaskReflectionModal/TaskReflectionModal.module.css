@@ -10,6 +10,7 @@
   border-radius: 30px;
   overflow: auto;
   padding: 20px 30px;
+  z-index: 10;
 }
 
 .taskReflectionModal::-webkit-scrollbar {
@@ -99,4 +100,14 @@
   font-family: "Source Sans Pro", sans-serif;
   font-size: 0.9rem;
   margin-bottom: 20px;
+}
+
+.captureClicks {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  background: transparent;
+  z-index: 5;
 }
