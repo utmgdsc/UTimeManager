@@ -38,7 +38,7 @@ export const InsightsCarousel = ({ taskData }) => {
         startedTasks.onTime.push(task);
       } else if (actualTime < plannedTime - 5) {
         startedTasks.early.push(task);
-      } else if (actualTime > plannedTime + 5) {
+      } else if (actualTime >= plannedTime + 5) {
         startedTasks.late.push(task);
       }
 
@@ -46,7 +46,7 @@ export const InsightsCarousel = ({ taskData }) => {
         endedTasks.onTime.push(task);
       } else if (actualEndTime < plannedEndTime - 5) {
         endedTasks.early.push(task);
-      } else if (actualEndTime > plannedEndTime + 5) {
+      } else if (actualEndTime >= plannedEndTime + 5) {
         endedTasks.late.push(task);
       }
 
