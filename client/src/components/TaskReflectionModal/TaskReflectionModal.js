@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./TaskReflectionModal.module.css";
 import { PropTypes } from "prop-types";
 
@@ -14,12 +14,12 @@ const TaskReflectionModal = ({
   onClose,
   onDone,
   readOnly,
-  satisfaction,
-  reflectionBody,
+  getTaskReflection,
 }) => {
   // chosenDot is the index of the chosen dot (0-9)
-  const [chosenDot, setChosenDot] = useState(satisfaction);
-  const [reflectionComments, setReflectionComments] = useState(reflectionBody);
+  const [chosenDot, setChosenDot] = useState(0);
+  const [reflectionComments, setReflectionComments] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   const ratingDots = () => {
     const dots = [];
@@ -39,6 +39,20 @@ const TaskReflectionModal = ({
     onDone(reflectionComments, chosenDot + 1);
   };
 
+  useEffect(() => {
+    if (readOnly) {
+      setErrorMessage("");
+      getTaskReflection()
+        .then((reflectionData) => {
+          setChosenDot(reflectionData.data.satisfaction - 1);
+          setReflectionComments(reflectionData.data.body);
+        })
+        .catch(() => {
+          setErrorMessage("Failed trying to get reflection");
+        });
+    }
+  }, []);
+
   return (
     <div className={styles.taskReflectionModal}>
       <div className={styles.taskReflectionTitle}>Task Reflection</div>
@@ -55,6 +69,7 @@ const TaskReflectionModal = ({
           onChange={(e) => setReflectionComments(e.target.value)}
         />
       </div>
+      <div className={styles.reflectionErrorMessage}>{errorMessage}</div>
       <div className={styles.actionContainer}>
         <button className={styles.closeBtn} onClick={onClose}>
           Cancel
@@ -80,8 +95,7 @@ TaskReflectionModal.propTypes = {
   onClose: PropTypes.func.isRequired,
   onDone: PropTypes.func,
   readOnly: PropTypes.bool.isRequired,
-  reflectionBody: PropTypes.string.isRequired,
-  satisfaction: PropTypes.number.isRequired,
+  getTaskReflection: PropTypes.func.isRequired,
 };
 
 export default TaskReflectionModal;

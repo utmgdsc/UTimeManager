@@ -113,18 +113,12 @@ const CalendarPage = () => {
   };
 
   const getTaskReflection = async (id) => {
-    setToggleError(false);
-    setToggleErrorMessage("");
-
     await instance
       .get(`/feedback/tasks/${id}`)
       .then((taskReflectionData) => {
         return taskReflectionData.data;
       })
       .catch(() => {
-        setToggleError(true);
-        setToggleErrorMessage("Failed to record task reflection!");
-
         // this value doesn't matter since no task cards will be shown if
         // at least one get task reflection fails
         return { body: "", satisfaction: 0 };
