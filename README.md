@@ -7,7 +7,7 @@
   </p>
   <h4 align="center">Plan, Record and Review your weekly schedule</h4>
   <p align="center" width="100%">
-    <a href="https://utimemanager.netlify.app/">https://utimemanager.netlify.app/</a>
+    <a href="https://utimemanager.netlify.app/">Documentation</a>
   </p>
 </h1>
 
