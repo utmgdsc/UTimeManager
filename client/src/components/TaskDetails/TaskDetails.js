@@ -7,14 +7,14 @@ const TaskDetails = ({
   title,
   location,
   description,
-  startDateTimeString,
-  endDateTimeString,
+  startDateTime,
+  endDateTime,
 }) => {
   return (
-    <div className={styles.captureClicks} onClick={() => {}}>
+    <div className={styles.preventClick} onClick={() => {}}>
       <div className={styles.modal}>
         <button className={styles.closeModal} onClick={closeModalHandler}>
-          close
+          Close
         </button>
         <div className={styles.taskDetailsHeader}>{title}</div>
         <div className={styles.taskDetailContainer}>
@@ -29,12 +29,12 @@ const TaskDetails = ({
 
         <div className={styles.taskDetailContainer}>
           <span className={styles.taskDetailsField}>{"From: "}</span>
-          <span className={styles.taskDetail}>{startDateTimeString}</span>
+          <span className={styles.taskDetail}>{startDateTime}</span>
         </div>
 
         <div className={styles.taskDetailContainer}>
           <span className={styles.taskDetailsField}>{"To: "}</span>
-          <span className={styles.taskDetail}>{endDateTimeString}</span>
+          <span className={styles.taskDetail}>{endDateTime}</span>
         </div>
       </div>
     </div>
@@ -46,8 +46,8 @@ TaskDetails.propTypes = {
   title: PropTypes.string,
   location: PropTypes.string,
   description: PropTypes.string,
-  startDateTimeString: PropTypes.string,
-  endDateTimeString: PropTypes.string,
+  startDateTime: PropTypes.string,
+  endDateTime: PropTypes.string,
 };
 
 export default TaskDetails;

@@ -8,6 +8,7 @@
 .modal,
 .overlay {
   max-width: 70vw;
+  min-width: 25vw;
   max-height: 80vh;
   top: 50%;
   left: 50%;
@@ -22,7 +23,7 @@
   z-index: 10;
 }
 
-.captureClicks {
+.preventClick {
   position: fixed;
   top: 0;
   left: 0;

@@ -98,7 +98,11 @@ const CalendarPage = () => {
       });
   };
 
-  const createTaskReflection = async (id, reflectionComments, satisfaction) => {
+  const createTaskReflectionHandler = async (
+    id,
+    reflectionComments,
+    satisfaction
+  ) => {
     setToggleError(false);
     setToggleErrorMessage("");
     const reflectionData = {
@@ -174,7 +178,7 @@ const CalendarPage = () => {
           tasks={taskData}
           edittable={true}
           toggleTaskHandler={toggleTaskHandler}
-          createTaskReflection={createTaskReflection}
+          createTaskReflectionHandler={createTaskReflectionHandler}
           getTaskReflection={getTaskReflection}
         />
       )}

@@ -7,7 +7,7 @@ const TaskListView = ({
   tasks,
   edittable,
   toggleTaskHandler,
-  createTaskReflection,
+  createTaskReflectionHandler,
   getTaskReflection,
 }) => {
   const cards = tasks.map(function (task, ix) {
@@ -22,9 +22,9 @@ const TaskListView = ({
           startDateTime={new Date(task.startDate)}
           endDateTime={new Date(task.endDate)}
           ongoing={task.isStarted && "taskStartedAt" in task}
-          finished={!task.isStarted && "taskEndedAt" in task}
+          isTaskCompleted={!task.isStarted && "taskEndedAt" in task}
           toggleTaskHandler={toggleTaskHandler}
-          createTaskReflection={createTaskReflection}
+          createTaskReflectionHandler={createTaskReflectionHandler}
           edittable={edittable}
           getTaskReflection={getTaskReflection}
         />
@@ -39,7 +39,7 @@ TaskListView.propTypes = {
   tasks: PropTypes.arrayOf(PropTypes.object).isRequired,
   edittable: PropTypes.bool.isRequired,
   toggleTaskHandler: PropTypes.func,
-  createTaskReflection: PropTypes.func.isRequired,
+  createTaskReflectionHandler: PropTypes.func.isRequired,
   getTaskReflection: PropTypes.func.isRequired,
 };
 export default TaskListView;

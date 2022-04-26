@@ -2,22 +2,22 @@ import React, { useState, useEffect } from "react";
 import styles from "./TaskReflectionModal.module.css";
 import { PropTypes } from "prop-types";
 
-const RatingDot = ({ chosen, onChosen }) => {
+const RatingDot = ({ selected, onSelected }) => {
   return (
     <span
-      className={chosen ? styles.chosenDot : styles.ratingDot}
-      onClick={onChosen}
+      className={selected ? styles.chosenDot : styles.ratingDot}
+      onClick={onSelected}
     ></span>
   );
 };
 const TaskReflectionModal = ({
   onClose,
-  onDone,
+  onSubmit,
   readOnly,
   getTaskReflection,
 }) => {
   // chosenDot is the index of the chosen dot (0-9)
-  const [chosenDot, setChosenDot] = useState(0);
+  const [selectedDot, setSelectedDot] = useState(0);
   const [reflectionComments, setReflectionComments] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -27,8 +27,8 @@ const TaskReflectionModal = ({
       dots.push(
         <RatingDot
           key={i}
-          chosen={i === chosenDot}
-          onChosen={() => setChosenDot(i)}
+          chosen={i === selectedDot}
+          onChosen={() => setSelectedDot(i)}
         />
       );
     }
@@ -36,7 +36,7 @@ const TaskReflectionModal = ({
   };
 
   const submitHandler = () => {
-    onDone(reflectionComments, chosenDot + 1);
+    onSubmit(reflectionComments, selectedDot + 1);
   };
 
   useEffect(() => {
@@ -44,7 +44,7 @@ const TaskReflectionModal = ({
       setErrorMessage("");
       getTaskReflection()
         .then((reflectionData) => {
-          setChosenDot(reflectionData.data.satisfaction - 1);
+          setSelectedDot(reflectionData.data.satisfaction - 1);
           setReflectionComments(reflectionData.data.body);
         })
         .catch(() => {
@@ -89,13 +89,13 @@ const TaskReflectionModal = ({
 };
 
 RatingDot.propTypes = {
-  chosen: PropTypes.bool.isRequired,
-  onChosen: PropTypes.func.isRequired,
+  selected: PropTypes.bool.isRequired,
+  onSelected: PropTypes.func.isRequired,
 };
 
 TaskReflectionModal.propTypes = {
   onClose: PropTypes.func.isRequired,
-  onDone: PropTypes.func,
+  onSubmit: PropTypes.func,
   readOnly: PropTypes.bool.isRequired,
   getTaskReflection: PropTypes.func.isRequired,
 };

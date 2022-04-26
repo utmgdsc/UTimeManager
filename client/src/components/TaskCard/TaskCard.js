@@ -12,19 +12,19 @@ const TaskCard = ({
   endDateTime,
   description,
   ongoing,
-  finished,
+  isTaskCompleted,
   edittable,
   toggleTaskHandler,
-  createTaskReflection,
+  createTaskReflectionHandler,
   id,
   getTaskReflection,
 }) => {
-  const toggleModal = () => {
-    setModal(!showModal);
+  const toggleFeedbackModal = () => {
+    setShowFeedbackModal(!showFeedbackModal);
   };
 
-  const toggleReflection = () => {
-    setReflection(!showReflection);
+  const toggleReflectionModal = () => {
+    setShowReflectionModal(!showReflectionModal);
   };
 
   const getDateTime = (taskDate) => {
@@ -35,28 +35,28 @@ const TaskCard = ({
   };
 
   const reflectionDoneHandler = async (reflectionComments, satisfaction) => {
-    await createTaskReflection(id, reflectionComments, satisfaction);
+    await createTaskReflectionHandler(id, reflectionComments, satisfaction);
     await toggleTaskHandler(id);
-    toggleReflection();
+    toggleReflectionModal();
   };
 
   const [startDate, startTime] = getDateTime(startDateTime);
   const [endDate, endTime] = getDateTime(endDateTime);
-  const [showModal, setModal] = useState(false);
-  const [showReflection, setReflection] = useState(false);
+  const [showFeedbackModal, setShowFeedbackModal] = useState(false);
+  const [showReflectionModal, setShowReflectionModal] = useState(false);
 
-  const taskTextStyle = finished ? styles.taskDone : "";
+  const taskTextStyle = isTaskCompleted ? styles.taskDone : "";
   const actionBtn =
-    edittable && !finished ? (
+    edittable && !isTaskCompleted ? (
       <SmallActionButton
         text={!ongoing ? "Start" : "End"}
         toggleButton={() => {
-          if (ongoing) toggleReflection();
+          if (ongoing) toggleReflectionModal();
           else toggleTaskHandler(id);
         }}
       />
     ) : (
-      <SmallActionButton text={"View"} toggleButton={toggleReflection} />
+      <SmallActionButton text={"View"} toggleButton={toggleReflectionModal} />
     );
 
   const startDateTimeString = `${startDate} ${startTime}`;
@@ -65,24 +65,24 @@ const TaskCard = ({
   // todo: modal should not both be visible
   return (
     <div className={styles.taskContainer}>
-      {showModal ? (
+      {showFeedbackModal ? (
         <TaskDetails
-          closeModalHandler={toggleModal}
+          closeModalHandler={toggleFeedbackModal}
           title={title}
           location={location}
           description={description}
-          startDateTimeString={startDateTimeString}
-          endDateTimeString={endDateTimeString}
+          startDateTime={startDateTimeString}
+          endDateTime={endDateTimeString}
         />
       ) : (
         <></>
       )}
-      {showReflection ? (
+      {showReflectionModal ? (
         <TaskReflectionModal
-          readOnly={finished}
-          onClose={toggleReflection}
-          onDone={reflectionDoneHandler}
-          getTaskReflection={async () => getTaskReflection(id)}
+          readOnly={isTaskCompleted}
+          onClose={toggleReflectionModal}
+          onSubmit={reflectionDoneHandler}
+          getTaskReflection={() => getTaskReflection(id)}
         />
       ) : (
         <></>
@@ -90,14 +90,18 @@ const TaskCard = ({
       <div className={styles.colorBar}></div>
       <div
         className={styles.taskInfo}
-        onClick={edittable ? toggleModal : () => {}}
+        onClick={edittable ? toggleFeedbackModal : () => {}}
       >
         <p className={taskTextStyle}>{title}</p>
         <p className={taskTextStyle}>{location}</p>
       </div>
       <div className={styles.timeInfo}>
         <p className={taskTextStyle}>{startDateTimeString}</p>
-        <p className={!finished ? styles.endTimeStyle : styles.taskDoneEndTime}>
+        <p
+          className={
+            !isTaskCompleted ? styles.endTimeStyle : styles.taskDoneEndTime
+          }
+        >
           to {endDateTimeString}
         </p>
         {actionBtn}
@@ -113,10 +117,10 @@ TaskCard.propTypes = {
   startDateTime: PropTypes.instanceOf(Date).isRequired,
   endDateTime: PropTypes.instanceOf(Date).isRequired,
   ongoing: PropTypes.bool.isRequired,
-  finished: PropTypes.bool.isRequired,
+  isTaskCompleted: PropTypes.bool.isRequired,
   edittable: PropTypes.bool.isRequired,
   toggleTaskHandler: PropTypes.func,
-  createTaskReflection: PropTypes.func.isRequired,
+  createTaskReflectionHandler: PropTypes.func.isRequired,
   id: PropTypes.string.isRequired,
   getTaskReflection: PropTypes.func.isRequired,
 };
