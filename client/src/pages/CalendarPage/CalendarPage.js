@@ -3,7 +3,7 @@ import "react-calendar/dist/Calendar.css";
 import "./CalendarOverride.css";
 import Calendar from "react-calendar";
 import styles from "./CalendarPage.module.css";
-import PageHeader from "../../components/PageHeader/PageHeader.js";
+import Header from "../../components/Header/Header.js";
 import TaskDetails from "../../components/TaskDetails/TaskDetails";
 import TaskListView from "../../components/TaskListView/TaskListView.js";
 
@@ -32,10 +32,10 @@ const dailyTaskDateFormatter = (date) => {
 };
 
 const CalendarPage = () => {
-  const [showModal, setModal] = useState(false);
+  const [showTaskDetails, setShowDetails] = useState(false);
 
   const toggleModal = () => {
-    setModal(!showModal);
+    setShowDetails(!showTaskDetails);
   };
   const [currDate, setCurrDate] = useState(new Date());
   const sampleTask = {
@@ -57,8 +57,12 @@ const CalendarPage = () => {
 
   return (
     <div className={styles.bg}>
-      {showModal ? <TaskDetails closeModalHandler={toggleModal} /> : <></>}
-      <PageHeader pageTitle={"Daily Tasks"} />
+      {showTaskDetails ? (
+        <TaskDetails closeModalHandler={toggleModal} />
+      ) : (
+        <></>
+      )}
+      <Header pageTitle={"Daily Tasks"} />
       <Calendar
         onChange={dateChangeGetter}
         value={currDate}
