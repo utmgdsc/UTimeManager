@@ -40,7 +40,7 @@ const getFeedback = asyncHandler(async (req, res) => {
     .catch((err) => {
       if (err.name === "CastError") {
         res.status(400);
-        throw new Error("Invalid feedback id provided");
+        throw new Error("Invalid task id provided");
       }
       res.status(500);
       throw new Error("Unable to get feedback");

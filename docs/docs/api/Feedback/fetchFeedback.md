@@ -46,7 +46,7 @@ taskId: task_id
 
 ```json
 {
-    "message": "Invalid feedback id provided",
+    "message": "Invalid task id provided",
     "stack": ""
 }
 ```
