@@ -35,7 +35,6 @@ const CredentialsForm = ({
         .post(submitURL, credentials)
         .then((res) => {
           // TODO: Redirect to calendar page here and store JWT token somewhere
-          console.log(res.data.token);
           setShowError(false);
           setShowSuccessMessage(true);
         })

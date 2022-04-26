@@ -5,10 +5,16 @@ import { MdClose } from "react-icons/md";
 import styles from "./Header.module.css";
 import { PropTypes } from "prop-types";
 
+import { instance } from "../../axios";
+
 const Sidebar = ({ onClose }) => {
   const navigate = useNavigate();
-  const handleLogOut = () => {
+  const handleLogOut = async () => {
     // TODO : API call for logout
+    const submitURL = "/api/users/logout";
+
+    await instance.post("/users/logout", {}, { withCredentials: true });
+
     navigate("/");
   };
 
@@ -22,7 +28,12 @@ const Sidebar = ({ onClose }) => {
           action={() => navigate("/task_history")}
         />
         <SidebarItem label={"Insights"} action={() => navigate("/insights")} />
-        <SidebarItem label={"Log out"} action={handleLogOut} />
+        <SidebarItem
+          label={"Log out"}
+          action={async () => {
+            await handleLogOut();
+          }}
+        />
       </div>
     </div>
   );
