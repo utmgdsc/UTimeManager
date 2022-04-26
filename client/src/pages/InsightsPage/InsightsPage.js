@@ -1,84 +1,91 @@
-import React from "react";
-import TaskStatusChart from "../../components/TaskStatusChart/TaskStatusChart";
+import React, { useEffect, useState } from "react";
 import styles from "./InsightsPage.module.css";
-import { InsightsCarousel } from "../../components/Carousel/Carousel";
+import { DateSelector } from "../../components/DateSelector/DateSelector.js";
+import { TaskDurationBarChart } from "../../components/TaskDurationBarChart/TaskDurationBarChart.js";
+import { InsightsCarousel } from "../../components/Carousel/Carousel.js";
+import { instance } from "../../axios";
+import { ErrorMessage } from "../../components/ErrorMessage/ErrorMessage";
+import { buildDateRangeRoute } from "../../utils";
 
 const InsightsPage = () => {
-  const nHoursAhead = (nHours) => {
-    const nextHour = new Date();
-    nextHour.setTime(nextHour.getTime() + nHours * 60 * 60 * 1000);
-    return nextHour;
+  const [startDate, setCurrDate1] = useState(new Date());
+  const [endDate, setCurrDate2] = useState(new Date());
+  const [taskData, setTaskData] = useState([]);
+  const [loadingError, setLoadingError] = useState(false);
+  const [loadingErrorMessage, setLoadingErrorMessage] = useState("");
+
+  const fetchTasks = async () => {
+    setLoadingErrorMessage("");
+    setLoadingError(false);
+    await instance
+      .get(buildDateRangeRoute(startDate, endDate))
+      .then((response) => {
+        setTaskData(response.data);
+        if (response.data.length === 0) {
+          setLoadingError(true);
+          setLoadingErrorMessage("No tasks yet");
+        }
+      })
+      .catch(() => {
+        setLoadingErrorMessage("Unable to load tasks!");
+        setLoadingError(true);
+      });
   };
 
-  const sampleTaskData = [
-    {
-      title: "Task 1",
-      description: "Task 1 description",
-      startDate: new Date(),
-      endDate: new Date(),
-      originalStartDate: new Date(2018, 11, 24, 10),
-      originalEndDate: new Date(),
-      taskStatus: "NOT STARTED",
-    },
-    {
-      title: "Task 2",
-      description: "Task 2 description",
-      startDate: new Date(),
-      endDate: nHoursAhead(3),
-      originalStartDate: new Date(),
-      originalEndDate: nHoursAhead(2),
-      taskStatus: "DONE",
-    },
-    {
-      title: "Task 3",
-      description: "Task 3 description",
-      startDate: new Date(),
-      endDate: nHoursAhead(1),
-      originalStartDate: new Date(2022, 11, 24, 10),
-      originalEndDate: nHoursAhead(3),
-      taskStatus: "DONE",
-    },
-    {
-      title: "Task 4",
-      description: "Task 4 description",
-      startDate: new Date(),
-      endDate: nHoursAhead(5),
-      originalStartDate: new Date(2025, 11, 24, 10),
-      originalEndDate: nHoursAhead(2),
-      taskStatus: "DONE",
-    },
-    {
-      title: "Task 5",
-      description: "Task 5 description",
-      startDate: new Date(),
-      endDate: nHoursAhead(1),
-      originalStartDate: new Date(),
-      originalEndDate: nHoursAhead(3),
-      taskStatus: "On Going",
-    },
-    {
-      title: "Task 6",
-      description: "Task 6 description",
-      startDate: new Date(),
-      endDate: nHoursAhead(3),
-      originalStartDate: new Date(),
-      originalEndDate: nHoursAhead(2),
-      taskStatus: "On Going",
-    },
-    {
-      title: "Task 7",
-      description: "Task 7 description",
-      startDate: new Date(),
-      endDate: nHoursAhead(1),
-      originalStartDate: new Date(),
-      originalEndDate: nHoursAhead(3),
-      taskStatus: "DONE",
-    },
-  ];
+  useEffect(() => {
+    fetchTasks();
+  }, [startDate, endDate]);
+
+  const cleanData = () => {
+    const mapped = taskData.map((task) => {
+      return {
+        title:
+          task.title.length > 10
+            ? `${task.title.substring(0, 10)}...`
+            : task.title,
+        description: task.description,
+        startDate: task.taskStartedAt ? new Date(task.taskStartedAt) : null,
+        endDate: task.taskEndedAt ? new Date(task.taskEndedAt) : null,
+        originalStartDate: new Date(task.startDate),
+        originalEndDate: new Date(task.endDate),
+        isStarted: task.isStarted,
+      };
+    });
+    return mapped;
+  };
+
+  const cleanedData = cleanData();
 
   return (
-    <div>
-      <InsightsCarousel taskData={sampleTaskData} />
+    <div className={styles.bg}>
+      <DateSelector
+        showTime={true}
+        selectedDate={startDate}
+        onDateChanged={(newDate) => {
+          setCurrDate1(newDate);
+        }}
+      />
+      <DateSelector
+        showTime={true}
+        selectedDate={endDate}
+        onDateChanged={(newDate) => {
+          setCurrDate2(newDate);
+        }}
+      />
+
+      <div>
+        <InsightsCarousel taskData={cleanedData} />
+      </div>
+
+      {loadingError ? (
+        <div className={styles.errorMessageStyle}>
+          <ErrorMessage errorMessage={loadingErrorMessage} />
+        </div>
+      ) : (
+        <div>
+          <TaskDurationBarChart taskResponseData={cleanedData} />
+        </div>
+      )}
     </div>
   );
 };
