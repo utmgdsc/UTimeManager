@@ -35,9 +35,15 @@ const TaskCard = ({
   };
 
   const reflectionDoneHandler = async (reflectionComments, satisfaction) => {
-    await createTaskReflectionHandler(id, reflectionComments, satisfaction);
-    await toggleTaskHandler(id);
-    toggleReflectionModal();
+    const success = await createTaskReflectionHandler(
+      id,
+      reflectionComments,
+      satisfaction
+    );
+    if (success) {
+      await toggleTaskHandler(id);
+      toggleReflectionModal();
+    }
   };
 
   const [startDate, startTime] = getDateTime(startDateTime);
