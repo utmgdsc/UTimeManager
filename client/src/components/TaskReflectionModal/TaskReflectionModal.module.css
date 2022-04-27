@@ -55,20 +55,24 @@
 
 .ratingDot {
   border-radius: 50%;
-  min-height: 20px;
-  min-width: 20px;
+  min-height: 22px;
+  min-width: 22px;
   background-color: #dadada;
   display: inline-block;
   margin: 0px 4px;
+  color: black;
+  text-align: center;
 }
 
 .chosenDot {
   border-radius: 50%;
-  min-height: 20px;
-  min-width: 20px;
+  min-height: 22px;
+  min-width: 22px;
   background-color: #032a5c;
   display: inline-block;
   margin: 0px 4px;
+  color: white;
+  text-align: center;
 }
 
 .actionContainer {

@@ -2,12 +2,14 @@ import React, { useState } from "react";
 import styles from "./TaskReflectionModal.module.css";
 import { PropTypes } from "prop-types";
 
-const RatingDot = ({ selected, onSelected }) => {
+const RatingDot = ({ ix, selected, onSelected }) => {
   return (
     <span
       className={selected ? styles.chosenDot : styles.ratingDot}
       onClick={onSelected}
-    ></span>
+    >
+      {ix + 1}
+    </span>
   );
 };
 const TaskReflectionModal = ({
@@ -30,6 +32,7 @@ const TaskReflectionModal = ({
       dots.push(
         <RatingDot
           key={i}
+          ix={i}
           selected={i === selectedDot}
           onSelected={() => setSelectedDot(i)}
         />
@@ -82,6 +85,7 @@ const TaskReflectionModal = ({
 RatingDot.propTypes = {
   selected: PropTypes.bool.isRequired,
   onSelected: PropTypes.func.isRequired,
+  ix: PropTypes.number.isRequired,
 };
 
 TaskReflectionModal.propTypes = {
