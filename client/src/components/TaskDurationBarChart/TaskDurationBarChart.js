@@ -1,7 +1,15 @@
 import React from "react";
 import styles from "./TaskDurationBarChart.module.css";
 import PropTypes from "prop-types";
-import { BarChart, Bar, XAxis, YAxis, ReferenceLine } from "recharts";
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  ReferenceLine,
+  Tooltip,
+  Cell,
+} from "recharts";
 
 export const TaskDurationBarChart = ({ taskResponseData }) => {
   const computeDurationDifference = (taskResponseData) => {
@@ -13,21 +21,33 @@ export const TaskDurationBarChart = ({ taskResponseData }) => {
         percentDifference: 0,
       };
 
-      const plannedDuration =
-        task.originalEndDate.getTime() - task.originalStartDate.getTime();
-      const actualDuration = task.endDate.getTime() - task.startDate.getTime();
-      taskDifference.percentDifference =
-        (actualDuration - plannedDuration) / plannedDuration;
+      if (task.startDate != null && task.endDate != null) {
+        const plannedDuration =
+          task.originalEndDate.getTime() - task.originalStartDate.getTime();
+        const actualDuration =
+          task.endDate.getTime() - task.startDate.getTime();
 
-      if (task.taskStatus === "DONE")
-        taskDurationDifferences.push(taskDifference);
+        taskDifference.percentDifference =
+          (actualDuration - plannedDuration) / plannedDuration;
+
+        if (taskDifference.percentDifference > 100) {
+          taskDifference.percentDifference = 100;
+        }
+
+        if (taskDifference.percentDifference < -100) {
+          taskDifference.percentDifference = -100;
+        }
+
+        if (!task.isStarted) {
+          taskDurationDifferences.push(taskDifference);
+        }
+      }
     }
 
     return taskDurationDifferences;
   };
 
   const taskDurationDifferences = computeDurationDifference(taskResponseData);
-
   return (
     <div className={styles.scrollableTaskChart}>
       <BarChart
@@ -40,8 +60,27 @@ export const TaskDurationBarChart = ({ taskResponseData }) => {
           left: 20,
           bottom: 5,
         }}
+        cursor="pointer"
       >
-        <XAxis dataKey="taskName" stroke="black" />
+        <Tooltip
+          formatter={(value) => value.toFixed(2)}
+          cursor={{ fill: "#ffffff00" }}
+          style={{ cursor: "pointer" }}
+        />
+        <XAxis
+          dataKey="taskName"
+          interval={0}
+          stroke="black"
+          label={{
+            value: "Tasks",
+            angle: "0",
+            position: "insideBottom",
+          }}
+          height={140}
+          angle={90}
+          dy={45}
+          dx={8}
+        />
         <YAxis
           stroke="black"
           label={{
@@ -51,7 +90,14 @@ export const TaskDurationBarChart = ({ taskResponseData }) => {
           }}
         />
         <ReferenceLine y={0} stroke="#000" />
-        <Bar dataKey="percentDifference" barSize={20} fill="#c97085" />
+        <Bar dataKey="percentDifference" barSize={20}>
+          {taskDurationDifferences.map((item, index) => (
+            <Cell
+              key={index}
+              fill={item.percentDifference > 0 ? "#449e48" : "#FF0000"}
+            ></Cell>
+          ))}
+        </Bar>
       </BarChart>
     </div>
   );

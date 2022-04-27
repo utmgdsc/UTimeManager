@@ -51,9 +51,9 @@ export const InsightsCarousel = ({ taskData }) => {
         endedTasks.late.push(task);
       }
 
-      if (task.taskStatus === "DONE") {
+      if (!task.isStarted && task.startDate && task.endDate) {
         summaryTasks.completed.push(task);
-      } else if (task.taskStatus === "NOT STARTED") {
+      } else if (!task.isStarted && !task.startDate && !task.endDate) {
         summaryTasks.notStarted.push(task);
       } else {
         summaryTasks.onGoing.push(task);
