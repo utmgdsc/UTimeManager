@@ -7,5 +7,6 @@
 .overlay {
   background-color: rgba(255, 255, 255, 0.27);
   border-radius: 50px;
-  padding: 10px 20px;
+  padding: 8px 10px;
+  height: 300px;
 }
