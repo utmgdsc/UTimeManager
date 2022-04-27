@@ -32,7 +32,7 @@ export const TaskDurationBarChart = ({ taskResponseData }) => {
     <div className={styles.scrollableTaskChart}>
       <BarChart
         width={500}
-        height={290}
+        height={300}
         data={taskDurationDifferences}
         margin={{
           top: 5,

@@ -30,9 +30,8 @@ const chartLabel = ({
   );
 };
 
-const COLORS = ["#4F7009", "#F6BE00", "#cc0000"];
-
 export const TaskStatusChart = ({ tasksData, chartHeader }) => {
+  const COLORS = ["#4F7009", "#F6BE00", "#cc0000"];
   return (
     <div className={styles.overlay}>
       <PieChart width={380} height={300}>
