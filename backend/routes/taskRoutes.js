@@ -12,7 +12,7 @@ const router = express.Router();
 
 // @desc Create a new task
 // @route POST /api/tasks/
-// @acess Private
+// @access Private
 router.post("/", [authenticateToken, createTask]);
 
 // @desc     Fetch all tasks
@@ -22,11 +22,11 @@ router.get("/", [authenticateToken, getTasks]);
 
 // @desc     Fetch single task
 // @route    GET /api/tasks/:id
-// @acesss   Private
+// @access   Private
 router.get("/:id", [authenticateToken, getTasksById]);
 
 // @desc     Update isStarted state to true
-// @route    PUT /api/tasks/startTask/:id
+// @route    PUT /api/tasks/toggle/:id
 // @access   Private
 router.put("/toggle/:id", [authenticateToken, toggleTask]);
 
