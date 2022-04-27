@@ -17,7 +17,7 @@ const TaskCard = ({
   toggleTaskHandler,
   createTaskReflectionHandler,
   id,
-  getTaskReflection,
+  taskReflection,
 }) => {
   const toggleFeedbackModal = () => {
     setShowFeedbackModal(!showFeedbackModal);
@@ -62,7 +62,6 @@ const TaskCard = ({
   const startDateTimeString = `${startDate} ${startTime}`;
   const endDateTimeString = `${endDate} ${endTime}`;
 
-  // todo: modal should not both be visible
   return (
     <div className={styles.taskContainer}>
       {showFeedbackModal ? (
@@ -82,7 +81,7 @@ const TaskCard = ({
           readOnly={isTaskCompleted}
           onClose={toggleReflectionModal}
           onSubmit={reflectionDoneHandler}
-          getTaskReflection={() => getTaskReflection(id)}
+          taskReflection={taskReflection}
         />
       ) : (
         <></>
@@ -122,7 +121,7 @@ TaskCard.propTypes = {
   toggleTaskHandler: PropTypes.func,
   createTaskReflectionHandler: PropTypes.func.isRequired,
   id: PropTypes.string.isRequired,
-  getTaskReflection: PropTypes.func.isRequired,
+  taskReflection: PropTypes.object.isRequired,
 };
 
 export default TaskCard;

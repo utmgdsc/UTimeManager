@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import styles from "./TaskReflectionModal.module.css";
 import { PropTypes } from "prop-types";
 
@@ -14,12 +14,15 @@ const TaskReflectionModal = ({
   onClose,
   onSubmit,
   readOnly,
-  getTaskReflection,
+  taskReflection,
 }) => {
   // chosenDot is the index of the chosen dot (0-9)
-  const [selectedDot, setSelectedDot] = useState(0);
-  const [reflectionComments, setReflectionComments] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
+  const [selectedDot, setSelectedDot] = useState(
+    taskReflection.satisfaction - 1
+  );
+  const [reflectionComments, setReflectionComments] = useState(
+    taskReflection.body
+  );
 
   const ratingDots = () => {
     const dots = [];
@@ -27,8 +30,8 @@ const TaskReflectionModal = ({
       dots.push(
         <RatingDot
           key={i}
-          chosen={i === selectedDot}
-          onChosen={() => setSelectedDot(i)}
+          selected={i === selectedDot}
+          onSelected={() => setSelectedDot(i)}
         />
       );
     }
@@ -38,20 +41,6 @@ const TaskReflectionModal = ({
   const submitHandler = () => {
     onSubmit(reflectionComments, selectedDot + 1);
   };
-
-  useEffect(() => {
-    if (readOnly) {
-      setErrorMessage("");
-      getTaskReflection()
-        .then((reflectionData) => {
-          setSelectedDot(reflectionData.data.satisfaction - 1);
-          setReflectionComments(reflectionData.data.body);
-        })
-        .catch(() => {
-          setErrorMessage("Failed trying to get reflection");
-        });
-    }
-  }, []);
 
   return (
     <div className={styles.captureClicks}>
@@ -70,7 +59,9 @@ const TaskReflectionModal = ({
             onChange={(e) => setReflectionComments(e.target.value)}
           />
         </div>
-        <div className={styles.reflectionErrorMessage}>{errorMessage}</div>
+        <div className={styles.reflectionErrorMessage}>
+          {taskReflection.errorMessage}
+        </div>
         <div className={styles.actionContainer}>
           <button className={styles.closeBtn} onClick={onClose}>
             Cancel
@@ -97,7 +88,7 @@ TaskReflectionModal.propTypes = {
   onClose: PropTypes.func.isRequired,
   onSubmit: PropTypes.func,
   readOnly: PropTypes.bool.isRequired,
-  getTaskReflection: PropTypes.func.isRequired,
+  taskReflection: PropTypes.object.isRequired,
 };
 
 export default TaskReflectionModal;

@@ -39,6 +39,7 @@ const CalendarPage = () => {
   const navigate = useNavigate();
   const [currDate, setCurrDate] = useState(new Date());
   const [taskData, setTaskData] = useState([]);
+  const [reflectionsData, setReflectionsData] = useState([]);
   const [toggleError, setToggleError] = useState(false);
   const [loadingError, setLoadingError] = useState(false);
   const [toggleErrorMessage, setToggleErrorMessage] = useState("");
@@ -64,23 +65,25 @@ const CalendarPage = () => {
   const getTasks = async () => {
     setLoadingErrorMessage("");
     setLoadingError(false);
-    await instance
-      .get(buildDateRangeRoute(currDate, currDate))
-      .then((taskData) => {
-        const filteredTaskData =
-          currentFilter !== filterSet[3]
-            ? taskData.data.filter(filterTask)
-            : taskData.data;
-        if (filteredTaskData.length === 0) {
-          setLoadingErrorMessage("No tasks yet");
-          setLoadingError(true);
-        }
-        setTaskData(filteredTaskData);
-      })
-      .catch(() => {
-        setLoadingErrorMessage("Unable to load tasks!");
+    try {
+      const taskData = await instance.get(
+        buildDateRangeRoute(currDate, currDate)
+      );
+      const filteredTaskData =
+        currentFilter !== filterSet[3]
+          ? taskData.data.filter(filterTask)
+          : taskData.data;
+      if (filteredTaskData.length === 0) {
+        setLoadingErrorMessage("No tasks yet");
         setLoadingError(true);
-      });
+      } else {
+        await getTaskReflections(filteredTaskData);
+      }
+      setTaskData(filteredTaskData);
+    } catch {
+      setLoadingErrorMessage("Unable to load tasks!");
+      setLoadingError(true);
+    }
   };
 
   const toggleTaskHandler = async (id) => {
@@ -116,17 +119,32 @@ const CalendarPage = () => {
     });
   };
 
-  const getTaskReflection = async (id) => {
-    await instance
-      .get(`/feedback/tasks/${id}`)
-      .then((taskReflectionData) => {
-        return taskReflectionData.data;
-      })
-      .catch(() => {
-        // this value doesn't matter since no task cards will be shown if
-        // at least one get task reflection fails
-        return { body: "", satisfaction: 0 };
-      });
+  const getTaskReflections = async (tasks) => {
+    const taskReflections = [];
+    for (let i = 0; i < tasks.length; i++) {
+      const task = tasks[i];
+      if (!task.isStarted && "taskEndedAt" in task && "taskStartedAt" in task) {
+        try {
+          const taskReflectionData = await instance.get(
+            `/feedback/tasks/${task._id}`
+          );
+          const reflectionModalData = {
+            ...taskReflectionData.data,
+            errorMessage: "",
+          };
+          taskReflections.push(reflectionModalData);
+        } catch {
+          taskReflections.push({
+            body: "",
+            satisfaction: 0,
+            errorMessage: "Failed fetching task reflection",
+          });
+        }
+      } else {
+        taskReflections.push({ body: "", satisfaction: 0, errorMessage: "" });
+      }
+    }
+    setReflectionsData(taskReflections);
   };
 
   useEffect(() => {
@@ -137,6 +155,11 @@ const CalendarPage = () => {
   const dateChangeGetter = (date, _) => {
     setCurrDate(date);
   };
+
+  // if (!loadingError && reflectionsData.length !== taskData.length) {
+  //   setLoadingError(true);
+  //   setLoadingErrorMessage("Loading task reflections ...");
+  // }
 
   return (
     <div className={styles.bg}>
@@ -179,7 +202,7 @@ const CalendarPage = () => {
           edittable={true}
           toggleTaskHandler={toggleTaskHandler}
           createTaskReflectionHandler={createTaskReflectionHandler}
-          getTaskReflection={getTaskReflection}
+          taskReflections={reflectionsData}
         />
       )}
     </div>
