@@ -32,10 +32,10 @@ const dailyTaskDateFormatter = (date) => {
 };
 
 const CalendarPage = () => {
-  const [showTaskDetails, setShowDetails] = useState(false);
+  const [showTaskDetails, setShowTaskDetails] = useState(false);
 
   const toggleModal = () => {
-    setShowDetails(!showTaskDetails);
+    setShowTaskDetails(!showTaskDetails);
   };
   const [currDate, setCurrDate] = useState(new Date());
   const sampleTask = {

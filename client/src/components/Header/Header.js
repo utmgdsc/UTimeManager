@@ -9,12 +9,8 @@ import { instance } from "../../axios";
 
 const Sidebar = ({ onClose }) => {
   const navigate = useNavigate();
-  const handleLogOut = async () => {
-    // TODO : API call for logout
-    const submitURL = "/api/users/logout";
-
+  const logoutHandler = async () => {
     await instance.post("/users/logout", {}, { withCredentials: true });
-
     navigate("/");
   };
 
@@ -30,8 +26,8 @@ const Sidebar = ({ onClose }) => {
         <SidebarItem label={"Insights"} action={() => navigate("/insights")} />
         <SidebarItem
           label={"Log out"}
-          action={async () => {
-            await handleLogOut();
+          action={() => {
+            logoutHandler();
           }}
         />
       </div>
