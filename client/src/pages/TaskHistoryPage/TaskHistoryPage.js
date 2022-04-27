@@ -9,6 +9,7 @@ import {
 import { ErrorMessage } from "../../components/ErrorMessage/ErrorMessage.js";
 import { instance } from "../../axios.js";
 import { TaskFilterSelector } from "../../components/TaskFilterSelector/TaskFilterSelector.js";
+import Header from "../../components/Header/Header.js";
 
 const TaskHistoryPage = () => {
   const filterSet = ["Day", "Week", "Month", "All"];
@@ -58,12 +59,14 @@ const TaskHistoryPage = () => {
 
   return (
     <div className={styles.bg}>
-      <div className={styles.taskHistoryHeader}>Your Tasks</div>
-      <TaskFilterSelector
-        filterSet={filterSet}
-        currentFilter={currentFilter}
-        onFilterChanged={setCurrentFilter}
-      />
+      <Header pageTitle={"Your Tasks"} />
+      <div style={{ paddingTop: "10px" }}>
+        <TaskFilterSelector
+          filterSet={filterSet}
+          currentFilter={currentFilter}
+          onFilterChanged={setCurrentFilter}
+        />
+      </div>
       {loadingError ? (
         <div className={styles.errorMessageStyle}>
           <ErrorMessage errorMessage={loadingErrorMessage} />
