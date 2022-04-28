@@ -41,11 +41,31 @@ const TaskCard = ({
   };
 
   const reflectionDoneHandler = async (reflectionComments, satisfaction) => {
+    const newTaskReflection = { ...taskReflection };
+    newTaskReflection.errorMessage = "";
+    setTaskReflection(newTaskReflection);
+
+    if (reflectionComments.length > 200) {
+      const newTaskReflection = { ...taskReflection };
+      newTaskReflection.errorMessage =
+        "Reflection is too long! (max: 200 chars)";
+      setTaskReflection(newTaskReflection);
+      return;
+    }
+
+    if (satisfaction <= 0) {
+      const newTaskReflection = { ...taskReflection };
+      newTaskReflection.errorMessage = "Task Satisfaction is required";
+      setTaskReflection(newTaskReflection);
+      return;
+    }
+
     const isTaskReflectionCreated = await createTaskReflectionHandler(
       id,
       reflectionComments,
       satisfaction
     );
+
     if (isTaskReflectionCreated) {
       await toggleTaskHandler(id);
       toggleReflectionModal();
