@@ -10,13 +10,35 @@
   flex-direction: column;
 }
 
+.headerContainer {
+  display: flex;
+  justify-content: space-between;
+}
+
 .calendarHeader {
   color: white;
   font-weight: 600;
   font-family: "Source Sans Pro", sans-serif;
   font-size: 1.875rem;
   margin-left: 25px;
+  margin-top: 10px;
   text-decoration: underline;
+}
+
+.createTaskButton {
+  background-color: #eaf3fe;
+  color: black;
+  border: none;
+  border-radius: 10px;
+  padding: 3px 7px;
+  margin: 5px 30px;
+  height: min-content;
+  align-self: flex-end;
+}
+
+.createTaskButton:hover {
+  cursor: pointer;
+  background: #d7d7d7;
 }
 
 .filterButton {
@@ -28,17 +50,16 @@
   color: #dadada;
 }
 
-.flexContainer {
-  display: flex;
-  justify-content: flex-end;
-  margin: 10px 20px 15px 0px;
-}
-
 .taskList {
   margin: 10px 25px;
   padding: 0px;
   overflow: hidden;
   overflow-y: scroll;
+}
+
+.errorMessageStyle {
+  margin: 20px;
+  align-self: center;
 }
 
 /* works in chrome and safari */

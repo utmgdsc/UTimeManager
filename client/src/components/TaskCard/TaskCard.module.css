@@ -1,10 +1,12 @@
 .taskDone {
   text-decoration: line-through;
+  text-decoration-thickness: 0.16rem;
   color: #dadada;
 }
 
 .taskDoneEndTime {
   text-decoration: line-through;
+  text-decoration-thickness: 0.2em;
   color: #dadada;
   font-family: "Source Sans Pro", sans-serif !important;
   font-size: 0.75rem !important;
@@ -21,6 +23,13 @@
   font-weight: 600;
   color: white;
   min-height: 60px;
+}
+
+.taskContainer:hover {
+  background: #153560;
+  padding: 3px;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
 .colorBar {

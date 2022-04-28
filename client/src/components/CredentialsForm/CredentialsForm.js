@@ -18,6 +18,7 @@ const CredentialsForm = ({
   nextPageText,
   submitURL,
   errorMessage,
+  landingPage,
 }) => {
   const navigate = useNavigate();
   const routeToNextPage = () => {
@@ -26,7 +27,6 @@ const CredentialsForm = ({
 
   const [credentials, setCredentials] = useState({ email: "", password: "" });
   const [showError, setShowError] = useState(false);
-  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
 
   const formSubmitHandler = async () => {
     // TODO: The portion below will need to change as we start adding in our other features
@@ -36,10 +36,9 @@ const CredentialsForm = ({
         .then((res) => {
           // TODO: Redirect to calendar page here and store JWT token somewhere
           setShowError(false);
-          setShowSuccessMessage(true);
+          navigate(landingPage);
         })
         .catch(() => {
-          setShowSuccessMessage(false);
           setShowError(true);
         });
     }
@@ -72,7 +71,6 @@ const CredentialsForm = ({
           placeholder={"Password"}
           header={"Password"}
         />
-        {showSuccessMessage ? "Logged In/Registered" : <></>}
         {showError ? <ErrorMessage errorMessage={errorMessage} /> : <></>}
       </div>
       <CredentialsButton text={actionText} authAction={formSubmitHandler} />
@@ -94,6 +92,7 @@ CredentialsForm.propTypes = {
   nextPageText: PropTypes.string.isRequired,
   submitURL: PropTypes.string.isRequired,
   errorMessage: PropTypes.string.isRequired,
+  landingPage: PropTypes.string.isRequired,
 };
 
 export default CredentialsForm;

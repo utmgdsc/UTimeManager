@@ -5,6 +5,7 @@ import {
   buildDateRangeRoute,
   getWeekRange,
   getMonthRange,
+  getTaskReflection,
 } from "../../utils.js";
 import { ErrorMessage } from "../../components/ErrorMessage/ErrorMessage.js";
 import { instance } from "../../axios.js";
@@ -72,7 +73,11 @@ const TaskHistoryPage = () => {
           <ErrorMessage errorMessage={loadingErrorMessage} />
         </div>
       ) : (
-        <TaskListView tasks={taskData} edittable={false} />
+        <TaskListView
+          tasks={taskData}
+          edittable={false}
+          getTaskReflection={getTaskReflection}
+        />
       )}
     </div>
   );
