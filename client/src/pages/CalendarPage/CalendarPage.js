@@ -10,7 +10,7 @@ import Header from "../../components/Header/Header.js";
 import TaskDetails from "../../components/TaskDetails/TaskDetails";
 import TaskListView from "../../components/TaskListView/TaskListView.js";
 import { ErrorMessage } from "../../components/ErrorMessage/ErrorMessage";
-import { buildDateRangeRoute } from "../../utils.js";
+import { buildDateRangeRoute, getTaskReflection } from "../../utils.js";
 
 const getDayAbbreviation = (_, label) => {
   return label.toString().slice(0, 1);
@@ -127,24 +127,6 @@ const CalendarPage = () => {
         setToggleErrorMessage("Unable to create task reflection");
         return false;
       });
-  };
-
-  // precondition: task should be already be finished
-  const getTaskReflection = async (id) => {
-    try {
-      const taskReflectionData = await instance.get(`/feedback/tasks/${id}`);
-      const taskReflectionModalData = {
-        ...taskReflectionData.data,
-        errorMessage: "",
-      };
-      return taskReflectionModalData;
-    } catch {
-      return {
-        body: "",
-        satisfaction: 0,
-        errorMessage: "Failed fetching task reflection",
-      };
-    }
   };
 
   useEffect(() => {

@@ -88,6 +88,10 @@
   padding: 4px 8px;
 }
 
+.doneBtn:hover {
+  cursor: pointer;
+}
+
 .closeBtn {
   border: none;
   border-radius: 10px;
@@ -95,6 +99,11 @@
   background-color: #dadada;
   margin-right: 10px;
   padding: 4px 8px;
+}
+
+.closeBtn:hover {
+  background: #cbcbcb;
+  cursor: pointer;
 }
 
 .reflectionErrorMessage {

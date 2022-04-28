@@ -53,6 +53,10 @@
   padding: 5px 10px;
 }
 
+.closeModal:hover {
+  cursor: pointer;
+}
+
 .taskDetailsHeader {
   color: #032a5c;
   font-weight: 800;

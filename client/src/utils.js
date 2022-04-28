@@ -1,3 +1,5 @@
+import { instance } from "./axios";
+
 export const formatDateforAPI = (currDate) => {
   // getMonth returns 0-11
   const currMonthStr = String(currDate.getMonth() + 1).padStart(2, "0");
@@ -32,4 +34,22 @@ export const getWeekRange = () => {
   sunday.setDate(sunday.getDate() + 7 - sunday.getDay());
 
   return [monday, sunday];
+};
+
+// precondition: task should be already be finished
+export const getTaskReflection = async (id) => {
+  try {
+    const taskReflectionData = await instance.get(`/feedback/tasks/${id}`);
+    const taskReflectionModalData = {
+      ...taskReflectionData.data,
+      errorMessage: "",
+    };
+    return taskReflectionModalData;
+  } catch {
+    return {
+      body: "",
+      satisfaction: 0,
+      errorMessage: "Failed fetching task reflection",
+    };
+  }
 };

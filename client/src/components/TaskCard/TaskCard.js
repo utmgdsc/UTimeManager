@@ -27,10 +27,11 @@ const TaskCard = ({
     setShowReflectionModal(!showReflectionModal);
   };
 
-  const viewTaskReflectionHandler = async () => {
-    const taskReflectionModalData = await getTaskReflection(id);
-    setTaskReflection(taskReflectionModalData);
-    toggleReflectionModal();
+  const viewTaskReflectionHandler = () => {
+    getTaskReflection(id).then((taskReflectionModalData) => {
+      setTaskReflection(taskReflectionModalData);
+      toggleReflectionModal();
+    });
   };
 
   const getDateTime = (taskDate) => {
@@ -133,10 +134,7 @@ const TaskCard = ({
         <></>
       )}
       <div className={styles.colorBar}></div>
-      <div
-        className={styles.taskInfo}
-        onClick={edittable ? toggleFeedbackModal : () => {}}
-      >
+      <div className={styles.taskInfo} onClick={toggleFeedbackModal}>
         <p className={taskTextStyle}>{title}</p>
         <p className={taskTextStyle}>{location}</p>
       </div>
@@ -149,7 +147,16 @@ const TaskCard = ({
         >
           to {endDateTimeString}
         </p>
-        {edittable ? actionBtn : <></>}
+        {edittable ? (
+          actionBtn
+        ) : isTaskCompleted ? (
+          <SmallActionButton
+            text={"View"}
+            toggleButton={viewTaskReflectionHandler}
+          />
+        ) : (
+          <></>
+        )}
       </div>
     </div>
   );
