@@ -90,7 +90,20 @@ export const InsightsCarousel = ({ taskData }) => {
       { name: "Not started Tasks", value: notStartedVal },
     ];
 
-    return [startedSummary, endedSummary, statusSummary];
+    const summaries = [startedSummary, endedSummary, statusSummary];
+    const filteredSummaries = [];
+
+    for (let i = 0; i < summaries.length; i++) {
+      // loops through all 3 summaries
+      const filteredSummary = [];
+      for (const summaryEntry of summaries[i]) {
+        // iterates over each entry in a summary
+        if (summaryEntry.value > 0) filteredSummary.push(summaryEntry);
+      }
+      filteredSummaries.push(filteredSummary);
+    }
+
+    return filteredSummaries;
   };
 
   const [startedSummary, endedSummary, statusSummary] = formatTasks(taskData);
