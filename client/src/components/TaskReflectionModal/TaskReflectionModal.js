@@ -70,7 +70,7 @@ const TaskReflectionModal = ({
         </div>
         <div className={styles.actionContainer}>
           <button className={styles.closeBtn} onClick={onClose}>
-            Cancel
+            {readOnly ? "Close" : "Cancel"}
           </button>
           {!readOnly ? (
             <button className={styles.doneBtn} onClick={submitHandler}>
