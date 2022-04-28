@@ -71,4 +71,11 @@ const loginUser = asyncHandler(async (req, res) => {
   res.status(200).json();
 });
 
-module.exports = { registerUser, loginUser };
+const logoutUser = asyncHandler(async (req, res) => {
+  res.clearCookie("token");
+  res.status(200).json({
+    message: "Success"
+  });
+});
+
+module.exports = { registerUser, loginUser, logoutUser };

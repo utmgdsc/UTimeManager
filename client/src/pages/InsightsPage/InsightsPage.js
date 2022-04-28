@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import Header from "../../components/Header/Header.js";
 import styles from "./InsightsPage.module.css";
 import { DateSelector } from "../../components/DateSelector/DateSelector.js";
 import { TaskDurationBarChart } from "../../components/TaskDurationBarChart/TaskDurationBarChart.js";
@@ -8,8 +9,8 @@ import { ErrorMessage } from "../../components/ErrorMessage/ErrorMessage";
 import { buildDateRangeRoute } from "../../utils";
 
 const InsightsPage = () => {
-  const [startDate, setCurrDate1] = useState(new Date());
-  const [endDate, setCurrDate2] = useState(new Date());
+  const [startDate, setStartDate] = useState(new Date());
+  const [endDate, setEndDate] = useState(new Date());
   const [taskData, setTaskData] = useState([]);
   const [loadingError, setLoadingError] = useState(false);
   const [loadingErrorMessage, setLoadingErrorMessage] = useState("");
@@ -58,18 +59,19 @@ const InsightsPage = () => {
 
   return (
     <div className={styles.bg}>
+      <Header pageTitle={"Insights"} />
       <DateSelector
         showTime={true}
         selectedDate={startDate}
         onDateChanged={(newDate) => {
-          setCurrDate1(newDate);
+          setStartDate(newDate);
         }}
       />
       <DateSelector
         showTime={true}
         selectedDate={endDate}
         onDateChanged={(newDate) => {
-          setCurrDate2(newDate);
+          setEndDate(newDate);
         }}
       />
 

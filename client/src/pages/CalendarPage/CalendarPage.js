@@ -4,9 +4,10 @@ import "react-calendar/dist/Calendar.css";
 import "./CalendarOverride.css";
 import Calendar from "react-calendar";
 import styles from "./CalendarPage.module.css";
-import CalendarHeader from "../../components/CalendarHeader/CalendarHeader.js";
 import { TaskFilterSelector } from "../../components/TaskFilterSelector/TaskFilterSelector.js";
 import { instance } from "../../axios.js";
+import Header from "../../components/Header/Header.js";
+import TaskDetails from "../../components/TaskDetails/TaskDetails";
 import TaskListView from "../../components/TaskListView/TaskListView.js";
 import { ErrorMessage } from "../../components/ErrorMessage/ErrorMessage";
 import { buildDateRangeRoute } from "../../utils.js";
@@ -46,6 +47,7 @@ const CalendarPage = () => {
   const [loadingErrorMessage, setLoadingErrorMessage] = useState("");
   const filterSet = ["Not Started", "Ongoing", "Completed", "All"];
   const [currentFilter, setCurrentFilter] = useState(filterSet[3]);
+  const [showTaskDetails, setShowTaskDetails] = useState(false);
 
   const filterTask = (task) => {
     switch (currentFilter) {
@@ -60,6 +62,10 @@ const CalendarPage = () => {
       case filterSet[2]:
         return !task.isStarted && "taskEndedAt" in task;
     }
+  };
+
+  const toggleModal = () => {
+    setShowTaskDetails(!showTaskDetails);
   };
 
   const getTasks = async () => {
@@ -168,7 +174,12 @@ const CalendarPage = () => {
 
   return (
     <div className={styles.bg}>
-      <CalendarHeader />
+      {showTaskDetails ? (
+        <TaskDetails closeModalHandler={toggleModal} />
+      ) : (
+        <></>
+      )}
+      <Header pageTitle={"Daily Tasks"} />
       <Calendar
         onChange={dateChangeGetter}
         value={currDate}
