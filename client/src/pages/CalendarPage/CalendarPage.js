@@ -40,7 +40,6 @@ const CalendarPage = () => {
   const navigate = useNavigate();
   const [currDate, setCurrDate] = useState(new Date());
   const [taskData, setTaskData] = useState([]);
-  const [reflectionsData, setReflectionsData] = useState([]);
   const [toggleError, setToggleError] = useState(false);
   const [loadingError, setLoadingError] = useState(false);
   const [toggleErrorMessage, setToggleErrorMessage] = useState("");
@@ -82,8 +81,6 @@ const CalendarPage = () => {
       if (filteredTaskData.length === 0) {
         setLoadingErrorMessage("No tasks yet");
         setLoadingError(true);
-      } else {
-        await getTaskReflections(filteredTaskData);
       }
       setTaskData(filteredTaskData);
     } catch {
@@ -130,32 +127,22 @@ const CalendarPage = () => {
     }
   };
 
-  const getTaskReflections = async (tasks) => {
-    const taskReflections = [];
-    for (let i = 0; i < tasks.length; i++) {
-      const task = tasks[i];
-      if (!task.isStarted && "taskEndedAt" in task && "taskStartedAt" in task) {
-        try {
-          const taskReflectionData = await instance.get(
-            `/feedback/tasks/${task._id}`
-          );
-          const reflectionModalData = {
-            ...taskReflectionData.data,
-            errorMessage: "",
-          };
-          taskReflections.push(reflectionModalData);
-        } catch {
-          taskReflections.push({
-            body: "",
-            satisfaction: 0,
-            errorMessage: "Failed fetching task reflection",
-          });
-        }
-      } else {
-        taskReflections.push({ body: "", satisfaction: 0, errorMessage: "" });
-      }
+  // precondition: task should be already be finished
+  const getTaskReflection = async (id) => {
+    try {
+      const taskReflectionData = await instance.get(`/feedback/tasks/${id}`);
+      const taskReflectionModalData = {
+        ...taskReflectionData.data,
+        errorMessage: "",
+      };
+      return taskReflectionModalData;
+    } catch {
+      return {
+        body: "",
+        satisfaction: 0,
+        errorMessage: "Failed fetching task reflection",
+      };
     }
-    setReflectionsData(taskReflections);
   };
 
   useEffect(() => {
@@ -218,7 +205,7 @@ const CalendarPage = () => {
           edittable={true}
           toggleTaskHandler={toggleTaskHandler}
           createTaskReflectionHandler={createTaskReflectionHandler}
-          taskReflections={reflectionsData}
+          getTaskReflection={getTaskReflection}
         />
       )}
     </div>

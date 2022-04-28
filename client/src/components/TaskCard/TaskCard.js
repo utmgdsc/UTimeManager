@@ -17,7 +17,7 @@ const TaskCard = ({
   toggleTaskHandler,
   createTaskReflectionHandler,
   id,
-  taskReflection,
+  getTaskReflection,
 }) => {
   const toggleFeedbackModal = () => {
     setShowFeedbackModal(!showFeedbackModal);
@@ -25,6 +25,12 @@ const TaskCard = ({
 
   const toggleReflectionModal = () => {
     setShowReflectionModal(!showReflectionModal);
+  };
+
+  const viewTaskReflectionHandler = async () => {
+    const taskReflectionModalData = await getTaskReflection(id);
+    setTaskReflection(taskReflectionModalData);
+    toggleReflectionModal();
   };
 
   const getDateTime = (taskDate) => {
@@ -48,6 +54,11 @@ const TaskCard = ({
 
   const [startDate, startTime] = getDateTime(startDateTime);
   const [endDate, endTime] = getDateTime(endDateTime);
+  const [taskReflection, setTaskReflection] = useState({
+    body: "",
+    satisfaction: 0,
+    errorMessage: "",
+  });
   const [showFeedbackModal, setShowFeedbackModal] = useState(false);
   const [showReflectionModal, setShowReflectionModal] = useState(false);
 
@@ -62,7 +73,10 @@ const TaskCard = ({
         }}
       />
     ) : (
-      <SmallActionButton text={"View"} toggleButton={toggleReflectionModal} />
+      <SmallActionButton
+        text={"View"}
+        toggleButton={viewTaskReflectionHandler}
+      />
     );
 
   const startDateTimeString = `${startDate} ${startTime}`;
@@ -127,7 +141,7 @@ TaskCard.propTypes = {
   toggleTaskHandler: PropTypes.func,
   createTaskReflectionHandler: PropTypes.func.isRequired,
   id: PropTypes.string.isRequired,
-  taskReflection: PropTypes.object.isRequired,
+  getTaskReflection: PropTypes.func.isRequired,
 };
 
 export default TaskCard;

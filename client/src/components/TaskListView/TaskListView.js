@@ -8,14 +8,8 @@ const TaskListView = ({
   edittable,
   toggleTaskHandler,
   createTaskReflectionHandler,
-  taskReflections,
+  getTaskReflection,
 }) => {
-  const reflectionsLoading = tasks.length !== taskReflections.length;
-  const loadingReflectionModalData = {
-    body: "",
-    satisfaction: 0,
-    errorMessage: "Loading task reflections",
-  };
   const cards = tasks.map(function (task, ix) {
     // if one call fails, then only the error message will be shown in calendar
     return (
@@ -32,11 +26,7 @@ const TaskListView = ({
           toggleTaskHandler={toggleTaskHandler}
           createTaskReflectionHandler={createTaskReflectionHandler}
           edittable={edittable}
-          taskReflection={
-            reflectionsLoading
-              ? loadingReflectionModalData
-              : taskReflections[ix]
-          }
+          getTaskReflection={getTaskReflection}
         />
       </li>
     );
@@ -50,6 +40,6 @@ TaskListView.propTypes = {
   edittable: PropTypes.bool.isRequired,
   toggleTaskHandler: PropTypes.func,
   createTaskReflectionHandler: PropTypes.func.isRequired,
-  taskReflections: PropTypes.arrayOf(PropTypes.object).isRequired,
+  getTaskReflection: PropTypes.func.isRequired,
 };
 export default TaskListView;
