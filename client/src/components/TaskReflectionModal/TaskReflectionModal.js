@@ -34,7 +34,9 @@ const TaskReflectionModal = ({
           key={i}
           ix={i}
           selected={i === selectedDot}
-          onSelected={() => setSelectedDot(i)}
+          onSelected={() => {
+            if (!readOnly) setSelectedDot(i);
+          }}
         />
       );
     }
@@ -60,6 +62,7 @@ const TaskReflectionModal = ({
             placeholder={"e.g., why your task was delayed"}
             value={reflectionComments}
             onChange={(e) => setReflectionComments(e.target.value)}
+            disabled={readOnly}
           />
         </div>
         <div className={styles.reflectionErrorMessage}>
