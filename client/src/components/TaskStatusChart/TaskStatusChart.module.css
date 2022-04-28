@@ -9,4 +9,8 @@
   border-radius: 50px;
   padding: 8px 10px;
   height: 300px;
+  min-width: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
