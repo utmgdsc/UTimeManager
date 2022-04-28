@@ -52,7 +52,7 @@ export const TaskDurationBarChart = ({ taskResponseData }) => {
     <div className={styles.scrollableTaskChart}>
       <BarChart
         width={500}
-        height={350}
+        height={250}
         data={taskDurationDifferences}
         margin={{
           top: 5,
@@ -94,7 +94,7 @@ export const TaskDurationBarChart = ({ taskResponseData }) => {
           {taskDurationDifferences.map((item, index) => (
             <Cell
               key={index}
-              fill={item.percentDifference > 0 ? "#449e48" : "#FF0000"}
+              fill={item.percentDifference <= 0 ? "#449e48" : "#FF0000"}
             ></Cell>
           ))}
         </Bar>

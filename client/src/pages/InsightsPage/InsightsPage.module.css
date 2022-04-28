@@ -4,4 +4,25 @@
   width: 100%;
   display: flex;
   flex-direction: column;
+  align-items: center;
+}
+
+.dateSelectionBar {
+  display: flex;
+  flex-flow: row;
+  justify-content: center;
+  align-items: center;
+  margin: 10px 20px;
+  width: 100%;
+}
+
+.dateRangeTo {
+  font-weight: 600;
+  font-family: "Source Sans Pro", sans-serif;
+  font-size: 1.7rem;
+  color: white;
+}
+
+.container {
+  margin: 0px 30px;
 }

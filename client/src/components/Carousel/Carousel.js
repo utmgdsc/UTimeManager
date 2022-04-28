@@ -1,11 +1,22 @@
 import React from "react";
 import styles from "../Carousel/Carousel.module.css";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
+import "./CarouselOverride.css";
 import { Carousel } from "react-responsive-carousel";
 import TaskStatusChart from "../TaskStatusChart/TaskStatusChart";
 import PropTypes from "prop-types";
 
 export const InsightsCarousel = ({ taskData }) => {
+  const classifyTasksByTime = (taskList, actualTime, plannedTime, task) => {
+    if (actualTime === plannedTime) {
+      taskList.onTime.push(task);
+    } else if (actualTime < plannedTime - 5) {
+      taskList.early.push(task);
+    } else if (actualTime >= plannedTime + 5) {
+      taskList.late.push(task);
+    }
+  };
+
   const formatTasks = (sampleTaskData) => {
     const startedTasks = {
       early: [],
@@ -26,46 +37,45 @@ export const InsightsCarousel = ({ taskData }) => {
     };
 
     const totalTasks = sampleTaskData.length;
+    let finishedTasks = 0;
 
     for (const task of sampleTaskData) {
-      const actualTime = Math.floor(task.startDate.getTime() / 60000);
-      const plannedTime = Math.floor(task.originalStartDate.getTime() / 60000);
-
-      const actualEndTime = Math.floor(task.endDate.getTime() / 60000);
-      const plannedEndTime = Math.floor(task.originalEndDate.getTime() / 60000);
-
-      if (actualTime === plannedTime) {
-        startedTasks.onTime.push(task);
-      } else if (actualTime < plannedTime - 5) {
-        startedTasks.early.push(task);
-      } else if (actualTime >= plannedTime + 5) {
-        startedTasks.late.push(task);
-      }
-
-      if (actualEndTime === plannedEndTime) {
-        endedTasks.onTime.push(task);
-      } else if (actualEndTime < plannedEndTime - 5) {
-        endedTasks.early.push(task);
-      } else if (actualEndTime >= plannedEndTime + 5) {
-        endedTasks.late.push(task);
-      }
-
       if (!task.isStarted && task.startDate && task.endDate) {
+        // finished
+        const actualStartTime = Math.floor(task.startDate.getTime() / 60000);
+        const actualEndTime = Math.floor(task.endDate.getTime() / 60000);
+        const plannedStartTime = Math.floor(
+          task.originalStartDate.getTime() / 60000
+        );
+        const plannedEndTime = Math.floor(
+          task.originalEndDate.getTime() / 60000
+        );
+        classifyTasksByTime(
+          startedTasks,
+          actualStartTime,
+          plannedStartTime,
+          task
+        );
+        classifyTasksByTime(endedTasks, actualEndTime, plannedEndTime, task);
         summaryTasks.completed.push(task);
+        finishedTasks++;
       } else if (!task.isStarted && !task.startDate && !task.endDate) {
+        // not started
         summaryTasks.notStarted.push(task);
       } else {
-        summaryTasks.onGoing.push(task);
+        summaryTasks.onGoing.push(task); // ongoing
       }
     }
 
-    const earlyPercentageVal = (100 * startedTasks.early.length) / totalTasks;
-    const onTimePercentageVal = (100 * startedTasks.onTime.length) / totalTasks;
-    const latePercentageVal = (100 * startedTasks.late.length) / totalTasks;
+    const earlyPercentageVal =
+      (100 * startedTasks.early.length) / finishedTasks;
+    const onTimePercentageVal =
+      (100 * startedTasks.onTime.length) / finishedTasks;
+    const latePercentageVal = (100 * startedTasks.late.length) / finishedTasks;
 
-    const earlyEndedVal = (100 * endedTasks.early.length) / totalTasks;
-    const onTimeEndedVal = (100 * endedTasks.onTime.length) / totalTasks;
-    const lateEndedVal = (100 * endedTasks.late.length) / totalTasks;
+    const earlyEndedVal = (100 * endedTasks.early.length) / finishedTasks;
+    const onTimeEndedVal = (100 * endedTasks.onTime.length) / finishedTasks;
+    const lateEndedVal = (100 * endedTasks.late.length) / finishedTasks;
 
     const completedVal = (100 * summaryTasks.completed.length) / totalTasks;
     const onGoingVal = (100 * summaryTasks.onGoing.length) / totalTasks;
@@ -89,7 +99,20 @@ export const InsightsCarousel = ({ taskData }) => {
       { name: "Not started Tasks", value: notStartedVal },
     ];
 
-    return [startedSummary, endedSummary, statusSummary];
+    const summaries = [startedSummary, endedSummary, statusSummary];
+    const filteredSummaries = [];
+
+    for (let i = 0; i < summaries.length; i++) {
+      // loops through all 3 summaries
+      const filteredSummary = [];
+      for (const summaryEntry of summaries[i]) {
+        // iterates over each entry in a summary
+        if (summaryEntry.value > 0) filteredSummary.push(summaryEntry);
+      }
+      filteredSummaries.push(filteredSummary);
+    }
+
+    return filteredSummaries;
   };
 
   const [startedSummary, endedSummary, statusSummary] = formatTasks(taskData);

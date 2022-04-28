@@ -9,9 +9,9 @@ import { ErrorMessage } from "../../components/ErrorMessage/ErrorMessage";
 import { buildDateRangeRoute } from "../../utils";
 
 const InsightsPage = () => {
+  const [taskData, setTaskData] = useState([]);
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
-  const [taskData, setTaskData] = useState([]);
   const [loadingError, setLoadingError] = useState(false);
   const [loadingErrorMessage, setLoadingErrorMessage] = useState("");
 
@@ -60,21 +60,23 @@ const InsightsPage = () => {
   return (
     <div className={styles.bg}>
       <Header pageTitle={"Insights"} />
-      <DateSelector
-        showTime={true}
-        selectedDate={startDate}
-        onDateChanged={(newDate) => {
-          setStartDate(newDate);
-        }}
-      />
-      <DateSelector
-        showTime={true}
-        selectedDate={endDate}
-        onDateChanged={(newDate) => {
-          setEndDate(newDate);
-        }}
-      />
-
+      <div className={styles.dateSelectionBar}>
+        <div className={styles.container}>
+          <DateSelector
+            selectedDate={startDate}
+            onDateChanged={setStartDate}
+            showTime={false}
+          />
+        </div>
+        <div className={styles.dateRangeTo}>to</div>
+        <div className={styles.container}>
+          <DateSelector
+            selectedDate={endDate}
+            onDateChanged={setEndDate}
+            showTime={false}
+          />
+        </div>
+      </div>
       <div>
         <InsightsCarousel taskData={cleanedData} />
       </div>
