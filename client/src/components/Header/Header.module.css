@@ -10,6 +10,7 @@
   display: flex;
   background: #032a5c;
   align-items: center;
+  width: 100vw;
 }
 
 .hamburgerIcon {
