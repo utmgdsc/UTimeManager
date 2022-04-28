@@ -8,6 +8,7 @@ import styles from "./CredentialsForm.module.css";
 import { InputBox } from "../InputBox/InputBox";
 import { ErrorMessage } from "../ErrorMessage/ErrorMessage";
 import { instance } from "../../axios";
+import Cookies from "universal-cookie";
 
 const CredentialsForm = ({
   headerText,
@@ -20,6 +21,7 @@ const CredentialsForm = ({
   errorMessage,
   landingPage,
 }) => {
+  const cookie = new Cookies();
   const navigate = useNavigate();
   const routeToNextPage = () => {
     navigate(nextPage);
@@ -33,10 +35,11 @@ const CredentialsForm = ({
     if (credentials.email && credentials.password) {
       await instance
         .post(submitURL, credentials)
-        .then((res) => {
-          // TODO: Redirect to calendar page here and store JWT token somewhere
+        .then(() => {
           setShowError(false);
+          cookie.set("isLoggedIn", true);
           navigate(landingPage);
+          window.location.reload();
         })
         .catch(() => {
           setShowError(true);

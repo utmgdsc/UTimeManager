@@ -6,8 +6,10 @@ import styles from "./Header.module.css";
 import { PropTypes } from "prop-types";
 
 import { instance } from "../../axios";
+import Cookies from "universal-cookie";
 
 const Sidebar = ({ onClose }) => {
+  const cookie = new Cookies();
   const navigate = useNavigate();
   const logoutHandler = async () => {
     await instance.post("/users/logout", {}, { withCredentials: true });
@@ -27,6 +29,7 @@ const Sidebar = ({ onClose }) => {
         <SidebarItem
           label={"Log out"}
           action={() => {
+            cookie.remove("isLoggedIn");
             logoutHandler();
           }}
         />
