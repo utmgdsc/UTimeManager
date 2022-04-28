@@ -40,15 +40,23 @@ export const InsightsCarousel = ({ taskData }) => {
     let finishedTasks = 0;
 
     for (const task of sampleTaskData) {
-      const plannedTime = Math.floor(task.originalStartDate.getTime() / 60000);
-      const plannedEndTime = Math.floor(task.originalEndDate.getTime() / 60000);
-
       if (!task.isStarted && task.startDate && task.endDate) {
         // finished
-        const actualTime = Math.floor(task.startDate.getTime() / 60000);
+        const actualStartTime = Math.floor(task.startDate.getTime() / 60000);
         const actualEndTime = Math.floor(task.endDate.getTime() / 60000);
-        classifyTasksByTime(startedTasks, actualTime, plannedEndTime, task);
-        classifyTasksByTime(endedTasks, actualTime, plannedEndTime, task);
+        const plannedStartTime = Math.floor(
+          task.originalStartDate.getTime() / 60000
+        );
+        const plannedEndTime = Math.floor(
+          task.originalEndDate.getTime() / 60000
+        );
+        classifyTasksByTime(
+          startedTasks,
+          actualStartTime,
+          plannedStartTime,
+          task
+        );
+        classifyTasksByTime(endedTasks, actualEndTime, plannedEndTime, task);
         summaryTasks.completed.push(task);
         finishedTasks++;
       } else if (!task.isStarted && !task.startDate && !task.endDate) {

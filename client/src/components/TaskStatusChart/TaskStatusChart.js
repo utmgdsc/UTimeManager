@@ -80,7 +80,7 @@ export const TaskStatusChart = ({ tasksData, chartHeader }) => {
           />
         </PieChart>
       ) : (
-        <ErrorMessage errorMessage={"No tasks yet"} />
+        <ErrorMessage errorMessage={`No tasks yet for ${chartHeader}`} />
       )}
     </div>
   );
