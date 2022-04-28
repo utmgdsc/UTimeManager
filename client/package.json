@@ -19,6 +19,7 @@
     "react-router-dom": "6",
     "react-scripts": "5.0.0",
     "recharts": "^2.1.9",
+    "universal-cookie": "^4.0.4",
     "web-vitals": "^2.1.0"
   },
   "scripts": {

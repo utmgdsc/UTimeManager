@@ -1,0 +1,125 @@
+.taskReflectionModal {
+  max-height: 50vh;
+  max-width: 80vw;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  position: fixed;
+  background-color: white;
+  text-align: center;
+  border-radius: 30px;
+  overflow: auto;
+  padding: 20px 30px;
+  z-index: 10;
+}
+
+.taskReflectionModal::-webkit-scrollbar {
+  width: 0px !important;
+  display: none;
+}
+
+.taskReflectionTitle {
+  color: #000000;
+  font-weight: bold;
+  font-family: "Roboto", sans-serif;
+  font-size: 1.5rem;
+}
+
+.taskReflectionContent {
+  color: #000000;
+  font-weight: 400;
+  font-family: "Roboto", sans-serif;
+  font-size: 0.9rem;
+  text-align: left;
+}
+
+.taskReflectionComments {
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid #000000;
+  flex: 1;
+}
+
+.taskReflectionComments:focus {
+  outline: none;
+  border: none;
+  border-bottom: 2px solid #032a5c;
+}
+
+.ratingDotContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0px;
+}
+
+.ratingDot {
+  border-radius: 50%;
+  min-height: 22px;
+  min-width: 22px;
+  background-color: #dadada;
+  display: inline-block;
+  margin: 0px 4px;
+  color: black;
+  text-align: center;
+}
+
+.chosenDot {
+  border-radius: 50%;
+  min-height: 22px;
+  min-width: 22px;
+  background-color: #032a5c;
+  display: inline-block;
+  margin: 0px 4px;
+  color: white;
+  text-align: center;
+}
+
+.actionContainer {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.doneBtn {
+  border: none;
+  border-radius: 10px;
+  color: white;
+  background-color: #032a5c;
+  padding: 4px 8px;
+}
+
+.doneBtn:hover {
+  cursor: pointer;
+}
+
+.closeBtn {
+  border: none;
+  border-radius: 10px;
+  color: black;
+  background-color: #dadada;
+  margin-right: 10px;
+  padding: 4px 8px;
+}
+
+.closeBtn:hover {
+  background: #cbcbcb;
+  cursor: pointer;
+}
+
+.reflectionErrorMessage {
+  color: red;
+  font-weight: 400;
+  font-family: "Source Sans Pro", sans-serif;
+  font-size: 0.9rem;
+  margin-bottom: 20px;
+}
+
+.captureClicks {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  background: transparent;
+  z-index: 5;
+}

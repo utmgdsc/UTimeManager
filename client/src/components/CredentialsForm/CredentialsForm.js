@@ -8,6 +8,7 @@ import styles from "./CredentialsForm.module.css";
 import { InputBox } from "../InputBox/InputBox";
 import { ErrorMessage } from "../ErrorMessage/ErrorMessage";
 import { instance } from "../../axios";
+import Cookies from "universal-cookie";
 
 const CredentialsForm = ({
   headerText,
@@ -18,7 +19,9 @@ const CredentialsForm = ({
   nextPageText,
   submitURL,
   errorMessage,
+  landingPage,
 }) => {
+  const cookie = new Cookies();
   const navigate = useNavigate();
   const routeToNextPage = () => {
     navigate(nextPage);
@@ -26,20 +29,19 @@ const CredentialsForm = ({
 
   const [credentials, setCredentials] = useState({ email: "", password: "" });
   const [showError, setShowError] = useState(false);
-  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
 
   const formSubmitHandler = async () => {
     // TODO: The portion below will need to change as we start adding in our other features
     if (credentials.email && credentials.password) {
       await instance
         .post(submitURL, credentials)
-        .then((res) => {
-          // TODO: Redirect to calendar page here and store JWT token somewhere
+        .then(() => {
           setShowError(false);
-          setShowSuccessMessage(true);
+          cookie.set("isLoggedIn", true);
+          navigate(landingPage);
+          window.location.reload();
         })
         .catch(() => {
-          setShowSuccessMessage(false);
           setShowError(true);
         });
     }
@@ -72,7 +74,6 @@ const CredentialsForm = ({
           placeholder={"Password"}
           header={"Password"}
         />
-        {showSuccessMessage ? "Logged In/Registered" : <></>}
         {showError ? <ErrorMessage errorMessage={errorMessage} /> : <></>}
       </div>
       <CredentialsButton text={actionText} authAction={formSubmitHandler} />
@@ -94,6 +95,7 @@ CredentialsForm.propTypes = {
   nextPageText: PropTypes.string.isRequired,
   submitURL: PropTypes.string.isRequired,
   errorMessage: PropTypes.string.isRequired,
+  landingPage: PropTypes.string.isRequired,
 };
 
 export default CredentialsForm;

@@ -13,7 +13,7 @@ app.use(
   cors({
     origin: "http://localhost:3000",
     credentials: true,
-    methods: "GET,POST,DELETE",
+    methods: "GET,POST,DELETE,PUT",
   })
 );
 app.use(express.json()); // Allows us to accept JSON data in the body

@@ -14,6 +14,7 @@ const SignUpPage = () => {
         nextPageText="Sign In"
         submitURL={"/users"}
         errorMessage={"Unable to Sign up"}
+        landingPage="/"
       />
     </div>
   );

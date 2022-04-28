@@ -9,7 +9,7 @@ const authenticateToken = asyncHandler(async (req, res, next) => {
     req.headers.cookie &&
     req.headers.cookie.includes("token")
   ) {
-    token = req.headers.cookie.split("token=")[1].split(" ")[0];
+    token = req.headers.cookie.split("token=")[1].split(";")[0];
   }
 
   // Verify that there is a token
