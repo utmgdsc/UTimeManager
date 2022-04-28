@@ -35,12 +35,12 @@ const TaskCard = ({
   };
 
   const reflectionDoneHandler = async (reflectionComments, satisfaction) => {
-    const success = await createTaskReflectionHandler(
+    const isTaskReflectionCreated = await createTaskReflectionHandler(
       id,
       reflectionComments,
       satisfaction
     );
-    if (success) {
+    if (isTaskReflectionCreated) {
       await toggleTaskHandler(id);
       toggleReflectionModal();
     }
