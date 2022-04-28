@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import Header from "../../components/Header/Header.js";
 import styles from "./InsightsPage.module.css";
 import { DateSelector } from "../../components/DateSelector/DateSelector.js";
 import { TaskDurationBarChart } from "../../components/TaskDurationBarChart/TaskDurationBarChart.js";
@@ -58,6 +59,7 @@ const InsightsPage = () => {
 
   return (
     <div className={styles.bg}>
+      <Header pageTitle={"Insights"} />
       <div className={styles.dateSelectionBar}>
         <div className={styles.container}>
           <DateSelector
