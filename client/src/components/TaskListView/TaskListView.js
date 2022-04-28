@@ -39,7 +39,7 @@ TaskListView.propTypes = {
   tasks: PropTypes.arrayOf(PropTypes.object).isRequired,
   edittable: PropTypes.bool.isRequired,
   toggleTaskHandler: PropTypes.func,
-  createTaskReflectionHandler: PropTypes.func.isRequired,
-  getTaskReflection: PropTypes.func.isRequired,
+  createTaskReflectionHandler: PropTypes.func,
+  getTaskReflection: PropTypes.func,
 };
 export default TaskListView;

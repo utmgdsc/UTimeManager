@@ -63,21 +63,17 @@ const TaskCard = ({
   const [showReflectionModal, setShowReflectionModal] = useState(false);
 
   const taskTextStyle = isTaskCompleted ? styles.taskDone : "";
-  const actionBtn =
-    edittable && !isTaskCompleted ? (
-      <SmallActionButton
-        text={!ongoing ? "Start" : "End"}
-        toggleButton={() => {
-          if (ongoing) toggleReflectionModal();
-          else toggleTaskHandler(id);
-        }}
-      />
-    ) : (
-      <SmallActionButton
-        text={"View"}
-        toggleButton={viewTaskReflectionHandler}
-      />
-    );
+  const actionBtn = !isTaskCompleted ? (
+    <SmallActionButton
+      text={!ongoing ? "Start" : "End"}
+      toggleButton={() => {
+        if (ongoing) toggleReflectionModal();
+        else toggleTaskHandler(id);
+      }}
+    />
+  ) : (
+    <SmallActionButton text={"View"} toggleButton={viewTaskReflectionHandler} />
+  );
 
   const startDateTimeString = `${startDate} ${startTime}`;
   const endDateTimeString = `${endDate} ${endTime}`;
@@ -123,7 +119,7 @@ const TaskCard = ({
         >
           to {endDateTimeString}
         </p>
-        {actionBtn}
+        {edittable ? actionBtn : <></>}
       </div>
     </div>
   );
@@ -139,9 +135,9 @@ TaskCard.propTypes = {
   isTaskCompleted: PropTypes.bool.isRequired,
   edittable: PropTypes.bool.isRequired,
   toggleTaskHandler: PropTypes.func,
-  createTaskReflectionHandler: PropTypes.func.isRequired,
+  createTaskReflectionHandler: PropTypes.func,
   id: PropTypes.string.isRequired,
-  getTaskReflection: PropTypes.func.isRequired,
+  getTaskReflection: PropTypes.func,
 };
 
 export default TaskCard;
