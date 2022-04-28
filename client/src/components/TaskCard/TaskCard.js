@@ -45,6 +45,13 @@ const TaskCard = ({
     newTaskReflection.errorMessage = "";
     setTaskReflection(newTaskReflection);
 
+    if (reflectionComments.length === 0) {
+      const newTaskReflection = { ...taskReflection };
+      newTaskReflection.errorMessage = "Reflection is required!";
+      setTaskReflection(newTaskReflection);
+      return;
+    }
+
     if (reflectionComments.length > 200) {
       const newTaskReflection = { ...taskReflection };
       newTaskReflection.errorMessage =
