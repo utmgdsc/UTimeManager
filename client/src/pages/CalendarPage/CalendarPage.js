@@ -117,14 +117,16 @@ const CalendarPage = () => {
       satisfaction: satisfaction,
     };
 
-    try {
-      await instance.post(`/feedback`, reflectionData);
-      return true;
-    } catch {
-      setToggleError(true);
-      setToggleErrorMessage("Unable to create task reflection");
-      return false;
-    }
+    await instance
+      .post(`/feedback`, reflectionData)
+      .then(() => {
+        return true;
+      })
+      .catch(() => {
+        setToggleError(true);
+        setToggleErrorMessage("Unable to create task reflection");
+        return false;
+      });
   };
 
   // precondition: task should be already be finished

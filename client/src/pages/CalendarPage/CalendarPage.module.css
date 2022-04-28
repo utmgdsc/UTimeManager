@@ -36,6 +36,11 @@
   align-self: flex-end;
 }
 
+.createTaskButton:hover {
+  cursor: pointer;
+  background: #d7d7d7;
+}
+
 .filterButton {
   font-family: "Source Sans Pro", sans-serif;
   font-size: 1.125rem;

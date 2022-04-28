@@ -16,6 +16,11 @@
   background: white;
 }
 
+.filterButton:hover {
+  cursor: pointer;
+  background: #d7d7d7;
+}
+
 .filterBar {
   display: flex;
   justify-content: center;

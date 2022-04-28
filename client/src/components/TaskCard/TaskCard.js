@@ -40,7 +40,7 @@ const TaskCard = ({
     ];
   };
 
-  const reflectionDoneHandler = async (reflectionComments, satisfaction) => {
+  const reflectionDoneHandler = (reflectionComments, satisfaction) => {
     const newTaskReflection = { ...taskReflection };
     newTaskReflection.errorMessage = "";
     setTaskReflection(newTaskReflection);
@@ -53,6 +53,13 @@ const TaskCard = ({
       return;
     }
 
+    if (reflectionComments.length === 0) {
+      const newTaskReflection = { ...taskReflection };
+      newTaskReflection.errorMessage = "Reflection is required!";
+      setTaskReflection(newTaskReflection);
+      return;
+    }
+
     if (satisfaction <= 0) {
       const newTaskReflection = { ...taskReflection };
       newTaskReflection.errorMessage = "Task Satisfaction is required";
@@ -60,16 +67,12 @@ const TaskCard = ({
       return;
     }
 
-    const isTaskReflectionCreated = await createTaskReflectionHandler(
-      id,
-      reflectionComments,
-      satisfaction
+    createTaskReflectionHandler(id, reflectionComments, satisfaction).then(
+      async () => {
+        await toggleTaskHandler(id);
+        toggleReflectionModal();
+      }
     );
-
-    if (isTaskReflectionCreated) {
-      await toggleTaskHandler(id);
-      toggleReflectionModal();
-    }
   };
 
   const [startDate, startTime] = getDateTime(startDateTime);
