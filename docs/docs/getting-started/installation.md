@@ -8,38 +8,29 @@ title: Installation
 
 ### Frontend
 
-- Node.js >= v8.11.3
-- Typescript >= v3.7.5
-- React >= v16.13.1
-- Axios >= v0.19.2
-- React-Redux >= v7.2.0
+- Yarn >= v2
 
 ### Backend
 
-- Docker >= v2.3.0.4
-- Docker-Compose >= v1.26.2
-- Go >= v1.14
+- Node >= 14.17.0
 
 ## Installation
 
+```
+git clone https://github.com/GDSCUTM-CommunityProjects/UTimeManager
+```
 ### Frontend
 
 ```
-git clone https://github.com/2ofClubsApp/2ofclubs-frontend
-cd 2ofclubs-frontend
-npm install
-npm start
+cd client
+yarn install 
+yarn run start
 ```
 
-### Backend (Docker Installation)
+### Backend
 
 ```
-docker pull 2ofclubsapp/server
-docker-compose up --build -d
+cd backend
+yarn install
+yarn run start
 ```
-
----
-
-:::caution
-2ofClubs is under active development. This page is subject to change.
-:::
